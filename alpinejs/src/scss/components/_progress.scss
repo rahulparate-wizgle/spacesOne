@@ -1,0 +1,38 @@
+/*! _progress.scss | Huro | Wizgle 2020-2021 */
+
+/*
+    1. Progress Bar
+    
+*/
+
+/* ==========================================================================
+1. Progress Bar
+========================================================================== */
+
+.progress {
+  margin-bottom: 0;
+
+  &::-webkit-progress-value {
+    border-radius: 50px;
+  }
+
+  &::-moz-progress-bar {
+    border-radius: 50px;
+  }
+
+  &::-ms-fill {
+    border-radius: 50px;
+  }
+
+  &.is-smaller {
+    height: 0.5rem !important;
+  }
+
+  &.is-tiny {
+    height: 0.35rem !important;
+  }
+
+  &.is-micro {
+    height: 0.2rem !important;
+  }
+}

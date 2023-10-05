@@ -1,0 +1,190 @@
+<div class="container-fluid">
+    <div class="row align-items-end heading">
+        <div class="col-lg-6">
+            <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+                Enquiry Kanban
+            </h6>
+            <ol class="breadcrumb m-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Enquiry Kanban</li>
+            </ol>
+        </div>
+        <!-- FOR FILTERS -->
+        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+            <div class="flex-shrink-0 d-flex gap-1 w-100 justify-content-end align-items-center">
+
+                <div class="col-4">
+                    <form [formGroup]="filterForm">
+                        <div class="col-12">
+                            <select name="venueName" formControlName="venueName" ngDefaultControl class="form-control" (change)="getAllEnquiryList($event)" style="height: 40px;">
+                              <option *ngFor="let item of filterData" [ngValue]="item?.venue" >{{ item?.venue?.name}}</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div role="group" class="btn-group btn-group-example">
+                    <button type="button" class="btn btn-soft-secondary w-xs" routerLink="/enquiries">
+                        <i class="bx bx-list-ol"></i></button>
+                    <button type="button" class="btn btn-secondary w-xs" routerLink="/kanban">
+                        <i class="bx bxs-card"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4" *ngIf="enquiryData?.length > 0">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body kanbanNew">
+                    <div class="dropdown float-end" ngbDropdown>
+                        <a href="javascript: void(0);" class="dropdown-toggle arrow-none" ngbDropdownToggle>
+                            <h6>({{upcomingTasks.length}})</h6>
+                        </a>
+                    </div>
+                    <!-- end dropdown -->
+
+                    <h4 class="card-title mb-4">New</h4>
+                    <div id="upcoming-task" class="pb-1 task-list" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event, upcomingTasks,'upcoming-task')">
+                        <div class="dndPlaceholder" dndPlaceholderRef></div>
+                        <ng-container *ngFor="let task of upcomingTasks">
+                            <div [dndDraggable]="task" dndEffectAllowed="move" (dndMoved)="onDragged(task, upcomingTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end col -->
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body kanbanInProgress">
+                    <div class="dropdown float-end" ngbDropdown>
+                        <a href="javascript: void(0);" class="dropdown-toggle arrow-none" ngbDropdownToggle>
+                            <h6>({{inprogressTasks.length}})</h6>
+                        </a>
+                    </div>
+                    <!-- end dropdown -->
+
+                    <h4 class="card-title mb-4">In Progress</h4>
+                    <div id="Progress-task" class="pb-1 task-list" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event, inprogressTasks,'Progress-task')">
+                        <div class="dndPlaceholder" dndPlaceholderRef></div>
+                        <ng-container *ngFor="let task of inprogressTasks">
+                            <div [dndDraggable]="task" dndEffectAllowed="move" (dndMoved)="onDragged(task, inprogressTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body kanbanSuccess">
+                    <div class="dropdown float-end" ngbDropdown>
+                        <a href="javascript: void(0);" class="dropdown-toggle arrow-none" ngbDropdownToggle>
+                            <h6>({{bookedTasks.length}})</h6>
+                        </a>
+                    </div>
+                    <!-- end dropdown -->
+
+                    <h4 class="card-title mb-4">Booked</h4>
+                    <div id="booked-task" class="pb-1 task-list" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event, bookedTasks,'booked-task')">
+                        <div class="dndPlaceholder" dndPlaceholderRef></div>
+
+                        <ng-container *ngFor="let task of bookedTasks">
+                            <div [dndDraggable]="task" dndEffectAllowed="move" (dndMoved)="onDragged(task, bookedTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </div>
+                        </ng-container>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body kanbanDanger">
+                    <div class="dropdown float-end" ngbDropdown>
+                        <a href="javascript: void(0);" class="dropdown-toggle arrow-none" ngbDropdownToggle>
+                            <h6>({{cancelledTasks.length}})</h6>
+                        </a>
+
+                    </div>
+                    <!-- end dropdown -->
+
+                    <h4 class="card-title mb-4">Cancelled</h4>
+                    <div id="cancelled-task" class="pb-1 task-list" dndDropzone dndEffectAllowed="move" (dndDrop)="onDrop($event, cancelledTasks,'cancelled-task')">
+                        <div class="dndPlaceholder" dndPlaceholderRef></div>
+
+                        <ng-container *ngFor="let task of cancelledTasks">
+                            <div [dndDraggable]="task" dndEffectAllowed="move" (dndMoved)="onDragged(task, cancelledTasks)">
+                                <ng-template [ngTemplateOutlet]="TaskContent" [ngTemplateOutletContext]="{task:task}">
+                                </ng-template>
+                            </div>
+                        </ng-container>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task  -->
+<ng-template #TaskContent let-task='task'>
+    <div class="card task-box">
+        <div class="card-body">
+            <div class="dropdown float-end" ngbDropdown>
+                <a routerLink="/enquiry-details" (click)="onDetails(task.id)" class="btn btn-sm btn-soft-primary"><i
+            class="mdi mdi-eye-outline"></i></a>
+            </div>
+            <div class="float-end ms-2">
+                <span class="badge rounded-pill badge-soft-secondary font-size-12" [ngClass]=" {
+            'badge-soft-secondary': task.task === 'Waiting',
+            'badge-soft-success': task.task === 'Complete',
+            'badge-soft-primary': task.task === 'Approved',
+            'badge-soft-warning': task.task === 'Pending' }">{{task.task}}</span>
+            </div>
+            <div>
+          <!-- <h5 class="font-size-13"><a href="javascript: void(0);" class="text-dark">{{task.name | titlecase}}</a></h5> -->
+          <h5 class="font-size-15 mb-1">{{ (task?.name || task?.customer?.name || "NA") | titlecase }}</h5>
+
+                <p class="text-muted mb-4">
+                  {{ task.bookingDate ? (task.bookingDate | date:'dd/MM/yyyy ') : "--" }}</p>
+            </div>
+
+            <div class="avatar-group float-start" style="padding-left: 0;">
+                <h6 class="text-muted mb-4">{{task.venue?.location | titlecase}}</h6>
+            </div>
+            <div class="text-end">
+                <h5 class="font-size-15 mb-1">{{task.employees?.name || "NA" }}</h5>
+                <p class="mb-0 text-muted font-size-12">Assignee</p>
+            </div>
+
+        </div>
+    </div>
+</ng-template>
+
+
+<div class="card-body" *ngIf="enquiryData?.length == 0">
+    <div class="col-12 search-no-data">
+        <i class="bx bx-sleepy"></i>
+        <h6> No enquires found matching your search</h6>
+    </div>
+</div>

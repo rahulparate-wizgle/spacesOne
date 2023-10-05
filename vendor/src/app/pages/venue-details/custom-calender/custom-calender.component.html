@@ -1,0 +1,494 @@
+<div class="container-fluid">
+
+    <div class="row align-items-end">
+        <div class="col-lg-6">
+            <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+                Availability Calendar
+            </h6>
+            <ol class="breadcrumb m-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Availability Calendar</li>
+            </ol>
+        </div>
+        <div class="col-lg-6 d-flex align-items-center justify-content-end">
+
+            <div class="yearMonth">
+                <div class="col-12">
+                    <div class="d-flex justify-content-end">
+                        <select class="form-control ml-1" (change)="changeMonthYear()" name="year" [(ngModel)]="venueId">
+                          <option selected value="">-- Select --</option>
+                          <option *ngFor="let item of venuesList" [value]="item.id">{{item.name}}</option>
+                        </select>
+                        <select class="form-control ml-1" (change)="changeMonthYear()" name="year" [(ngModel)]="year">
+                        <option *ngFor="let item of slYears" [value]="item">{{item}}</option>
+                        </select>
+                        <select class="form-control ml-1" (change)="changeMonthYear()" id="slMonth" name="month" [(ngModel)]="month">
+                          <option *ngFor="let item of slMonths" [value]="item.value">{{item.key}}</option>
+                        </select>
+                        <!-- <button type="button" class="btn btn-success waves-effect waves-light ml-1" data-bs-toggle="modal" (click)="helpModal(help)" style="min-width: 36px;">
+                          <i class="bx bx-file"></i>
+                        </button> -->
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <ng-template #help role="document" let-modal>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Venue Listing Page</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        Overview
+                    </h6>
+                    <p>
+                    </p>
+                    <h6>
+                        Page Header
+                    </h6>
+                    <p>
+
+                    </p>
+                    <h6>
+                        Venue List
+                    </h6>
+                    <p>
+
+                    </p>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="row justify-content-end">
+
+                        <div class="col-auto">
+                            <div role="group" class="btn-group btn-group-example">
+                                <button type="button" class="btn btn-soft-secondary w-xs" (click)="changeCalenderView( 'month')" class="btn btn-soft-secondary w-xs" [className]="calenderView=='month' ? 'btn btn-secondary w-xs': 'btn btn-soft-secondary w-xs' ">
+                                    <i class="bx bx-list-ol"></i></button>
+                                <button type="button" class="btn btn-secondary w-xs" (click)="changeCalenderView('day')" class="btn btn-secondary w-xs" [className]="calenderView == 'day' ? 'btn btn-secondary w-xs':'btn btn-soft-secondary w-xs'">
+                                    <i class="bx bxs-card"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-auto" *ngIf="calenderView == 'day'">
+                            <div class="row">
+                                <div class="col-4">
+                                    <button (click)="dateChange(-1)" class="form-control "><i class='bx bx-chevrons-left'></i></button>
+                                </div>
+                                <div class="col-4">
+                                    <select class="form-control" (change)="selectDate($event)" id="slMonth" name="month" [(ngModel)]="day" style="text-align: center;">
+                                    <option *ngFor="let item of slDays" [value]="item">{{item}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-4">
+                                    <button (click)="dateChange(1)" class="form-control"><i class='bx bx-chevrons-right'></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-lg-12">
+                            <form>
+                                <div *ngIf="calenderView == 'month'" class="dates">
+                                    <table class="table table-bordered">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th *ngFor="let d of thDays">{{ d }}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let week of weeks">
+                                              <td *ngFor="let day of week" (click)="StaticModal(StaticDataModal,day.date)" style="cursor: pointer;">
+                                                    <div> {{ day?.date }}
+
+                                                         <a *ngFor="let item of day.entries" class="event-tile" [ngStyle]="{'background-color': item.title === 'Not Available' ? 'red' : '#556ee6', 'color': '#fff'}">
+                                                          <i class="bx bx-message-square-dots" [ngStyle]="{'background-color': item.title === 'Not Available' ? 'red' : '#556ee6', 'color': '#fff'}"></i>
+                                                          {{item.title.substr(0, 20)}}{{(item.title.length > 20 ? '..':'')}}
+                                                        </a>
+                                                        <a *ngFor="let item of day.entries" class="event-tile">
+                                                          <button *ngIf="item.title === 'Not Available'"  class="unblock-button" (click)="deleteBooking(item.id)">Click To Unblock</button>
+                                                        </a>
+
+                                                        <a *ngFor="let item of day.enquiries" class="event-tile" [style]="stringToColorCode(item.status)" style="color: #09142d">
+                                                            <!-- <i class="bx bxs-message-square-dots"></i> {{item.name.substr(0,20)}} {{(item.name.length > 20 ? '..':'')}} -->
+                                                            {{ (item?.customer?.name ? (item.customer.name.substr(0, 20) + (item.customer.name.length > 20 ? '..' : '')) : (item?.name )) }}
+
+                                                          </a>
+
+                                                        <a class="event-tile" style="color: #09142d; background-color: #eee; padding: 3px;" *ngIf="day.remainingEntries > 0">
+                                                            <span>+ {{day.remainingEntries}} Bookings</span>
+                                                        </a>
+                                                        <a class="event-tile" style="color: #09142d; background-color: #eee;  padding: 3px;" *ngIf="day.remainingEnquires > 0">
+                                                            <span>+ {{day.remainingEnquires}} Enquiries</span>
+                                                        </a>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div *ngIf="calenderView == 'day'">
+                                    <div class="row align-items-center">
+                                        <div class="col-6">
+                                            <label>Date</label>
+                                            <h6>
+                                                {{day}}/{{month}}/{{year}}
+                                            </h6>
+                                        </div>
+                                        <div class="col-6 d-flex justify-content-end">
+                                            <button type="button" (click)="StaticModal(StaticDataModal,day)" class="btn btn-primary"> Details
+                                            </button>
+                                        </div>
+                                    </div>
+
+
+                                    <ul ngbNav #customNav="ngbNav" [activeId]="3" class="nav-tabs nav-tabs-custom nav-justified col-3 mt-3">
+                                        <li [ngbNavItem]="3">
+                                            <a ngbNavLink style="text-align: left;">
+                                                <span class="d-none d-sm-block">Bookings</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="TabContent3"></ng-template>
+                                            </ng-template>
+                                        </li>
+                                        <li [ngbNavItem]="4">
+                                            <a ngbNavLink style="text-align: left;">
+                                                <span class="d-none d-sm-block">Enquiries</span>
+                                            </a>
+                                            <ng-template ngbNavContent>
+                                                <ng-template [ngTemplateOutlet]="TabContent4"></ng-template>
+                                            </ng-template>
+                                        </li>
+
+                                    </ul>
+                                    <div [ngbNavOutlet]="customNav"></div>
+
+                                    <!-- Tab Content -->
+                                    <ng-template #TabContent3>
+                                        <div class="row mt-3" *ngIf="!selectedDateBooking?.length">
+                                            <div class="col-12 search-no-data"><i class="bx bx-sleepy"></i>
+                                                <h6> No Bookings Available</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3" *ngIf="selectedDateBooking?.length">
+                                            <div class="col-12">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mb-0">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th style="width: 1%"> # </th>
+                                                                <th> Title </th>
+                                                                <th> From </th>
+                                                                <th> To </th>
+                                                                <th> Details </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of selectedDateBooking">
+                                                                <td style="width: 1%">
+                                                                    <p class="event-tile" style="height: 20px;" style="background-color:#50a5f1">.</p>
+                                                                </td>
+                                                                <td>{{item.title}}</td>
+                                                                <td>{{item.from_day}}/{{item.from_month}}/{{item.from_year}} : {{item.from_time}} </td>
+                                                                <td>{{item.to_day}}/{{item.to_month}}/{{item.to_year}} : {{item.to_time}} </td>
+                                                                <td>{{item.details}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+
+                                    <!-- Tab Content -->
+                                    <ng-template #TabContent4>
+                                        <div class="row mt-3" *ngIf="!selectedDateEnquiries?.length">
+                                            <div class="col-12 search-no-data"><i class="bx bx-sleepy"></i>
+                                                <h6> No Enquiries Available</h6>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mt-3" *ngIf="selectedDateEnquiries?.length">
+                                            <div class="col-12">
+
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover mt-3">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th scope="col">Customer Name</th>
+                                                                <th scope="col">Message</th>
+                                                                <th scope="col">Enquiry Date</th>
+                                                                <th scope="col">Status</th>
+                                                                <th scope="col">Number Of Person</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let data of selectedDateEnquiries">
+                                                              <td>{{ data.customer?.name ? data.customer?.name : data.name || '--' }}</td>
+                                                                <td>{{data.additionalMessage || "--"}}</td>
+                                                                <!-- <td>{{data.enquiryDate || "--"}}</td> -->
+                                                                <td>{{ data.enquiryDate ? (data.enquiryDate | date:'dd/MM/yyyy  : HH:mm') : "--" }}</td>
+                                                                <td>{{getStatusString(data.status)}}</td>
+                                                                <td>{{data.numberOfPeople || '--'}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </ng-template>
+
+
+
+
+
+
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-body">
+                            <div>
+                                <!-- Static Backdrop Modal -->
+                                <ng-template #StaticDataModal let-modal>
+                                    <div class="modal-header">
+                                        <div style="display: flex;">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Bookings</h5>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="closeBookingPopup()"></button>
+                                        </div>
+                                    </div>
+                                    <div class="modal-body p-0">
+
+                                        <div *ngIf="bookingView == 'list'">
+
+                                            <div class="row align-items-center p-3">
+                                                <div class="col-6">
+                                                    <label>Date</label>
+                                                    <h6>
+                                                        {{day}}/{{month}}/{{year}}
+                                                    </h6>
+                                                </div>
+                                                <div class="col-6 d-flex justify-content-end">
+                                                    <select class="form-control" (change)="changeMonthYear()" name="year" [(ngModel)]="venueId">
+                                                      <option selected value="">Select Venues </option>
+                                                        <option *ngFor="let item of venuesList" [value]="item.id">{{item.name}}</option>
+                                                    </select>
+                                                    <button type="button" [disabled]="!venueId" (click)="changeBookingView('add')" class="btn btn-primary ml-1"> Add </button>
+                                                    <button type="button" [disabled]="!venueId" (click)="blockDay()"  class="btn btn-primary ml-1"> Block </button>
+                                                </div>
+                                            </div>
+
+                                            <ul ngbNav #customNav="ngbNav" [activeId]="1" class="nav-tabs nav-tabs-custom nav-justified">
+                                                <li [ngbNavItem]="1">
+                                                    <a ngbNavLink>
+                                                        <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
+                                                        <span class="d-none d-sm-block">Bookings</span>
+                                                    </a>
+                                                    <ng-template ngbNavContent>
+                                                        <ng-template [ngTemplateOutlet]="TabContent"></ng-template>
+                                                    </ng-template>
+                                                </li>
+                                                <li [ngbNavItem]="2">
+                                                    <a ngbNavLink>
+                                                        <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
+                                                        <span class="d-none d-sm-block">Enquiries</span>
+                                                    </a>
+                                                    <ng-template ngbNavContent>
+                                                        <ng-template [ngTemplateOutlet]="TabContent1"></ng-template>
+                                                    </ng-template>
+                                                </li>
+
+                                            </ul>
+                                            <div [ngbNavOutlet]="customNav"></div>
+
+                                            <!-- Tab Content -->
+                                            <ng-template #TabContent>
+                                                <div class="row mt-3 p-3" *ngIf="!selectedDateBooking.length">
+                                                    <div class="col-12 search-no-data"><i class="bx bx-sleepy"></i>
+                                                        <h6> No Bookings Available</h6>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-3 p-3">
+                                                    <div class="col-12" *ngIf="selectedDateBooking.length">
+
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th style="width: 5%"> # </th>
+                                                                        <th> Title </th>
+                                                                        <th> From </th>
+                                                                        <th> To </th>
+                                                                        <th> Details </th>
+                                                                        <th> Action </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let item of selectedDateBooking">
+                                                                        <td style="width: 5%">
+                                                                            <p class="event-tile" style="height: 20px;" style="background-color:#50a5f1">.</p>
+                                                                        </td>
+                                                                        <td>{{item.title}}</td>
+                                                                        <td>{{item.from_day}}/{{item.from_month}}/{{item.from_year}} : {{item.from_time}}
+                                                                        </td>
+                                                                        <td>{{item.to_day}}/{{item.to_month}}/{{item.to_year}} : {{item.to_time}} </td>
+                                                                        <td>{{item.details}}</td>
+                                                                        <td>
+                                                                            <ul class="list-unstyled hstack gap-1 mb-0 d-flex justify-content-end">
+                                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                                                    <div class="btn btn-sm btn-soft-primary" (click)="editBooking(item.id)">
+                                                                                        <a> <i class="bx bxs-edit"></i> </a>
+
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                                                    <div class="btn btn-sm btn-soft-primary" (click)="deleteBooking(item.id)">
+                                                                                        <a> <i class="bx bx-trash-alt"></i> </a>
+
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </ng-template>
+
+                                            <!-- Tab Content -->
+                                            <ng-template #TabContent1>
+                                                <div class="row mt-3 p-3" *ngIf="!selectedDateEnquiries.length">
+                                                    <div class="col-12 search-no-data"><i class="bx bx-sleepy"></i>
+                                                        <h6> No Enquiries Available</h6>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mt-3 p-3">
+                                                    <div class="col-12" *ngIf="selectedDateEnquiries.length">
+
+                                                        <div class="table-responsive">
+                                                            <table class="table table-hover mb-0">
+                                                                <thead class="table-light">
+                                                                    <tr>
+                                                                        <th scope="col">Customer Name</th>
+                                                                        <th scope="col">Message</th>
+                                                                        <th scope="col">Enquiry Date</th>
+                                                                        <th scope="col">Status</th>
+                                                                        <th scope="col">Number Of Person</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let item of selectedDateEnquiries">
+                                                                      <td>{{ item.customer?.name ? item.customer?.name : item.name || '--' }}</td>
+                                                                        <td>{{item.additionalMessage || "--"}}</td>
+                                                                        <!-- <td>{{item.enquiryDate || "--"}}</td> -->
+                                                                        <td>{{ item.enquiryDate ? (item.enquiryDate | date:'dd/MM/yyyy  : HH:mm') : "--" }}</td>
+                                                                        <td>{{getStatusString(item.status)}}</td>
+                                                                        <td>{{item.numberOfPeople || '--'}}</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ng-template>
+
+                                        </div>
+
+                                        <div *ngIf="bookingView == 'add'">
+                                            <form [formGroup]="bookingForm">
+                                                <div class="mb-3">
+                                                    <label for="recipient-name" class="col-form-label">Title:</label>
+                                                    <input type="text" class="form-control" id="recipient-name" formControlName="title">
+                                                    <input type="hidden" class="form-control" id="recipient-name" formControlName="id">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+
+                                                        <div class="mb-3">
+                                                            <label for="recipient-name" class="col-form-label">From:</label>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <input type="date" class="form-control" id="recipient-name" formControlName="from_date">
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="time" class="form-control" id="recipient-name" formControlName="from_time">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="mb-3">
+                                                            <label for="recipient-name" class="col-form-label">To:</label>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <input type="date" class="form-control" [min]="bookingForm.value.from_date" id="recipient-name" formControlName="to_date">
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <input type="time" class="form-control" id="recipient-name" formControlName="to_time">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-6 mt-3">
+                                                        <label for="recipient-name" class="col-form-label">Type:</label>
+                                                        <input type="text" class="form-control" id="recipient-name" formControlName="type">
+                                                    </div>
+
+                                                    <div class="col-6 mt-3">
+                                                        <label for="recipient-name" class="col-form-label">Tags:</label>
+                                                        <input type="text" class="form-control" id="recipient-name" formControlName="tags">
+                                                    </div>
+
+                                                    <div class="col-12 mt-3">
+                                                        <label for="message-text" class="col-form-label">Details:</label>
+                                                        <textarea class="form-control" id="message-text" formControlName="details"></textarea>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                            <div class="modal-footer mt-3">
+                                                <button type="button" (click)="changeBookingView('list')" class="btn btn-secondary">Cancel</button>
+                                                <button type="button" (click)="addBooking()" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

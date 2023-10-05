@@ -1,0 +1,192 @@
+/*! _form.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Field
+    2. Input
+    3. Custom Toggle
+*/
+
+
+/* ==========================================================================
+1. Field
+========================================================================== */
+
+.field {
+    width: 100%;
+}
+
+
+/* ==========================================================================
+2. Input
+========================================================================== */
+
+.control {
+    &.has-caret {
+        position: relative;
+    }
+    &.has-icon {
+        position: relative;
+        .form-icon {
+            position: absolute;
+            top: 0;
+            height: 40px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $light-text;
+            transition: color 0.3s;
+            &.is-left {
+                left: 0;
+            }
+            &.is-right {
+                right: 0;
+            }
+            svg {
+                height: 18px;
+                width: 18px;
+            }
+        }
+        .input {
+            padding-left: 44px;
+            &:focus+.form-icon {
+                color: $primary;
+            }
+        }
+    }
+    .input {
+        box-shadow: none;
+        font-family: $font;
+        border-radius: 0.55rem;
+        transition: all 0.3s;
+        &:active,
+        &.is-active {
+            border-color: $border;
+        }
+        &:hover {
+            box-shadow: $light-box-shadow;
+        }
+        &:focus {
+            border-color: $border;
+        }
+    }
+}
+
+.input {
+    &.is-bigger {
+        height: 46px;
+    }
+}
+
+.textarea {
+    box-shadow: none;
+    font-family: $font;
+    border-radius: 0.55rem;
+    transition: all 0.3s;
+    &:active,
+    &.is-active {
+        border-color: $border;
+    }
+    &:hover {
+        box-shadow: $light-box-shadow;
+    }
+    &:focus {
+        box-shadow: $light-box-shadow;
+        border-color: $border;
+    }
+}
+
+
+/* ==========================================================================
+3. Custom Toggle
+========================================================================== */
+
+.ninja-toggle {
+    position: relative;
+    input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        opacity: 0;
+        &:checked {
+            +label {
+                span {
+                    &.track {
+                        .track-knob {
+                            margin-left: 22px;
+                            transform: rotate(360deg);
+                            background: $primary;
+                            border-color: $primary;
+                            box-shadow: $primary-box-shadow;
+                            i {
+                                opacity: 1;
+                            }
+                            svg {
+                                &.inactive {
+                                    display: none;
+                                    stroke-width: $dark-text;
+                                }
+                                &.active {
+                                    display: block;
+                                    stroke: $light-white;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    label {
+        display: block;
+        cursor: pointer;
+        span {
+            display: block;
+            &.track {
+                position: relative;
+                .track-inner {
+                    height: 11px;
+                    width: 42px;
+                    background: $placeholder;
+                    border-radius: 100px;
+                }
+                .track-knob {
+                    position: absolute;
+                    top: -8px;
+                    left: -2px;
+                    height: 26px;
+                    width: 26px;
+                    border-radius: 50%;
+                    border: 1px solid darken($fade-grey, 3%);
+                    box-shadow: $light-box-shadow;
+                    background: $white;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transform: rotate(0);
+                    transition: all 0.3s;
+                    i {
+                        color: $white;
+                        opacity: 0;
+                        transition: all 0.3s;
+                    }
+                    svg {
+                        height: 14px;
+                        width: 14px;
+                        stroke-width: 2px;
+                        stroke: $dark-text;
+                        &.inactive {
+                            display: block;
+                        }
+                        &.active {
+                            display: none;
+                            stroke-width: 5px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

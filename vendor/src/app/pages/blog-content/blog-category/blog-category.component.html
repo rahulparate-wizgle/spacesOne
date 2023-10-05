@@ -1,0 +1,54 @@
+<div class="modal-body d-flex flex-column justify-content-center">
+  <div class="text-center">
+    <h3 class="mt-2">Get ready-to-create blog find your category.</h3>
+    <p class="mt-3" style="max-width: 768px; margin: 0 auto">
+      Create A Blogging Website Solution for You. Create your Website & E-commerce for Free.
+       We've made website building easy for you--and totally free.
+    </p>
+  </div>
+  <div class="type">
+    <div class="row justify-content-center">
+      <div
+        class="col-xl-4 col-sm-6"
+        *ngFor="let list of listData; let i = index"
+      >
+      <div
+      class="card"
+      [ngClass]="i == statusClass ? 'active' : ''"
+      (click)="setActiveClass(i)"
+    >
+          <div class="card-body">
+            <div class="type-item">
+              <div class="">
+                <img
+                  *ngIf="list.image"
+                  src="{{ list.image }}"
+                  class="avatar-sm float-start float-lg-none rounded-circle"
+                  alt="img"
+                />
+              </div>
+              <div class="data">
+                <h5 class="text-truncate mb-1 mb-lg-2">{{ list.title }}</h5>
+                <p class="mb-0">
+                  {{ list.description }}
+                </p>
+              </div>
+              <div class="info">
+                <i class="bx bxs-info-circle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-3 d-flex justify-content-center">
+    <button
+      type="button"
+      class="btn btn-primary w-lg waves-effect waves-light"
+      (click)="router.navigate(['Home/blog-form'])"
+    >
+      Add Blogs
+    </button>
+  </div>
+</div>

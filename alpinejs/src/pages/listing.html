@@ -1,0 +1,263 @@
+<!--Main Navbar-->
+{{> main-navigation-v2}}
+
+<div class="dual-container" x-data="getData()">
+    <div class="dual-container-left" id="catTable">
+
+        <div class="flat-list pb-6">
+            <!--Title-->
+            <div class="flat-carousels-wrapper pt-0">
+                <!--Title-->
+                <h4 class="title is-5 mb-2">From your search</h4>
+                <div class="filters py-4">
+                    <div class="buttons">
+                        <div id="divFilterContainer" >
+                            
+                        </div>
+                       
+                        <button class="button is-small is-rounded modal-trigger" data-modal="languages-modal">Filters</button>
+                    </div>
+                </div>
+
+                <p>
+                    Before booking, please make sure to check our
+                    <a class="underlink mx-2">Covid-19 travel guide</a>
+                </p>
+                <!--Scheduled events carousel-->
+                <div class="flats">
+                    <div class="flats-inner glide flat-carousel">
+                        <div class="glide__track" data-glide-el="track">
+                            <!--Carousel-->
+                            <ul class="glide__slides" style="
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: flex-start;">
+                                <!--Carousel item-->
+                                <template x-for="(item,index) in venues" :key="item.id">
+                                    
+                                <li class="glide__slide map-popup-item"  data-location="0" style="width: 31%; margin-right: 2%; margin-bottom: 2%;">
+                                    <p style="
+                                    position: absolute;
+                                    text-align: center;
+                                    /* justify-content: center; */
+                                    /* height: 100%; */
+                                    width: 100%;
+                                    color: #000;
+                                    font-size: 14px;
+                                    font-weight: 500;
+                                    margin: 90px 0 0 0;
+                                " x-show="item.venueBookings" >Not available for selected dates</p>
+                                    <div class="flat" :class="{ 'hasBooking': item.venueBookings }">
+                                        <div :style="'background: url('+item.gallery[0]+')';" class="flat-image map-popup-trigger" >
+                                          
+                                            <!-- <div class="action-bar">
+                                                <button class="button wishlist-button">
+                                                <i data-feather="heart"></i>
+                                              </button>
+                                            </div> -->
+                                        </div>
+                                        <div class="flat-content">
+                                           
+                                            <div class="flat-rating">
+                                                <img src="../img/star.png" style="max-width: 15px; margin: 0 5px 5px 0;">
+                                                <span  x-text="item?.rating" style="color: #671cc9;"></span>
+                                                <span class="px-2">-</span>
+                                            
+                                                <template x-if="item.address.length > 25">
+                                                  <span  x-text="item.address.slice(0, 25)"></span>
+                                                  <span>...</span>
+                                              </template>
+                                <template x-if="item.address.length < 30">
+                                                            <span  x-text="item.address.slice(0, 30)"></span>
+                                                        </template>
+                        </div>
+                        <p class="flat-name">
+                            <a x-text="item.name" x-bind:href="'/details.html?venue=' + item.id"></a>
+                        </p>
+                        <p class="flat-price">
+                            Starting from ₹ <span x-text="item?.pricing?.perUnit" style="color: #671cc9; font-weight: bold;"></span> <small>/night</small>
+                        </p>
+                        <div class="locate-map" x-on:click="flyToLocation(index)">
+                            <i data-feather="map-pin"> locate </i>
+                        </div>
+                    </div>
+                </div>
+                </li>
+                </template>
+
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+</div>
+<div class="dual-container-right" id="places-map" data-long="-4.501974124414064" data-lat="36.62256952621055"></div>
+</div>
+<div id="languages-modal" x-data="{listFilter : {}}" class="modal modal-md filter-modal">
+    <div class="modal-background modal-dismiss"></div>
+    <div class="modal-content">
+        <!--Modal card-->
+        <div class="card">
+            <header class="card-header">
+                <div class="card-header-title">
+                    <span>Filters</span>
+                </div>
+                <button class="modal-dismiss">
+          <span class="icon">
+            <i data-feather="x"></i>
+          </span>
+        </button>
+            </header>
+            <div class="card-content">
+                <form>
+
+                    <label>Sort By</label>
+                    <div class="field">
+                        <div x-data="{ sortBy: '' }" class="control has-caret">
+                            <select id="slFilterSortBy" x-model="sortBy" class="input" data-choice-select>
+                                <option selected value="" >Select</option>
+                                <option value="Low to High" >Low to High</option>
+                              <option value="High to Low" >High to Low</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- 
+                    <label>Type</label>
+                    <div class="field">
+                        <div class="control has-caret">
+                            <select class="input" data-choice-select>
+                              <option>Hotel</option>
+                              <option>Banquet</option>
+                              <option>Lawn</option>
+                              <option>Resort</option>
+                            </select>
+                        </div>
+                    </div> -->
+
+                    <div class="group-toggle" style="margin-top: 30px;">
+                        <label style="margin-bottom: 5px;">Rooms Available</label>
+                        <div class="field" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <p style="font-size: 12px;">
+                                Only show listings from hosts where rooms are available for attendees
+                            </p>
+                            <div class="ninja-toggle">
+                                <input id="group-toggle" type="checkbox">
+                                <label for="group-toggle" class="no-margin">
+                          <span class="track">
+                            <span class="track-inner"></span>
+                            <span class="track-knob">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-circle inactive"><circle cx="12" cy="12" r="10"></circle></svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check active"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </span>
+                          </span>
+                        </label>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <label>Price</label>
+                    <div class="field">
+                        <div class="control has-caret">
+                            <select id="slFilterPrice" class="input" data-choice-select>
+                             <option selected value="" >Select</option>
+                              <option value="0-300" >₹0 to ₹300</option>
+                              <option value="300-500" >₹300 to ₹500</option>
+                              <option value="500-800" >₹500 to ₹800</option>
+                              <option value="800-1200" >₹800 to ₹1200</option>
+                              <option value="1200-+" >₹1200 +</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Ratings</label>
+                    <div class="field">
+                        <div class="control has-caret">
+                            <select id="slFilterRating" class="input" data-choice-select>
+                            <option selected value="" >Select</option>
+                              <option value="1" >1 Star</option>
+                              <option value="2" >2 Star</option>
+                              <option value="3" >3 Star</option>
+                              <option value="4" >4 Star</option>
+                              <option value="5" >5 Star</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label>Locality</label>
+                    <div class="field">
+                        <div class="control has-caret">
+                            <select id="slFilterLocality" class="input" data-choice-select>
+                              <option>Ramdaspeth</option>
+                              <option>Sadar</option>
+                              <option>Nandavan</option>
+                              <option>Mankapur</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <div class="field" style="margin-top: 30px;">
+                        <div class="control">
+                            <div x-on:click="applyFilter(venues)" class="button is-primary is-fullwidth mx-1">Apply Filter</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script>
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            let filterObj ={}
+            let currentFilterStr = urlParams.get('__filter');
+            if(currentFilterStr?.length > 0){
+                filterObj = JSON.parse(currentFilterStr);
+                let keys = Object.keys(filterObj);
+                let htmlString = '';
+                for(let i=0;i<keys.length;i++){
+                    if(filterObj[keys[i]].length > 0)
+                    htmlString += "<button class='button is-small is-rounded'>"+keys[i]+":"+filterObj[keys[i]]+"  <i key='"+keys[i]+"' onclick='removeFilter(this)' data-feather='x'></i> </button>";
+                }
+                document.getElementById('divFilterContainer').innerHTML = htmlString;
+
+
+                var slFilterSortBy = document.getElementById("slFilterSortBy");
+                var slFilterPrice = document.getElementById("slFilterPrice");
+
+                var slFilterRating = document.getElementById("slFilterRating");
+                if(filterObj?.SortBy?.length){
+                    slFilterSortBy.value = filterObj.SortBy;
+                }
+
+                if(filterObj?.Price?.length){
+                    slFilterPrice.value = filterObj.Price;
+                }
+                if(filterObj?.Rating?.length){
+                    slFilterRating.value = filterObj.Rating;
+                }
+
+
+            }
+            
+            function removeFilter(event){
+                let key = event.getAttribute('key')
+                delete filterObj[key];
+               urlParams.set('__filter',JSON.stringify(filterObj));
+               location.href = '/listing.html?' + urlParams.toString(); 
+            }
+        </script>
+    </div>
+</div>
+</div>
+
+<style>
+    .hasBooking {
+        opacity: 0.4;
+    }
+</style>

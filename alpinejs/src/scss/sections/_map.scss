@@ -1,0 +1,302 @@
+/*! _cta.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Designed Map
+    2. Map Popup
+    3. Map pagination
+    4. Media Queries
+*/
+
+
+/* ==========================================================================
+1. Designed Map
+========================================================================== */
+
+.map-block {
+    padding: 60px 0;
+    .map-header {
+        text-align: center;
+        margin-bottom: 120px;
+        .subtitle {
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+            color: $light-text;
+        }
+        .button {
+            min-width: 165px;
+        }
+    }
+    .map-container {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        .avatar {
+            position: absolute;
+            display: block;
+            border-radius: 50%;
+            z-index: 1;
+            &.avatar-1 {
+                top: 0;
+                left: 0;
+                height: 40px;
+                width: 40px;
+            }
+            &.avatar-2 {
+                top: 15%;
+                left: 30%;
+                height: 60px;
+                width: 60px;
+            }
+            &.avatar-3 {
+                bottom: 35%;
+                left: 10%;
+                height: 50px;
+                width: 50px;
+            }
+            &.avatar-4 {
+                top: 0;
+                right: 0;
+                height: 46px;
+                width: 46px;
+            }
+            &.avatar-5 {
+                top: 30%;
+                right: 5%;
+                height: 55px;
+                width: 55px;
+            }
+            &.avatar-6 {
+                top: 10%;
+                right: 30%;
+                height: 36px;
+                width: 36px;
+            }
+            &.avatar-7 {
+                bottom: 35%;
+                right: 32%;
+                height: 42px;
+                width: 42px;
+            }
+            &.avatar-8 {
+                bottom: 15%;
+                left: 40%;
+                height: 34px;
+                width: 34px;
+            }
+        }
+        .floating-box {
+            position: absolute;
+            display: block;
+            z-index: 2;
+            background: $white;
+            border-radius: 0.75rem;
+            border: 1px solid $border;
+            box-shadow: $light-box-shadow-md;
+            padding: 1rem;
+            min-width: 200px;
+            line-height: 1.2;
+            &.floating-box-1 {
+                top: 20%;
+                left: -15%;
+            }
+            &.floating-box-2 {
+                bottom: 5%;
+                right: 10%;
+            }
+            &.floating-box-3 {
+                top: -10%;
+                left: 30%;
+            }
+            span {
+                display: block;
+                &:first-child {
+                    font-family: $font-main;
+                    font-weight: 700;
+                    font-size: 1.3rem;
+                    color: $primary;
+                }
+                &:nth-child(2) {
+                    font-family: $font;
+                    color: $light-text;
+                }
+            }
+        }
+        .map {
+            display: block;
+            opacity: 0.6;
+            user-select: none;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Map Popup
+========================================================================== */
+
+.map-popup-item {
+    cursor: pointer;
+}
+
+.mapboxgl-popup {
+    &.mapboxgl-popup-anchor-bottom {
+        .mapboxgl-popup-tip {
+            z-index: 30;
+            position: relative;
+            top: -2px;
+        }
+    }
+    &.mapboxgl-popup-anchor-top {
+        .mapboxgl-popup-tip {
+            z-index: 30;
+            position: relative;
+            bottom: -2px;
+        }
+    }
+    &.mapboxgl-popup-anchor-right {
+        .mapboxgl-popup-tip {
+            z-index: 30;
+            position: relative;
+            left: -2px;
+        }
+    }
+    &.mapboxgl-popup-anchor-left {
+        .mapboxgl-popup-tip {
+            z-index: 30;
+            position: relative;
+            right: -2px;
+        }
+    }
+    .mapboxgl-popup-content {
+        border: 1px solid $border;
+        box-shadow: $light-box-shadow;
+        padding: 1.25rem;
+        border-radius: 0.5rem;
+        .map-box-location {
+            .map-box-header {
+                .location-pic {
+                    position: relative;
+                    .rating-badge {
+                        position: absolute;
+                        top: 0.25rem;
+                        left: 0.25rem;
+                        display: flex;
+                        align-items: center;
+                        font-family: $font;
+                        font-weight: 500;
+                        color: $dark-text;
+                        background: $white;
+                        border-radius: 0.25rem;
+                        padding: 0.25rem 0.75rem 0.25rem 0.25rem;
+                        border: 1px solid $border;
+                        box-shadow: $light-box-shadow;
+                        svg {
+                            height: 13px;
+                            width: 13px;
+                            margin-right: 0.15rem;
+                            stroke: #ffb536;
+                            fill: #ffb536;
+                        }
+                    }
+                    img {
+                        width: 100%;
+                        max-height: 100px;
+                        border-radius: 0.25rem;
+                        object-fit: cover;
+                    }
+                }
+            }
+            .map-box-body {
+                padding: 0.5rem 0;
+                .location-meta {
+                    margin-bottom: 0.25rem;
+                    span {
+                        display: block;
+                        &:first-child {
+                            font-family: $font;
+                            font-size: 0.85rem;
+                            font-weight: 600;
+                            color: $dark-text;
+                            line-height: 1.2;
+                        }
+                        &:nth-child(2) {
+                            color: $light-text;
+                        }
+                    }
+                }
+                p {
+                    font-size: 0.85rem;
+                    line-height: 1.4;
+                    color: $medium-text;
+                    >b {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Map pagination
+========================================================================== */
+
+.map-pagination {
+    .pagination-previous,
+    .pagination-next {
+        font-family: $font;
+    }
+    .pagination-link {
+        font-family: $font;
+        &.is-current {
+            background: $primary;
+            border-color: $primary;
+            box-shadow: $primary-box-shadow;
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Media Queries
+========================================================================== */
+
+@media only screen and (max-width: 767px) {
+    .map-block {
+        .map-header {
+            .button {
+                min-width: 140px;
+            }
+        }
+        .map-container {
+            .floating-box {
+                &.floating-box-1 {
+                    left: -4%;
+                }
+                &.floating-box-2 {
+                    bottom: -25%;
+                }
+                &.floating-box-3 {
+                    top: -39%;
+                    left: 42%;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .map-block {
+        .map-container {
+            .floating-box {
+                &.floating-box-1 {
+                    left: -6%;
+                }
+            }
+        }
+    }
+}

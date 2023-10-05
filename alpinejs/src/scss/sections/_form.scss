@@ -1,0 +1,248 @@
+/*! _form.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Card form
+    2. Pulled card form
+    3. Subscription field
+    4. Month / Date selector
+    
+*/
+
+
+/* ==========================================================================
+1. Card form
+========================================================================== */
+
+.card-form {
+    padding: 3rem;
+    max-width: 440px;
+    margin: 0 auto;
+    border-radius: 0.75rem;
+    overflow: visible;
+    box-shadow: $light-box-shadow;
+    &.card-form-horizontal {
+        display: flex;
+        max-width: 840px;
+        border-radius: 1.5rem;
+        .card-form-left {
+            width: 55%;
+            padding: 2rem;
+        }
+        .card-form-right {
+            width: 45%;
+            padding: 2rem;
+        }
+    }
+    .title {
+        &.is-1 {
+            line-height: 1;
+        }
+    }
+    .bottom-link {
+        font-family: $font;
+        font-weight: 500;
+        font-size: 0.85rem;
+        color: $primary;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .pulled-hero-form {
+        padding: 0 1rem;
+    }
+    .card-form {
+        &.card-form-horizontal {
+            flex-direction: column;
+            padding: 1rem;
+            .card-form-left,
+            .card-form-right {
+                width: 100%;
+            }
+        }
+        &.careers-card-form {
+            padding: 2rem;
+            text-align: center;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .pulled-hero-form {
+        padding: 0 1rem;
+    }
+}
+
+
+/* ==========================================================================
+2. Pulled card form
+========================================================================== */
+
+.pulled-hero-form {
+    margin-top: -120px;
+}
+
+
+/* ==========================================================================
+3. Subscription field
+========================================================================== */
+
+.subscription-field {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    .field {
+        .control {
+            position: relative;
+            .input {
+                height: 58px;
+                border-radius: 0.75rem;
+            }
+            .button {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+            }
+        }
+    }
+}
+
+.subscription-text {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 3rem 0 0 0;
+    text-align: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .subscription-field {
+        .field {
+            .control {
+                .button {
+                    position: static;
+                    width: 100%;
+                    margin: 0.5rem 0;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Month / Date selector
+========================================================================== */
+
+.month-selector {
+    margin: 40px 0 20px 0;
+    .months {
+        display: flex;
+        max-width: 330px;
+        margin: 0 auto;
+        .month {
+            padding: 8px 16px;
+            border-radius: 100px;
+            background: $widget-grey;
+            border: 1px solid $border;
+            color: $light-text;
+            margin: 0 8px;
+            width: calc(100% - 16px);
+            text-align: center;
+            text-transform: uppercase;
+            font-family: $font;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            &.active {
+                background: $white;
+                border-color: $primary;
+                color: $primary;
+            }
+        }
+    }
+}
+
+.date-selector {
+    display: flex;
+    flex-wrap: wrap;
+    .date-box {
+        position: relative;
+        width: calc(33.3% - 16px);
+        margin: 8px;
+        &:hover {
+            .class-topic-inner {
+                background: $white;
+                box-shadow: $light-box-shadow;
+                .icon-wrap {
+                    i {
+                        color: $primary;
+                    }
+                }
+                span {
+                    color: $primary;
+                }
+            }
+        }
+        input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 1;
+            &:checked+.date-box-inner {
+                border-color: $primary;
+                .indicator {
+                    display: flex;
+                }
+                span {
+                    color: $primary;
+                }
+            }
+        }
+        .date-box-inner {
+            position: relative;
+            background: $white;
+            box-shadow: $light-box-shadow;
+            border: 1px solid $border;
+            padding: 0.75rem 0;
+            border-radius: 8px;
+            transition: all 0.3s;
+            .indicator {
+                position: absolute;
+                top: -6px;
+                right: -6px;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                height: 22px;
+                width: 22px;
+                border-radius: 50%;
+                background: $primary;
+                i {
+                    font-size: 0.8rem;
+                    color: $white;
+                }
+            }
+            span {
+                display: block;
+                text-align: center;
+                color: $light-text;
+                &:nth-child(2) {
+                    font-family: $font;
+                    text-transform: uppercase;
+                }
+                &:nth-child(3) {
+                    font-family: $font;
+                    font-weight: 300;
+                    font-size: 2.5rem;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+}

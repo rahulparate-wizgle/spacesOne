@@ -1,0 +1,13 @@
+/* ==============
+  Druafula
+===================*/
+
+.task-box {
+    border: 1px solid var(--#{$prefix}gray-300);
+    background: #f8f8fb;
+}
+
+.gu-transit {
+    border: 1px dashed var(--#{$prefix}border-color) !important;
+    background-color: var(--#{$prefix}gray-200) !important;
+}

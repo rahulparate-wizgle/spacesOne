@@ -1,0 +1,101 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Personal Information</h4>
+
+          <p class="text-muted mb-4">
+            Hi I'm {{ usersData.name }},has been the industry's standard dummy
+            text To an English person, it will seem like simplified English, as
+            a skeptical Cambridge.
+          </p>
+          <div class="table-responsive">
+            <table class="table table-nowrap mb-0">
+              <tbody>
+                <tr>
+                  <th scope="row">Name :</th>
+                  <td>{{ usersData.name }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Company :</th>
+                  <td>{{ usersData.company }}</td>
+                </tr>
+                <!-- <tr>
+                  <th scope="row">Location :</th>
+                  <td>{{usersData.location}}</td>
+                </tr> -->
+                <tr>
+                  <th scope="row">Email :</th>
+                  <td>{{ usersData.email }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Contact No. :</th>
+                  <td>{{ usersData.mobileNumber }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Status :</th>
+                  <td>{{ usersData.status }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Designation :</th>
+                  <td>{{ usersData.designation }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Summary :</th>
+                  <td>{{ usersData.summary }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Venues:</th>
+                  <td>
+                    <div class="assign" *ngFor="let item of usersData.assignedVenueIds">
+                      {{ getVenueName(item) }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+    </div>
+
+    <div class="col-xl-8">
+      <div class="row">
+        <div *ngFor="let stat of statData" class="col-md-4">
+          <app-stat
+            [title]="stat.title"
+            [value]="stat.value"
+            [icon]="stat.icon"
+          ></app-stat>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Revenue</h4>
+          <apx-chart
+            dir="ltr"
+            class="apex-charts"
+            [series]="revenueBarChart.series"
+            [chart]="revenueBarChart.chart"
+            [xaxis]="revenueBarChart.xaxis"
+            [colors]="revenueBarChart.colors"
+            [yaxis]="revenueBarChart.yaxis"
+            [dataLabels]="revenueBarChart.dataLabels"
+            [stroke]="revenueBarChart.stroke"
+            [plotOptions]="revenueBarChart.plotOptions"
+            [fill]="revenueBarChart.fill"
+          >
+          </apx-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end row -->
+</div>

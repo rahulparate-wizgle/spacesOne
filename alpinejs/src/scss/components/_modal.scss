@@ -1,0 +1,446 @@
+/*! _modal.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Base
+    2. Modal icon list
+    3. Modal text block
+    4. Modal wishlist
+    5. Check cards
+    6. Comments modal
+    7. Map Modal
+    8. Media queries
+*/
+
+
+/* ==========================================================================
+1. Base
+========================================================================== */
+
+.modal {
+    &.modal-white {
+        .modal-background {
+            background: $white;
+        }
+    }
+    .modal-background {
+        background: rgba($dark, 0.7);
+    }
+    .modal-content {
+        animation: fadeInDown 0.5s;
+        padding: 0 1rem;
+        .card {
+            border: 1px solid $border;
+            border-radius: 1rem;
+            box-shadow: $light-box-shadow;
+            .card-header {
+                box-shadow: none;
+                padding: 1rem 2rem;
+                .card-header-title {
+                    font-family: $font-main;
+                    font-weight: 600;
+                    font-size: 1.2rem;
+                    color: $dark-text;
+                    padding: 0;
+                }
+                .modal-dismiss {
+                    height: 40px;
+                    width: 40px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-radius: 50%;
+                    border: none;
+                    background: transparent;
+                    outline: none !important;
+                    transition: background-color 0.3s;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: darken($widget-grey, 3%);
+                    }
+                    svg {
+                        height: 18px;
+                        width: 18px;
+                    }
+                }
+            }
+            .card-content {
+                padding: 0.5rem 2rem 3rem 2rem;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Modal icon list
+========================================================================== */
+
+.modal {
+    .modal-icon-list {
+        .icon-list-item {
+            display: flex;
+            align-items: center;
+            &.is-share-action {
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+                transition: background-color 0.3s;
+                &:hover {
+                    background-color: darken($widget-grey, 2%);
+                }
+                &:not(:last-child) {
+                    margin-bottom: 0.25rem;
+                }
+                i {
+                    font-size: 1.4rem;
+                    color: $primary;
+                }
+            }
+            &:not(:last-child) {
+                margin-bottom: 0.75rem;
+            }
+            svg {
+                height: 18px;
+                width: 18px;
+            }
+            i {
+                &.las {
+                    font-size: 1.25rem;
+                }
+            }
+            .text {
+                margin-left: 0.5rem;
+                font-family: $font;
+                color: $medium-text;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Modal text-block
+========================================================================== */
+
+.modal {
+    .modal-text-block {
+        >p {
+            margin-top: 0.75rem;
+            color: $medium-text;
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Modal wishlist
+========================================================================== */
+
+.modal {
+    .modal-wishlist {
+        .modal-wishlist-item {
+            display: flex;
+            align-items: center;
+            padding: 0.55rem;
+            border-radius: 0.75rem;
+            transition: background-color 0.3s;
+            &:hover {
+                background-color: darken($widget-grey, 2%);
+            }
+            &:not(:last-child) {
+                margin-bottom: 0.25rem;
+            }
+            >img {
+                display: block;
+                height: 64px;
+                width: 64px;
+                min-width: 64px;
+                border-radius: 0.75rem;
+            }
+            .button {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 64px;
+                width: 64px;
+                min-width: 64px;
+                border-radius: 0.75rem;
+                padding: 0;
+                &:active,
+                &:focus {
+                    box-shadow: $light-box-shadow;
+                    border-color: $border;
+                }
+            }
+            .meta {
+                margin-left: 0.75rem;
+                line-height: 1.4;
+                span {
+                    display: block;
+                    &:first-child {
+                        font-family: $font-main;
+                        font-weight: 600;
+                        color: $dark-text;
+                    }
+                    &:nth-child(2) {
+                        font-family: $font;
+                        font-size: 0.9rem;
+                        color: $medium-text;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-side-info {
+    svg {
+        display: block;
+        height: 110px;
+        width: 110px;
+        margin: 0 auto;
+    }
+}
+
+
+/* ==========================================================================
+5. Check cards
+========================================================================== */
+
+.modal {
+    .check-cards-group {
+        display: flex;
+        flex-wrap: wrap;
+        .check-card {
+            position: relative;
+            width: calc(50% - 1rem);
+            margin: 0.5rem;
+            input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0;
+                cursor: pointer;
+                &:checked+.check-card-inner {
+                    box-shadow: $light-box-shadow !important;
+                    border-color: $primary !important;
+                    img {
+                        filter: grayscale(0);
+                        opacity: 1;
+                    }
+                }
+            }
+            .check-card-inner {
+                display: flex;
+                align-items: center;
+                padding: 12px;
+                border: 1px solid $border;
+                background: $white;
+                border-radius: 14px;
+                transition: all 0.3s;
+                img {
+                    display: block;
+                    height: 32px;
+                    width: 32px;
+                    min-width: 32px;
+                    object-fit: cover;
+                    border-radius: 50%;
+                    filter: grayscale(1);
+                    opacity: 0.6;
+                    transition: all 0.3s;
+                }
+                .meta {
+                    margin-left: 14px;
+                    span {
+                        display: block;
+                        &:first-child {
+                            font-family: $font;
+                            font-size: 0.9rem;
+                            font-weight: 600;
+                            color: $dark-text;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+6. Comments modal
+========================================================================== */
+
+.modal {
+    .comments-modal-content {
+        .reviews {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            padding-bottom: 1.5rem;
+            .review-item {
+                width: calc(50% - 1rem);
+                margin: 0.5rem;
+                .review-item-inner {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    max-width: 230px;
+                }
+                .review-category {
+                    font-family: $font;
+                    font-size: 0.9rem;
+                }
+                .review-rating {
+                    display: flex;
+                    align-items: center;
+                    flex-grow: 2;
+                    max-width: 90px;
+                    .progress {
+                        margin: 0;
+                    }
+                    .rating-value {
+                        font-family: $font;
+                        font-size: 0.9rem;
+                        font-weight: 500;
+                        margin-left: 0.75rem;
+                    }
+                }
+            }
+        }
+        .comments {
+            padding: 1.5rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            &.is-bigger {
+                max-height: 430px;
+            }
+            .comment {
+                margin-bottom: 0.75rem;
+                .comment-head {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1.5rem;
+                    >a img {
+                        display: block;
+                        height: 44px;
+                        width: 44px;
+                        border-radius: 50%;
+                    }
+                    .meta {
+                        margin-left: 1rem;
+                        p,
+                        span {
+                            font-family: $font;
+                            color: $light-text;
+                            font-size: 0.95rem;
+                        }
+                    }
+                }
+                >p {
+                    font-size: 0.85rem;
+                    color: $medium-text;
+                    max-width: 440px;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+7. Map Modal
+========================================================================== */
+
+.modal {
+    .modal-map-container {
+        width: 100%;
+        .modal-map-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+        .modal-map {
+            position: relative;
+            width: 100%;
+            min-width: 100%;
+            min-height: 260px;
+            overflow: hidden;
+            border-radius: 0.65rem;
+            .mapboxgl-canvas {
+                width: 100% !important;
+                height: auto;
+                overflow: hidden;
+            }
+        }
+        .modal-map-content {
+            padding: 1rem 0 0 0;
+            .instructions {
+                line-height: 1.2;
+                font-size: 0.9rem;
+                color: $medium-text;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+8. Media queries
+========================================================================== */
+
+@media screen and (max-width: 767px) {
+    .modal {
+        .modal-content {
+            overflow: initial;
+            .card {
+                .card-header {
+                    padding: 1rem;
+                }
+                .card-content {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                    .comments-modal-content {
+                        .reviews {
+                            .review-item {
+                                width: calc(100% - 1rem);
+                                .review-item-inner {
+                                    max-width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .modal.modal-lg {
+        .modal-card,
+        .modal-content {
+            width: 100%;
+            max-width: 800px !important;
+            margin: 0 auto;
+        }
+    }
+    .modal.modal-md {
+        .modal-card,
+        .modal-content {
+            width: 100%;
+            max-width: 500px !important;
+            margin: 0 auto;
+        }
+    }
+    .modal.modal-sm {
+        .modal-card,
+        .modal-content {
+            width: 100%;
+            max-width: 400px !important;
+            margin: 0 auto;
+        }
+    }
+}

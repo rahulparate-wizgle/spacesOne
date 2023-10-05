@@ -1,0 +1,22 @@
+/*! _tag.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Tag base styles
+*/
+
+
+/* ==========================================================================
+1. Tag base styles
+========================================================================== */
+
+.tag:not(body) {
+    font-family: $font;
+    height: 2.25em;
+    border-radius: 0.4rem;
+    &.is-primary {
+        &.is-raised {
+            box-shadow: $primary-box-shadow;
+        }
+    }
+}

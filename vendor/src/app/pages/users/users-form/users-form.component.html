@@ -1,0 +1,314 @@
+<div class="container-fluid">
+  <div class="row align-items-end item">
+    <div class="col-lg-6">
+      <h6
+        *ngIf="!id?.length"
+        class="text-uppercase"
+        style="font-weight: bold; font-size: 16px"
+      >
+        NEW User
+      </h6>
+      <h6
+        *ngIf="id?.length"
+        class="text-uppercase"
+        style="font-weight: bold; font-size: 16px"
+      >
+        UPDATE User
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item">
+          <a href="javascript: void(0);">User List</a>
+        </li>
+        <li *ngIf="!id?.length" class="breadcrumb-item active">New User</li>
+        <li class="breadcrumb-item active">Update User</li>
+      </ol>
+    </div>
+  </div>
+  <div class="card col-6" style="border-radius: 0 0 10px 10px">
+    <div class="card-body">
+      <div class="row d-flex justify-content-end">
+        <div class="col-12">
+          <form (ngSubmit)="postUsersData($event)" [formGroup]="usersForm">
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="projectname" class="col-form-label"
+                  ><span class="asterik">*</span>Name</label
+                >
+                <input
+                  name="name"
+                  formControlName="name"
+                  type="text"
+                  class="form-control"
+                  placeholder="Eg. John"
+                  [ngClass]="{
+                    'is-invalid':
+                      (form.name.dirty || form.name.touched) && form.name.errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    (form.name.dirty || form.name.touched) && form.name.errors
+                  "
+                >
+                  <span class="error-message" *ngIf="form.name.errors?.required"
+                    >required</span
+                  >
+                </div>
+              </div>
+              <div class="mb-4">
+                <div
+                  class="d-flex align-items-center justify-content-between mb-2"
+                >
+                  <label class="form-label mb-0" for="signin-password"
+                    >Password</label
+                  ><a class="fs-sm" href="javascript:void(0)"></a>
+                </div>
+                <div class="password-toggle">
+                  <input
+                    class="form-control"
+                    [type]="loginPassfield ? 'text' : 'password'"
+                    id="signin-password"
+                    formControlName="password"
+                    placeholder="Enter password"
+                    [ngClass]="{
+                      'is-invalid':
+                        (form['password'].touched || form['password'].dirty) &&
+                        form['password'].errors
+                    }"
+                  />
+                  <span
+                    *ngIf="form['password'].errors?.['required']"
+                    class="mt-1 text-danger fs-sm"
+                    >Password is required</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="mb-3">
+                  <label for="projectname" class="col-form-label col-lg-12"
+                    >Venues</label
+                  >
+                  <ng-select
+                    formControlName="assignedVenueIds"
+                    name="assignedVenueIds"
+                    [multiple]="true"
+                  >
+                    <ng-option
+                      *ngFor="let item of venuesData"
+                      [value]="item.id"
+                      >{{ item.name }}</ng-option
+                    >
+                  </ng-select>
+                  <!-- <span class="error-message">{{ validationError.eventType }}</span> -->
+                </div>
+              </div>
+              <div class="mb-3 col-6">
+                <label class="col-form-label">Designation*</label>
+                <input
+                  name="designation"
+                  formControlName="designation"
+                  type="text"
+                  class="form-control"
+                  disabled
+                />
+                <div
+                  *ngIf="
+                    (form.designation.dirty || form.designation.touched) &&
+                    form.designation.errors
+                  "
+                >
+                  <span
+                    class="error-message"
+                    *ngIf="form.designation.errors?.required"
+                    >required</span
+                  >
+                </div>
+              </div>
+              <div class="mb-3 col-6">
+                <label for="projectname" class="col-form-label"
+                  ><span class="asterik">*</span>Status</label
+                >
+                <ng-select
+                  [items]="status"
+                  bindLabel="name"
+                  bindValue="value"
+                  placeholder="Please Select Status"
+                  [multiple]="false"
+                  formControlName="status"
+                  name="status"
+                  [ngClass]="{
+                    'is-invalid':
+                      (form.status.dirty || form.status.touched) &&
+                      form.status.errors
+                  }"
+                >
+                  <ng-option value="" selected>Please Select Status</ng-option>
+                </ng-select>
+                <div
+                  *ngIf="
+                    (form.status.dirty || form.status.touched) &&
+                    form.status.errors
+                  "
+                >
+                  <span
+                    class="error-message"
+                    *ngIf="form.status.errors?.required"
+                    >required</span
+                  >
+                </div>
+              </div>
+
+              <div class="mb-3 col-6">
+                <label for="projectname" class="col-form-label"
+                  ><span class="asterik">*</span>Email</label
+                >
+                <input
+                  name="email"
+                  (keyup)="checkEmail()"
+                  formControlName="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="Eg. john@gmail.com"
+                  [ngClass]="{
+                    'is-invalid':
+                      (form.email.dirty || form.email.touched) &&
+                      form.email.errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    (form.email.dirty || form.email.touched) &&
+                    form.email.errors
+                  "
+                >
+                  <span class="error-message" *ngIf="form.email.errors.required"
+                    >required</span
+                  >
+                  <span class="error-message" *ngIf="form.email.errors.pattern"
+                    >Enter valid Email ID</span
+                  >
+                </div>
+                <div *ngIf="emailError">
+                  <span class="error-message">Email already Exist</span>
+                </div>
+              </div>
+
+              <div class="mb-3 col-6">
+                <label for="projectname" class="col-form-label"
+                  ><span class="asterik">*</span>Mobile No.</label
+                >
+                <input
+                  name="mobileNumber"
+                  formControlName="mobileNumber"
+                  type="text"
+                  class="form-control"
+                  placeholder="Eg. 9999999999"
+                  [ngClass]="{
+                    'is-invalid':
+                      (form.mobileNumber.dirty || form.mobileNumber.touched) &&
+                      form.mobileNumber.errors
+                  }"
+                />
+                <div
+                  *ngIf="
+                    (form.mobileNumber.dirty || form.mobileNumber.touched) &&
+                    form.mobileNumber.errors
+                  "
+                >
+                  <span
+                    class="error-message"
+                    *ngIf="form.mobileNumber.errors.required"
+                    >required</span
+                  >
+                  <span
+                    class="error-message"
+                    *ngIf="form.mobileNumber.errors?.pattern"
+                    >Enter Valid Mobile Number</span
+                  >
+                </div>
+              </div>
+
+              <div class="mb-3 col-12" *ngIf="id">
+                <div class="mb-3 col-12">
+                  <label for="projectname" class="col-form-label"
+                    >Select Profile</label
+                  >
+                  <input
+                    type="file"
+                    class="form-control"
+                    name="image"
+                    formControlName="image"
+                    (change)="fileChangeEvent($event)"
+                  />
+                </div>
+
+                <div>
+                  <img class="img-tile" [src]="usersData?.image" />
+                </div>
+              </div>
+
+              <div class="mb-3 col-12">
+                <label for="projectname" class="col-form-label"
+                  ><span class="asterik">*</span>Summary</label
+                >
+                <textarea
+                  style="height: 200px"
+                  type="text"
+                  class="form-control"
+                  formControlName="summary"
+                  name="summary"
+                  placeholder="Eg. Summary"
+                  [ngClass]="{
+                    'is-invalid':
+                      (form.summary.dirty || form.summary.touched) &&
+                      form.summary.errors
+                  }"
+                ></textarea>
+                <div
+                  *ngIf="
+                    (form.summary.dirty || form.summary.touched) &&
+                    form.summary.errors
+                  "
+                >
+                  <span
+                    class="error-message"
+                    *ngIf="form.summary.errors?.required"
+                    >required</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <div class="row">
+                <div class="col-12 flex-wrap d-flex justify-content-end">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    (click)="postCancel()"
+                    style="margin-right: 10px"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="postUsersData($event)"
+                    [disabled]="usersForm.invalid"
+                  >
+                    <i
+                      class="bx bx-send font-size-16 align-middle me-2"
+                      style="transform: rotate(-45deg); margin-top: -5px"
+                    ></i>
+                    Save & Publish
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

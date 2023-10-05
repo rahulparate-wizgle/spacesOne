@@ -1,0 +1,153 @@
+<div class="container-fluid">
+    <div class="row align-items-end">
+        <div class="col-lg-6">
+            <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+                Enquiry List
+            </h6>
+            <ol class="breadcrumb m-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Enquiry List</li>
+            </ol>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="col-lg-12 d-flex justify-content-end align-items-center">
+                    <div class="flex-shrink-0 d-flex gap-1 w-100 justify-content-end align-items-center">
+                        <input type="text" class="form-control" placeholder="Eg. Rajan Damodran" [(ngModel)]="filterBy" (keyup)="filter()" style="width: unset;" />
+                        <button type="button" class="btn btn-primary" style="height: 36.5px;" data-bs-toggle="modal" data-bs-target="#myModal" (click)="openModal(content)"><i class="mdi mdi-filter-outline align-middle"></i>
+                            Filters</button>
+                        <button *ngIf="showResetBtn" style="margin-left: 10px; height: 36.5px;" type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" (click)="resetAll()" data-bs-target="#exampleModalFullscreen"><i class="bx bx-reset"></i>
+                            Reset
+                        </button>
+                        <ng-template #content role="document" let-modal>
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel">More Filters</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form [formGroup]="filterForm">
+                                    <div class="col-12">
+                                        <label class="form-label">Venue Name</label>
+                                        <select name="venueName" formControlName="venueName" ngDefaultControl class="form-control">
+                                            <option value="" selected>Select Venue Name</option>
+                                            <option *ngFor="let item of filterData" [ngValue]="item.venue">{{
+                                                item?.venue?.name}}</option>
+                                        </select>
+                                    </div>
+                                    <!-- <div class="col-12 mt-3">
+                                        <label class="form-label">Location</label>
+                                        <select name="address" formControlName="address" ngDefaultControl class="form-control">
+                                            <option value="" selected>Select Location</option>
+                                            <option *ngFor="let item of listdata" [ngValue]="item">
+                                                {{item.address}}</option>
+                                        </select>
+                                    </div> -->
+                                    <div class="col-12 mt-3">
+                                        <label class="form-label">Status</label>
+                                        <ng-select [items]="selectValue" name="status" ngDefaultControl placeholder="Select Status" formControlName="status" bindLabel="status" bindValue="id">
+                                        </ng-select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
+                                <button type="button" class="btn btn-primary waves-effect waves-light" [(ngModel)]="filterBy" (click)="getAllEnquiryList()">Filter</button>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div role="group" class="btn-group btn-group-example" style="margin-left: 5px;">
+                        <button type="button" class="btn btn-secondary w-xs" routerLink="/enquiries">
+                            <i class="bx bx-list-ol"></i></button>
+                        <button type="button" class="btn btn-soft-secondary w-xs" routerLink="/kanban">
+                            <i class="bx bxs-card"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- <app-page-title title="Enquiry List" [breadcrumbItems]="breadCrumbItems"></app-page-title> -->
+
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-body" *ngIf="enquiryList?.length > 0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Venue</th>
+                                    <th scope="col">Enquiry Date</th>
+                                    <th scope="col">Booking Date</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Number Of Person</th>
+                                    <th scope="col" style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let data of enquiryList">
+                                    <!-- <td>{{data.name | titlecase}}</td> -->
+                                    <td>{{ data?.name ? data?.name : data?.customer?.name }}</td>
+                                    <td>{{data.additionalMessage || "--"}}</td>
+                                    <td>{{ data?.venue?.name || "--" | titlecase }}</td>
+                                    <!-- <td>{{data.enquiryDate || "--"}}</td> -->
+                                    <td>{{ data.enquiryDate ? (data.enquiryDate | date:'dd/MM/yyyy  : HH:mm') : "--" }}</td>
+                                    <!-- <td>{{data.bookingDate || "--"}}</td> -->
+                                    <td>{{ data.bookingDate ? (data.bookingDate | date:'dd/MM/yyyy') : "--" }}</td>
+
+                                    <td>{{getStatusInText(data.status || '--')}}</td>
+                                    <td>{{data.numberOfPeople || '--'}}</td>
+                                    <td>
+                                        <ul class="list-unstyled hstack gap-1 mb-0 d-flex justify-content-end">
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                                                <a routerLink="/enquiry-details" (click)="onDetails(data.id)" class="btn btn-sm btn-soft-primary"><i
+                                                        class="mdi mdi-eye-outline"></i></a>
+                                            </li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                                <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger" (click)="deleteEnquiryData(data.id,$event)"><i
+                                                        class="mdi mdi-delete-outline"></i></a>
+                                            </li>
+
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Message">
+                                              <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-success" (click)="goingToMessage(data.id)"><i
+                                                      class="mdi mdi-chat-outline"></i></a>
+                                          </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row pagination">
+                      <div class="col-auto d-flex justify-content-end">
+                        <div class="card d-inline-block ms-auto mb-0">
+                            <div class="card-body p-2">
+                                <nav aria-label="Page navigation example" class="mb-0">
+                                    <ul class="pagination mb-0">
+                                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                         </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                      <!--end col-->
+
+                    </div>
+                </div>
+
+
+                <div class="card-body" *ngIf="enquiryList?.length == 0">
+                    <div class="col-12 search-no-data">
+                        <i class="bx bx-sleepy"></i>
+                        <h6> No enquires found matching your search</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <app-venue-details [venue]="venue" [currentTab]="3"></app-venue-details>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header venue-card pt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>
+                                Pricing
+                            </h5>
+                            <p class="mb-0">
+                                "Set the pricing for your venue according to your preferences."
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12 d-flex justify-content-end flex-wrap">
+                                <button type="button" class="btn btn-primary" style="margin-left: 10px" awPreviousStep (click)="postprice($event)">
+                                  <i class="bx bx-send font-size-16 align-middle me-2"
+                                    style="transform: rotate(-45deg); margin-top: -5px"></i>
+                                  Save & Publish
+                                  </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form [formGroup]="pricingForm">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="">
+                                            <div class="mb-3">
+                                                <label for="projectname" class="col-form-label">Per Person/Day</label>
+                                                <input name="perUnit" formControlName="perUnit" type="text" class="form-control" placeholder="Eg. 25000" />
+                                                <span class="error-message">{{ validationError.perUnit }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="projectname" class="col-form-label">Description</label>
+                                                <textarea name="perUnitDesc" formControlName="perUnitDesc" type="text" class="form-control " rows="5"></textarea>
+                                                <span class="error-message">{{ validationError.perUnitDesc }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <label for="projectname" class="col-form-label">Apply Minimum Charges</label>
+                                            <ui-switch color="#556ee6" [checked]="pricingForm.value.isMinChargesRequired == true" (change)="changesMinCharges($event)" width="47px" uncheckedLabel="No" checkedLabel="Yes" size="small" class="me-1" name="rulesValue"></ui-switch>
+
+                                        </div>
+                                        <div *ngIf="pricingForm?.value?.isMinChargesRequired == true" class="">
+                                            <div class="mb-3">
+                                                <label for="projectname" class="col-form-label">Minimum Charges</label>
+                                                <input name="minimumCharges" formControlName="minimumCharges" type="text" class="form-control" placeholder="Eg. 20000" />
+                                                <span class="error-message">{{ validationError.minimumCharges }}</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="projectname" class="col-form-label">Description</label>
+                                                <textarea name="minimumChargesDesc" formControlName="minimumChargesDesc" type="text" class="form-control"  placeholder="Eg. Description" rows="5" ></textarea>
+                                                <span class="error-message">{{ validationError.minimumCharges }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label for="projectname" class="col-form-label">Other Pricing</label>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <p class="font-size-12 text-info" *ngIf="isUploadStarted">The image upload is started, This will take some time to reflect. Please switch the tabs to see the changes.</p>
+
+                                                <div class="pricing-upload">
+                                                    <input type="file" multiple name="file" (change)="fileChangeEvent($event)" class="d-block">
+                                                    <button [disabled]="!files?.length" (click)="uploadPricingGallery()" class="btn btn-success btn-sm mt-2">Upload</button>
+                                                </div>
+                                                <div class="row gallery mt-3" *ngIf="gallery">
+                                                    <div class="col-3 d-flex flex-column mb-4" *ngFor="let item of gallery; let i=index ">
+                                                        <div (click)="setMainImage(item)" class="img-tile img">
+                                                            <i class="bx bx-file text-primary"></i>
+                                                        </div>
+                                                        <span (click)="deleteImage(i)" class="delete bg-danger"> <i class="bx bxs-trash"></i> </span>
+                                                        <span (click)="openPdf(item)" class="download bg-dark"> <i class="bx bxs-download"></i> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

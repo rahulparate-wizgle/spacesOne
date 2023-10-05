@@ -1,0 +1,577 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Venue List
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Venue List</li>
+      </ol>
+    </div>
+    <div class="col-lg-6 d-flex align-items-center justify-content-end">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search here ..."
+        [(ngModel)]="filterBy"
+        *ngIf="venueListData?.length > 0"
+        (keyup)="filter()"
+        style="width: unset"
+      />
+
+      <div class="position-relative h-100 hstack" style="margin-left: 10px">
+        <!-- <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" *ngIf="venueListData?.length > 0" data-bs-target="#content" (click)="openModal(content)">
+                  <i class="bx bx-filter-alt"></i>
+                  Filter
+                </button> -->
+        <!-- <button style="margin-left: 8px" type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" (click)="resetAll()" data-bs-target="#exampleModalFullscreen" *ngIf="reSet">
+                  <i class="bx bx-reset"></i>
+                  Reset
+                </button> -->
+                <ng-template #content role="document" let-modal>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel">Filter</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form [formGroup]="filterForm">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="mb-3" *ngIf="designation == constDesignations.superAdmin" >
+                                        <label class="form-label">Location</label>
+                                        <select name="location" formControlName="location" ngDefaultControl class="form-control form-select">
+                                          <option value="" selected disabled>Eg. Select location</option>
+                                          <option *ngFor="let item of locationList" [ngValue]="item">{{item}}</option>
+                                        </select>
+                                    </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">City</label>
+                    <select
+                      name="address"
+                      formControlName="address"
+                      ngDefaultControl
+                      class="form-control form-select"
+                    >
+                      <option value="" selected disabled>
+                        Eg. Select City
+                      </option>
+                      <option *ngFor="let item of citiesList" [ngValue]="item">
+                        {{ item }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Venue Type</label>
+                    <ng-select
+                      [items]="selectVenueType"
+                      name="type"
+                      ngDefaultControl
+                      placeholder="Eg. Select Venue Type"
+                      formControlName="type"
+                      bindLabel="type"
+                      bindValue="type"
+                    >
+                    </ng-select>
+                  </div>
+
+                  <!-- <div class="mb-3">
+                    <label class="form-label">Price</label>
+                    <input type="text" placeholder="Eg. Please enter price" formControlName="price" name="price"
+                      class="form-control">
+                  </div> -->
+
+                  <div class="mb-3">
+                    <h5 class="font-size-14 mb-3 mt-0">Price</h5>
+                    <ng5-slider
+                      [(value)]="visibleSelection"
+                      [options]="visibleBarOptions"
+                      formControlName="price"
+                      name="price"
+                    ></ng5-slider>
+                  </div>
+
+                  <div class="mb-3">
+                    <label class="form-label">Company Name</label>
+                    <select
+                      name="cName"
+                      formControlName="cName"
+                      ngDefaultControl
+                      class="form-control form-select"
+                      placeholder="Eg. Select City"
+                    >
+                      <option value="" selected disabled>
+                        Eg. Please select company name
+                      </option>
+                      <option *ngFor="let item of companyData" [ngValue]="item">
+                        {{ item.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row mt-3" *ngIf="filteredUsers?.length == 0">
+              <div class="col-12 search-no-data">
+                <i class="bx bx-sleepy"></i>
+                <h6>No data found matching your search</h6>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary waves-effect"
+              data-bs-dismiss="modal"
+              (click)="modal.close('Close click')"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary waves-effect waves-light"
+              [(ngModel)]="filterBy"
+              (click)="getAllVenueList()"
+            >
+              Filter
+            </button>
+          </div>
+        </ng-template>
+      </div>
+      <div class="position-relative h-100 hstack" style="margin-left: 10px">
+        <!-- center modal -->
+
+        <ng-template #centerDataModal let-modal>
+          <div class="modal-header">
+            <h5 class="modal-title">Enquiry</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+              (click)="modal.dismiss('Cross click')"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form (ngSubmit)="confirmSubmit()" [formGroup]="contactForm">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Name*</label>
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        name="name"
+                        type="text"
+                        placeholder="Eg.komal Ramekar "
+                        formControlName="name"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.name.dirty || form.name.touched) &&
+                            form.name.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          (form.name.dirty || form.name.touched) &&
+                          form.name.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.name.errors?.required"
+                          >required</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Email*</label>
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        name="email"
+                        type="text"
+                        placeholder="Eg.komal2@gmail.com"
+                        formControlName="email"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.email.dirty || form.email.touched) &&
+                            form.email.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          (form.email.dirty || form.email.touched) &&
+                          form.email.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.email.errors.required"
+                          >required</span
+                        >
+                        <span
+                          class="error-message"
+                          *ngIf="form.email.errors.pattern"
+                          >Enter valid Email ID</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Mobile No*</label>
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        name="mobNumber"
+                        type="text"
+                        placeholder="Eg.6587895655"
+                        formControlName="mobNumber"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.mobNumber.dirty || form.mobNumber.touched) &&
+                            form.mobNumber.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          (form.mobNumber.dirty || form.mobNumber.touched) &&
+                          form.mobNumber.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.mobNumber.errors.required"
+                          >required</span
+                        >
+                        <span
+                          class="error-message"
+                          *ngIf="form.mobNumber.errors?.pattern"
+                          >Enter Valid Mobile Number</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label">Booking Date*</label>
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        name="bookingDate"
+                        type="date"
+                        [min]="today"
+                        formControlName="bookingDate"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.bookingDate.dirty ||
+                              form.bookingDate.touched) &&
+                            form.bookingDate.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          (form.bookingDate.dirty ||
+                            form.bookingDate.touched) &&
+                          form.bookingDate.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.bookingDate.errors.required"
+                          >required</span
+                        >
+                        <span
+                          class="error-message"
+                          *ngIf="form.bookingDate.errors?.pattern"
+                          >Enter Valid Mobile Number</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label"
+                      >Additional Message*</label
+                    >
+                    <div class="col-md-9">
+                      <textarea
+                        type="text"
+                        cols="50"
+                        name="message"
+                        rows="3"
+                        placeholder="Please enter additional message.."
+                        formControlName="message"
+                        class="form-control"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.message.dirty || form.message.touched) &&
+                            form.message.errors
+                        }"
+                      ></textarea>
+                      <div
+                        *ngIf="
+                          (form.message.dirty || form.message.touched) &&
+                          form.message.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.message.errors.required"
+                          >required</span
+                        >
+                        <span
+                          class="error-message"
+                          *ngIf="form.message.errors?.pattern"
+                          >Enter Valid Mobile Number</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <label class="col-md-3 col-form-label"
+                      >Number of Person*</label
+                    >
+                    <div class="col-md-9">
+                      <input
+                        class="form-control"
+                        name="numberOfPeople"
+                        type="number"
+                        formControlName="numberOfPeople"
+                        [ngClass]="{
+                          'is-invalid':
+                            (form.numberOfPeople.dirty ||
+                              form.numberOfPeople.touched) &&
+                            form.numberOfPeople.errors
+                        }"
+                      />
+                      <div
+                        *ngIf="
+                          (form.numberOfPeople.dirty ||
+                            form.numberOfPeople.touched) &&
+                          form.numberOfPeople.errors
+                        "
+                      >
+                        <span
+                          class="error-message"
+                          *ngIf="form.numberOfPeople.errors.required"
+                          >required</span
+                        >
+                        <span
+                          class="error-message"
+                          *ngIf="form.numberOfPeople.errors?.pattern"
+                          >Enter Number</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ul class="list-inline wizard mb-0">
+                <li class="next list-inline-item float-end">
+                  <button
+                    class="btn btn-primary"
+                    type="submit"
+                    [disabled]="contactForm.invalid"
+                  >
+                    Submit
+                  </button>
+                </li>
+
+                <li
+                  class="next list-inline-item float-end"
+                  style="margin-right: 10px"
+                >
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    [disabled]="contactForm.invalid"
+                    (click)="getQuotation()"
+                  >
+                    Get Quotation
+                  </button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </ng-template>
+        <!-- /.modal -->
+      </div>
+      <!-- <div class="row mt-3" *ngIf="filteredUsers?.length == 0">
+              <div class="col-12 search-no-data">
+                <i class="bx bx-sleepy"></i>
+                <h6> No data found matching your search</h6>
+              </div>
+            </div> -->
+
+      <button
+        *ngIf="designation != 'manager'"
+        type="button"
+        class="btn btn-primary waves-effect waves-light"
+        routerLink="/venue-details/0"
+      >
+        Create New Venue
+      </button>
+
+      <!-- Document Modal -->
+      <button
+        type="button"
+        class="btn btn-success waves-effect waves-light"
+        data-bs-toggle="modal"
+        (click)="helpModal(help)"
+        style="margin-left: 10px"
+      >
+        <i class="bx bx-file"></i>
+      </button>
+      <ng-template #help role="document" let-modal>
+        <div class="modal-header">
+          <h5 class="modal-title" id="myModalLabel">Venue Listing Page</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <h6>Overview</h6>
+          <p></p>
+
+          <h6>Page Header</h6>
+          <p></p>
+
+          <h6>Venue List</h6>
+          <p></p>
+        </div>
+      </ng-template>
+      <!-- Document Modal -->
+    </div>
+  </div>
+
+  <div class="row mt-4" *ngIf="filteredUsers?.length > 0">
+    <div class="col-xl-3 col-md-6" *ngFor="let data of filteredUsers">
+      <div class="card p-2">
+        <div
+          class="noProduct center-container"
+          *ngIf="data?.gallery?.length < 1"
+        >
+          <p class="text-center fs-xs mb-0">No Image Found</p>
+        </div>
+        <div *ngIf="data.gallery?.length > 0 && data.gallery[0]?.length">
+          <div
+            class="image"
+            [ngStyle]="{ 'background-image': 'url(' + data.gallery[0] + ')' }"
+          ></div>
+        </div>
+        <div class="card-body">
+          <div class="favorite-icon">
+            <a href="javascript:void(0)"
+              ><i class="uil uil-heart-alt fs-18"></i
+            ></a>
+          </div>
+
+          <h5 class="fs-17 mb-2" style="cursor: pointer">
+            <a (click)="openEdit(data.id)" class="text-dark">{{ data.name }}</a>
+            <small class="text-muted fw-normal"></small>
+          </h5>
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item">
+              <p class="text-muted fs-14 mb-1">{{ data.city }}</p>
+            </li>
+            <p class="text-muted">
+              <i
+                *ngFor="let item of [].constructor(data.rating)"
+                class="bx bxs-star text-warning"
+              ></i>
+            </p>
+            <li class="list-inline-item">
+              <p class="font-size-12 mb-0" style="font-weight: 600">
+                <i class="uil uil-wallet"></i>Packages starting at
+                <span class="text-primary font-size-15"
+                  >₹ {{ data?.pricing?.perUnit }} / person</span
+                >
+              </p>
+            </li>
+          </ul>
+          <div class="mt-3 hstack gap-2">
+            <span
+              *ngFor="let services of data.serviceProvide"
+              class="badge rounded-1"
+              [ngClass]="{
+                'badge-soft-success': services.type == 'Hotel',
+                'badge-soft-info': services.type == 'Conference Hall',
+                'badge-soft-warning': services.type == 'Lawn'
+              }"
+              >{{ services.type }}</span
+            >
+          </div>
+          <div
+            class="button-container mt-3 hstack gap-2 d-flex justify-content-end"
+          >
+            <button
+              type="button"
+              class="btn btn-danger waves-light"
+              data-bs-toggle="modal"
+              data-bs-target=".bs-example-modal-center"
+              (click)="deleteVenueData(data.id)"
+            >
+              Delete
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-success waves-light"
+              data-bs-toggle="modal"
+              data-bs-target=".bs-example-modal-center"
+              (click)="centerModal(centerDataModal, data)"
+            >
+              Add Enquiry
+            </button>
+
+            <button
+              (click)="openPreview(data.id)"
+              type="button"
+              class="btn btn-secondary btn-label waves-light"
+            >
+              <i class="bx bx-carousel label-icon"></i> Preview
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+
+    <div class="row mt-4" *ngIf="filteredUsers?.length == 0">
+      <div class="col-12 search-no-data">
+        <i class="bx bx-sleepy"></i>
+        <h6>No data found matching your search</h6>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4" *ngIf="filteredUsers?.length == 0">
+    <div class="col-12 search-no-data">
+      <i class="bx bx-sleepy"></i>
+      <h6>No venues found matching your search</h6>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid" *ngIf="venueListData?.length == 0">
+  <div class="row mt-5">
+    <div class="col-12 text-center">
+      <h6>No Venues Found. Lets Create One!</h6>
+      <button
+        type="button"
+        class="btn btn-primary"
+        routerLink="/venue-details/0"
+      >
+        Create New Venue
+      </button>
+    </div>
+  </div>
+</div>

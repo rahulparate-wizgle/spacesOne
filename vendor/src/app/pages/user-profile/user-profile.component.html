@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="row align-items-end item">
+    <div class="col-lg-6">
+        <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+         Profile
+        </h6>
+        <ol class="breadcrumb m-0 p-0">
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+            <li class="breadcrumb-item active">User Profile</li>
+        </ol>
+    </div>
+</div>
+
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="card overflow-hidden">
+        <div class="bg-soft bg-primary">
+          <div class="row">
+            <div class="col-7">
+              <div class="text-primary p-3">
+                <h5 class="text-primary">Welcome Back !</h5>
+                <p>It will seem like simplified</p>
+              </div>
+            </div>
+            <div class="col-5 align-self-end">
+              <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="avatar-md profile-user-wid mb-4">
+                <img src="assets/images/users/avatar-1.jpg" alt="" class="img-thumbnail rounded-circle">
+              </div>
+              <h5 class="font-size-15 text-truncate">{{userProfileData.name}}</h5>
+              <p class="text-muted mb-0 text-truncate">{{userProfileData.designation | titlecase}}</p>
+            </div>
+
+            <div class="col-sm-8">
+              <div class="pt-4">
+
+                <div class="row">
+                  <div class="col-6">
+                    <h5 class="font-size-15">125</h5>
+                    <p class="text-muted mb-0">Locations</p>
+                  </div>
+                  <div class="col-6">
+                    <h5 class="font-size-15">1245</h5>
+                    <p class="text-muted mb-0">Enquiries</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr>
+            <div class="updateDetails mt-3">
+              <h4 class="card-title mb-4">Personal Information</h4>
+                   <a href="javascript:void(0);" class="btn btn-sm btn-soft-info" ><i
+                  class="mdi mdi-pencil-outline" (click)="editProfile(userProfileData.id)"></i></a>
+                </div>
+            <div class="table-responsive">
+              <table class="table table-nowrap mb-0">
+                <tbody>
+                  <tr>
+                    <th scope="row">Full Name :</th>
+                    <td>{{userProfileData.name}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Mobile :</th>
+                    <td>{{userProfileData.contactNo}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">E-mail :</th>
+                    <td>{{userProfileData.email}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Location :</th>
+                    <td>{{userProfileData.location}}</td>
+                  </tr>
+                </tbody>
+              </table>
+                <button class="btn btn-primary mt-2" (click)="router.navigate(['account/recoverpwd'])">Change Password</button>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+    </div>
+  </div>
+  <!-- end row -->
+</div>
+

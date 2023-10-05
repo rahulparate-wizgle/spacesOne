@@ -1,0 +1,221 @@
+/*! main.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/* ==========================================================================
+SCSS Imports
+========================================================================== */
+
+//1. Base
+@import "abstracts/variables";
+@import "abstracts/brands";
+@import "abstracts/shadows";
+@import "abstracts/typography";
+@import "abstracts/animations";
+//2. Bulma
+@import "../sass/bulma";
+//3. Custom Helpers
+@import "abstracts/helpers";
+//4. Layout
+@import "layout/all";
+//5. Elements
+@import "elements/all";
+//6. Components
+@import "components/all";
+//7. Sections
+@import "sections/all";
+// Custom CSS
+.enquiry-form {
+    label {
+        font-size: 12px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+        color: #283252;
+    }
+    .no-of-people,
+    .date {
+        display: flex;
+        flex-direction: column;
+        input {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            border: 1px solid transparent;
+            border-radius: 0.55rem;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            font-size: 1rem;
+            height: 2.5em;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+            line-height: 1.5;
+            padding-bottom: calc(0.5em - 1px);
+            padding-left: calc(0.75em - 1px);
+            padding-right: calc(0.75em - 1px);
+            padding-top: calc(0.5em - 1px);
+            position: relative;
+            vertical-align: top;
+            border-color: #e5e5e5;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            font-family: "Karla", sans-serif;
+            border-radius: .55rem;
+            -webkit-transition: all .3s;
+            transition: all .3s;
+            &::placeholder {
+                color: #ebebeb;
+            }
+            &:hover {
+                -webkit-box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, .06);
+                box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, .06)
+            }
+            &:focus {
+                border-color: #e5e5e5
+            }
+        }
+    }
+}
+
+.main-navigation--menu .host-btn {
+    background: #671cc9;
+    color: #fff !important;
+    padding: 8px 20px;
+    border-radius: 20px;
+    letter-spacing: 0 !important;
+    font-size: .85rem;
+    font-weight: 600 !important;
+    font-family: "Montserrat", sans-serif;
+    color: #283252;
+}
+
+.main-navigation.is-scrolled.is-expanded .main-navigation--search {
+    margin-top: 0 !important;
+}
+
+.flats .flat-image {
+    background-size: cover !important;
+}
+
+.listing-cover-wrapper .listing-cover {
+    background-size: cover !important;
+}
+
+.scheduled-listing .scheduled-listing-image {
+    background-size: cover !important;
+}
+
+.flat-carousels-wrapper .flats .flats-inner .flat .flat-image {
+    min-height: 200px !important;
+}
+
+.filters {
+    .is-rounded {
+        // background-color: #671cc9;
+        // color: #fff;
+        svg {
+            width: 15px;
+            margin: 0 0 0 10px;
+        }
+    }
+}
+
+.filter-modal {
+    .card {
+        height: unset;
+    }
+    label {
+        display: block;
+        font-family: "Karla", sans-serif;
+        font-size: .9rem;
+        color: #3f4f66;
+        margin-bottom: 10px;
+    }
+    .field {
+        margin-bottom: 15px;
+    }
+    .choices__inner {
+        border-radius: 10px;
+    }
+}
+
+.modal-content,
+.modal-card {
+    overflow: unset !important;
+}
+
+.flats .flats-inner .glide__slide {
+    position: relative;
+    .locate-map {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #0000004f;
+        z-index: 1060;
+        border-radius: 10px;
+        height: 30px;
+        width: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #fff;
+        svg {
+            height: 14px;
+        }
+    }
+}
+
+.capacity {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    .listing-feature {
+        width: 50%;
+    }
+}
+
+.guidelines-block.cs {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    margin-bottom: 2rem;
+    .head {
+        display: flex;
+        align-items: center !important;
+    }
+    p {
+        margin-left: 40px
+    }
+}
+
+.similar {
+    li {
+        display: none;
+        &:nth-child(2) {
+            display: block;
+        }
+        &:nth-child(3) {
+            display: block;
+        }
+        &:nth-child(4) {
+            display: block;
+        }
+        &:nth-child(5) {
+            display: block;
+        }
+    }
+}
+
+.listing-dates .available-dates .available-date {
+    margin: 0 20px 20px 0;
+}
+
+.bottom.cs h6 {
+    display: flex;
+    align-items: center;
+    span {
+        color: #671cc9;
+        margin: 0 !important;
+    }
+}

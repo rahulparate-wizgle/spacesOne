@@ -1,0 +1,1624 @@
+<main class="page-wrapper">
+  <!-- Header-->
+  <app-header id="top"></app-header>
+
+  <!-- Page header-->
+  <section class="container pt-5 mt-5">
+    <!-- Breadcrumb-->
+
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+    <div class="full-loader" *ngIf="isLoading">
+      <div class="spinner-border text-accent m-2" role="status">
+        <span class="visually-hidden"></span>
+      </div>
+      <p class="h6 fs-xs mt-3">fetching the details of the Space for you...</p>
+    </div>
+
+    <div class="row">
+      <div class="col-8">
+        <h1 class="h4 mb-2">{{ venuesDetails?.name }}</h1>
+        <p class="text-muted">
+          <i
+            *ngFor="let item of [].constructor(venuesDetails?.rating)"
+            class="bx bxs-star text-warning"
+          ></i>
+        </p>
+        <p class="mb-2 pb-1 fs-md">{{ venuesDetails?.address }}</p>
+        <p class="mb-2 pb-1 fs-md" *ngIf="venuesDetails?.location">
+          Location: {{ venuesDetails?.location }}
+        </p>
+      </div>
+      <div class="col-4" style="text-align: right">
+        <p class="h4 text-primary mb-2">
+          ₹{{
+            venuesDetails?.pricing?.perUnit | number : "1.0" : "en-INR" || "--"
+          }}
+          <span class="fs-sm" style="font-weight: normal">per person</span>
+        </p>
+        <p class="fs-xs mb-2">{{ venuesDetails?.pricing?.perUnitDesc }}</p>
+        <div
+          *ngIf="
+            !venuesDetails?.pricing?.perUnitDesc ||
+            venuesDetails?.pricing?.perUnitDesc.length == 0
+          "
+        >
+          <p class="mb-2 pb-1 fs-md">No Description Available</p>
+        </div>
+      </div>
+      <div class="col-12 d-flex justify-content-end mb-2">
+        <div *ngIf="loggedInUser && showSaveButton" (click)="addToWishlist()">
+          <button
+            type="button"
+            placement="top"
+            ngbtooltip="Add to Wishlist"
+            class="btn btn-primary btn-xs ms-2 mb-2"
+          >
+            <i class="fi-star-filled"></i> Save Space
+          </button>
+        </div>
+        <div *ngIf="isAlreadyWishlisted" (click)="removeFromWishlist()">
+          <button
+            type="button"
+            placement="top"
+            ngbtooltip="Add to Wishlist"
+            class="btn btn-secondary btn-xs ms-2 mb-2"
+          >
+            Remove from Saved
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features + Sharing-->
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- <ul class="d-flex mb-4 list-unstyled">
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.standing || "--"}}</b><i class="fas fa-user mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.theater || "--"}}</b><i class="fa-tv-music mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.dinning || "--"}}</b><i class="fa-fork-knife mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.cabaret || "--"}}</b><i class="fa-cc-diners-club mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.accessibilityValue || "--"}}</b><i class="fas fa-wheelchair mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.cateringValue || "--"}}</b><i class="fas fa-utensils mt-n1 lead align-middle text-muted"></i>
+                </li>
+                <li class="me-3 pe-3 border-end"><b class="me-1">{{venuesDetails?.capacity?.musicValue || "--"}}</b><i class="fas fa-music mt-n1 lead align-middle text-muted"></i>
+                </li>
+            </ul> -->
+      <!-- <div class="text-nowrap">
+               <button class="btn btn-icon btn-light-primary btn-xs shadow-sm rounded-circle ms-2 mb-2" type="button" placement="top" ngbTooltip="Add to Wishlist"><i class="fi-heart"></i></button>
+                    <div class="dropdown d-inline-block" placement="top" ngbTooltip="Share">
+                        <button class="btn btn-icon btn-light-info btn-xs shadow-sm rounded-circle ms-2 mb-2" type="button" data-bs-toggle="dropdown"><i class="fi-share"></i></button>
+                        <div class="dropdown-menu dropdown-menu-end my-1">
+                            <button class="dropdown-item" type="button"><i
+                class="fi-facebook fs-base opacity-75 me-2"></i>Facebook</button>
+                            <button class="dropdown-item" type="button"><i
+                class="fi-twitter fs-base opacity-75 me-2"></i>Twitter</button>
+                            <button class="dropdown-item" type="button"><i
+                class="fi-instagram fs-base opacity-75 me-2"></i>Instagram</button>
+                        </div>
+                    </div>
+                </div> -->
+    </div>
+  </section>
+
+  <!-- Gallery-->
+  <section class="container overflow-auto mb-4 pb-3" data-simplebar>
+    <div
+      class="row g-2 g-md-3 gallery"
+      data-thumbnails="true"
+      style="min-width: 30rem"
+    >
+      <!-- <div class="col-8">
+                <a class="gallery-item rounded rounded-md-3 img1" href="javascript:void(0);" (click)="customOpen(0)" [ngStyle]="{
+            'background-image': 'url(' + venuesDetails?.gallery[0] + ')'
+          }">
+                </a>
+            </div> -->
+      <div class="col-8">
+        <a
+          class="gallery-item rounded rounded-md-3 img1"
+          href="javascript:void(0);"
+          (click)="customOpen(0)"
+          [ngStyle]="{
+            'background-image': venuesDetails?.gallery[0]
+              ? 'url(' + venuesDetails?.gallery[0] + ')'
+              : 'none',
+            'background-color': venuesDetails?.gallery[0]
+              ? 'transparent'
+              : '#f0f0f0',
+            display: venuesDetails?.gallery[0] ? 'block' : 'flex',
+            'justify-content': venuesDetails?.gallery[0]
+              ? 'center'
+              : 'flex-start',
+            'align-items': venuesDetails?.gallery[0] ? 'center' : 'flex-start',
+            position: 'relative'
+          }"
+        >
+          <!-- Add text "No image found" here -->
+          <span
+            *ngIf="!venuesDetails?.gallery[0]"
+            class="textImage"
+            style="
+              font-weight: bold;
+              text-align: center;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            "
+            >No image found</span
+          >
+        </a>
+      </div>
+      <!-- <div class="col-4">
+                <a class="gallery-item rounded rounded-md-3 mb-2 mb-md-3 img2" href="javascript:void(0);" (click)="customOpen(1)" [ngStyle]="{
+            'background-image': 'url(' + venuesDetails?.gallery[1] + ')'
+          }">
+                </a>
+                <a class="gallery-item rounded rounded-md-3 img3" href="javascript:void(0);" (click)="customOpen(2)" [ngStyle]="{
+            'background-image': 'url(' + venuesDetails?.gallery[2] + ')'
+          }">
+                </a>
+            </div> -->
+      <div class="col-4">
+        <a
+          class="gallery-item rounded rounded-md-3 mb-2 mb-md-3 img2"
+          href="javascript:void(0);"
+          (click)="customOpen(1)"
+          [ngStyle]="{
+            'background-image': venuesDetails?.gallery[1]
+              ? 'url(' + venuesDetails?.gallery[1] + ')'
+              : 'none',
+            'background-color': venuesDetails?.gallery[1]
+              ? 'transparent'
+              : '#f0f0f0',
+            display: venuesDetails?.gallery[1] ? 'block' : 'flex',
+            'justify-content': venuesDetails?.gallery[1]
+              ? 'center'
+              : 'flex-start',
+            'align-items': venuesDetails?.gallery[1] ? 'center' : 'flex-start',
+            position: 'relative'
+          }"
+        >
+          <!-- Add text "No image found" here -->
+          <span
+            *ngIf="!venuesDetails?.gallery[1]"
+            class="textImage"
+            style="
+              font-weight: bold;
+              text-align: center;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            "
+            >No image found</span
+          >
+        </a>
+        <a
+          class="gallery-item rounded rounded-md-3 img3"
+          href="javascript:void(0);"
+          (click)="customOpen(2)"
+          [ngStyle]="{
+            'background-image': venuesDetails?.gallery[2]
+              ? 'url(' + venuesDetails?.gallery[2] + ')'
+              : 'none',
+            'background-color': venuesDetails?.gallery[2]
+              ? 'transparent'
+              : '#f0f0f0',
+            display: venuesDetails?.gallery[2] ? 'block' : 'flex',
+            'justify-content': venuesDetails?.gallery[2]
+              ? 'center'
+              : 'flex-start',
+            'align-items': venuesDetails?.gallery[2] ? 'center' : 'flex-start',
+            position: 'relative'
+          }"
+        >
+          <!-- Add text "No image found" here -->
+          <span
+            *ngIf="!venuesDetails?.gallery[2]"
+            class="textImage"
+            style="
+              font-weight: bold;
+              text-align: center;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            "
+            >No image found</span
+          >
+        </a>
+      </div>
+
+      <!-- <div class="col-12">
+                <div class="row g-2 g-md-3">
+                    <div class="col" *ngFor="let image of venuesDetails?.gallery.slice(3); let i = index">
+                        <a class="gallery-item rounded-1 rounded-md-2 imgs" href="javascript:void(0);" (click)="open(i + 3)" [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+                        </a>
+                    </div>
+                </div>
+            </div> -->
+
+      <div class="col-12">
+        <div class="row g-2 g-md-3">
+          <div
+            class="col"
+            *ngFor="let image of venuesDetails?.gallery.slice(3); let i = index"
+          >
+            <a
+              class="gallery-item rounded-1 rounded-md-2 imgs"
+              href="javascript:void(0);"
+              (click)="open(i + 3)"
+              [ngStyle]="{
+                'background-image': image ? 'url(' + image + ')' : 'none',
+                'background-color': image ? 'transparent' : '#f0f0f0',
+                display: image ? 'block' : 'flex',
+                'justify-content': image ? 'center' : 'flex-start',
+                'align-items': image ? 'center' : 'flex-start',
+                position: 'relative'
+              }"
+            >
+              <!-- Add text "No image found" here -->
+              <span
+                *ngIf="!image"
+                class="textImage"
+                style="
+                  font-weight: bold;
+                  text-align: center;
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                "
+                >No image found</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    class="container mb-5 pb-1 by-same-venue"
+    style="border-bottom: 2px solid ccc"
+    *ngIf="venuesFromVendor?.length > 0"
+  >
+    <div class="row">
+      <div class="col-12">
+        <h1 class="h6 mb-2">
+          More space by {{ venuesDetails?.master_venue }}
+        </h1>
+        <p class="text-muted fs-sm">
+          Here are some additional space located within the
+          {{ venuesDetails?.master_venue }}.
+        </p>
+      </div>
+
+      <div class="col-12">
+        <div class="row" style="flex-wrap: nowrap; overflow-x: hidden">
+          <div class="col-md-3" *ngFor="let item of venuesFromVendor">
+            <div
+              class="card bg-size-cover bg-position-center border-0 overflow-hidden h-100"
+              [ngStyle]="{ 'background-image': 'url(' + (item?.gallery?.[0] || 'fallback-url') + ')' }"
+            >
+              <span class="img-gradient-overlay"></span>
+              <!-- <div class="card-body content-overlay pb-0">
+                                <div class="d-flex"><span class="badge bg-primary fs-sm me-2">Verified</span></div>
+                            </div> -->
+              <div class="card-footer content-overlay border-0 pt-0 pb-4">
+                <div
+                  class="d-sm-flex justify-content-between align-items-end pt-3"
+                >
+                  <a class="text-decoration-none text-light pe-2">
+                    <p class="text-muted">
+                      <i
+                        *ngFor="let item of [].constructor(item?.rating)"
+                        class="bx bxs-star text-warning"
+                      ></i>
+                    </p>
+                    <h3 class="h6 text-light mb-1">
+                      <a
+                        [href]="getFrontBaseUrl() + item.id"
+                        target="_blank"
+                        class="nav-link stretched-link"
+                        style="cursor: pointer"
+                        >{{ item.name }}</a
+                      >
+                    </h3>
+                    <div class="fs-sm opacity-70">
+                      Prices starting at ₹{{ item.pricing?.perUnit }}
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post content-->
+  <section class="container mb-5 pb-1">
+    <div class="row">
+      <div class="col-md-7 mb-md-0 mb-4">
+        <!-- <span class="badge bg-success me-2 mb-3">Verified</span>
+                <span class="badge bg-info me-2 mb-3">New</span>
+                <h2 class="h3 mb-4 pb-4 border-bottom">₹{{venuesDetails?.pricing?.perUnit}}<span class="d-inline-block ms-1 fs-base fw-normal text-body">/Unit</span></h2> -->
+
+        <!-- OVERVIEW-->
+        <div *ngIf="venuesDetails?.description?.length > 0">
+          <h3 class="h5 mb-4">Overview</h3>
+          <p class="mb-3">{{ venuesDetails?.description }}</p>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.description ||
+            venuesDetails.description.length === 0
+          "
+        >
+          <div class="col-12 search-no-data">
+            <h3 class="h5 mb-2">Overview</h3>
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy pb-5" style="margin-bottom: 19px"></i>
+              <P class="text-muted pb-5" style="margin-left: 5px"
+                >No Overview Available</P
+              >
+            </div>
+          </div>
+        </div>
+        <ul class="list-unstyled capacity d-flex flex-wrap mt-3 mb-0">
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-people-simple"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Standing</p>
+              <h6 class="h6 fs-md mb-0">
+                <p>
+                  {{ venuesDetails?.capacity?.standing || "--" }}
+                </p>
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-utensils"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Dining</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.dinning || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-camera-movie"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Theatre</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.theater || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-speakers"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Music & Sound Effect</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.musicValue || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-hands"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Accessibility Value  </p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.accessibilityValue || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-hat-chef"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Catering Value </p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.cateringValue || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-suitcase-rolling"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Casual</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.casual || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-circle-ellipsis"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Cluster/ round table</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.cluster || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-school"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Schoolroom</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.schoolroom || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-people-group"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Conference</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.conference || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-solid fa-u"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">U-Shaped</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.ushaped || "--" }}
+              </h6>
+            </div>
+          </li>
+          <li class="mb-4 col-lg-4">
+            <i class="fa-duotone fa-person-shelter"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Boardroom</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.boardroom || "--" }}
+              </h6>
+            </div>
+          </li>
+          <!-- <li class="mb-4 col-lg-4">
+        <i class="fa-regular fa-hands"></i>
+        <div>
+            <p class="text-muted mb-0 fs-sm">
+                Accessibility
+            </p>
+            <h6 class="h6 fs-md mb-0">
+                {{venuesDetails?.capacity?.accessibilityValue || "--"}}
+            </h6>
+        </div>
+    </li> -->
+          <li class="mb-4 col-lg-4">
+            <i class="fa-regular fa-lights-holiday"></i>
+            <div>
+              <p class="text-muted mb-0 fs-sm">Cabaret</p>
+              <h6 class="h6 fs-md mb-0">
+                {{ venuesDetails?.capacity?.cabaret || "--" }}
+              </h6>
+            </div>
+          </li>
+        </ul>
+
+        <!-- </div> -->
+
+        <!-- PRICING DETAILS -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="venuesDetails?.roomsDetails?.length > 0"
+        >
+          <h3 class="h5 mb-4">Pricing</h3>
+
+          <ul class="list-unstyled row mb-1 text-nowrap rooms-details">
+            <li class="col-6 mb-3">
+              <div
+                class="card"
+                style="
+                  border: none;
+                  border-left: 2px solid #671cc9;
+                  border-radius: 0;
+                "
+              >
+                <div class="card-body py-2">
+                  <p class="h6 text-primary mb-2">
+                    ₹{{
+                      venuesDetails?.pricing?.perUnit
+                        | number : "1.0" : "en-INR" || "--"
+                    }}
+                    <span class="fs-sm">per person</span>
+                  </p>
+                  <p class="fs-xs mb-2">
+                    {{ venuesDetails?.pricing?.perUnitDesc }}
+                  </p>
+                </div>
+              </div>
+              <div class="card-body py-2">
+                <!-- <p class="h6 fs-sm text-dark mb-2">
+                                    ₹{{ venuesDetails?.pricing?.minimumCharges | number : "1.0" : "en-INR" || "--" }}
+                                </p> -->
+                <p
+                  class="h6 fs-sm text-dark mb-2"
+                  *ngIf="venuesDetails?.pricing?.minimumCharges > 0"
+                >
+                  ₹{{
+                    venuesDetails?.pricing?.minimumCharges
+                      | number : "1.0" : "en-INR"
+                  }}
+                </p>
+                <p class="fs-xs mb-2">
+                  {{ venuesDetails?.pricing?.minimumChargesDesc }}
+                </p>
+              </div>
+            </li>
+            <!-- <li class="col-6 mb-3" *ngIf="venuesDetails?.pricing?.gallery?.length > 0">
+                            <div class="card-body py-2">
+                                <p class="fs-xs mb-2">Pricing Details and Plans Documents</p>
+                                <div class="d-flex flex-wrap">
+                                    <button class="fs-sm mb-3 me-3 btn-sm btn btn-primary d-flex align-items-center text-center" style="font-weight: normal" *ngFor="
+                      let item of venuesDetails?.pricing?.gallery;
+                      let i = index
+                    " (click)="openPdf(item)">
+                    File{{ i }} <i class="bx bxs-download mb-0 mx-2 fs-xs"></i>
+                  </button>
+                                </div>
+                            </div>
+                        </li> -->
+            <li
+              class="col-6 mb-3"
+              *ngIf="
+                venuesDetails?.pricing?.gallery &&
+                venuesDetails?.pricing?.gallery.length > 0
+              "
+            >
+              <div class="card-body py-2">
+                <p class="fs-xs mb-2">Pricing Details and Plans Documents</p>
+                <div class="d-flex flex-wrap">
+                  <button
+                    class="fs-sm mb-3 me-3 btn-sm btn btn-primary d-flex align-items-center text-center"
+                    style="font-weight: normal"
+                    *ngFor="
+                      let item of venuesDetails?.pricing?.gallery;
+                      let i = index
+                    "
+                    (click)="openPdf(item)"
+                  >
+                    File{{ i }} <i class="bx bxs-download mb-0 mx-2 fs-xs"></i>
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.roomsDetails ||
+            venuesDetails.roomsDetails.length === 0
+          "
+        >
+          <div class="col-12 search-no-data">
+            <h3 class="h5 mb-2">Pricing</h3>
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Pricing Available</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ROOMS DETAILS -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="venuesDetails?.roomsDetails?.length > 0"
+        >
+          <h3 class="h5 mb-4">Rooms/Sleeping Arrangements</h3>
+          <p>
+            This space offers well-maintained and hygienic air-conditioned
+            rooms, providing the choice of single and double bed accommodations
+          </p>
+          <ul
+            class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap rooms-details"
+          >
+            <li
+              class="col mb-3"
+              *ngFor="let item of venuesDetails?.roomsDetails"
+            >
+              <div
+                class="card"
+                style="
+                  border: none;
+                  border-left: 2px solid #671cc9;
+                  border-radius: 0;
+                "
+              >
+                <div class="card-body py-2">
+                  <i class="fa-regular fa-bed-front"></i>
+                  <p class="h6">{{ item.roomType }}</p>
+                  <p class="fs-sm mb-2">
+                    Price range from
+                    <strong class="text-primary"
+                      >₹{{ item.priceFrom | number : "1.0" : "en-INR" }} To ₹{{
+                        item.priceTo | number : "1.0" : "en-INR"
+                      }}</strong
+                    >
+                  </p>
+                  <p class="fs-sm mb-0">
+                    <strong>{{ item.noOfRooms }}</strong> rooms available
+                  </p>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <ul class="list-unstyled row mb-1 text-nowrap">
+            <li
+              class="col-12 mb-3"
+              *ngFor="let item of venuesDetails?.room_tnc?.room_tnc"
+            >
+              <h6 class="h6 fs-sm mb-3 text-capitalize">
+                {{ item.heading }}
+              </h6>
+              <div
+                class="d-flex align-items-center"
+                *ngFor="let x of item.items"
+              >
+                <i
+                  class="bx bx-check align-middle mt-n1 me-2 fs-lg text-primary"
+                ></i>
+                <div>
+                  <p class="fs-xs mb-0">{{ x.title }}</p>
+                  <p class="fs-xs mb-2">{{ x.desc }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.roomsDetails ||
+            venuesDetails.roomsDetails.length === 0
+          "
+        >
+          <div class="col-12 search-no-data">
+            <h3 class="h5 mb-2">Rooms/Sleeping Arrangements</h3>
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Rooms & Sleeping Arrangements Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- AMENITIES -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="venuesDetails?.general_attributes?.amenities.length > 0"
+        >
+          <h3 class="h5 mb-2">Amenities</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col"
+              *ngFor="let item of venuesDetails?.general_attributes?.amenities"
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.amenities ||
+            venuesDetails.general_attributes.amenities.length === 0
+          "
+        >
+          <div class="col-12 search-no-data">
+            <h3 class="h5 mb-2">Amenities</h3>
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <p class="text-muted" style="margin-left: 5px">
+                No Amenities Available.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HOUSE STANDARDS -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="venuesDetails?.general_attributes?.house_standards > 0"
+        >
+          <h3 class="h5 mb-4">Space Standards</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col"
+              *ngFor="
+                let item of venuesDetails?.general_attributes?.house_standards
+              "
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.house_standards ||
+            venuesDetails.general_attributes.house_standards.length === 0
+          "
+        >
+          <h3 class="h5 mb-2">Space Standards</h3>
+          <div class="col-12 search-no-data">
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Space Standards Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ATTRIBUTES -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="venuesDetails?.general_attributes?.attributes > 0"
+        >
+          <h3 class="h5 mb-4">Attributes</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col"
+              *ngFor="let item of venuesDetails?.general_attributes?.attributes"
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.attributes ||
+            venuesDetails.general_attributes.attributes.length === 0
+          "
+        >
+          <h3 class="h5 mb-2">Attributes</h3>
+          <div class="col-12 search-no-data">
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Attributes Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- RULES -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="
+            venuesDetails?.general_attributes?.rules?.length > 0 ||
+            venuesDetails?.general_attributes?.safety_rules?.length > 0
+          "
+        >
+          <h3 class="h5 mb-4">Space Rules</h3>
+          <p class="h6 fs-sm">General Rules</p>
+          <ul class="list-unstyled row gy-1 mb-1">
+            <li
+              class="col-6 d-flex align-items-center mb-3"
+              *ngFor="let item of venuesDetails?.general_attributes?.rules"
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+          <div
+            class="row mt-3"
+            *ngIf="
+              !venuesDetails?.general_attributes?.rules ||
+              venuesDetails.general_attributes.rules.length === 0
+            "
+          >
+            <h3 class="h5 mb-2">General Rules</h3>
+            <div class="col-12 search-no-data">
+              <div
+                style="
+                  display: flex;
+                  justify-content: left;
+                  align-items: center;
+                "
+              >
+                <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+                <P class="text-muted" style="margin-left: 5px"
+                  >No General Rules Available.</P
+                >
+              </div>
+            </div>
+          </div>
+
+          <p class="h6 fs-sm">Safety Rules</p>
+          <ul class="list-unstyled row gy-1 mb-1 text-nowrap">
+            <li
+              class="col-6 d-flex align-items-center mb-3"
+              *ngFor="
+                let item of venuesDetails?.general_attributes?.safety_rules
+              "
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.rules ||
+            venuesDetails.general_attributes.rules.length === 0
+          "
+        >
+          <h3 class="h5 mb-2">General Rules</h3>
+          <div class="col-12 search-no-data">
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No General Rules Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.safety_rules ||
+            venuesDetails.general_attributes.safety_rules.length === 0
+          "
+        >
+          <h3 class="h5 mb-2">Safety Rules</h3>
+          <div class="col-12 search-no-data">
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Safety Rules Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- ADDITIONAL BENEFITS -->
+        <div
+          class="mb-4 pb-md-3"
+          *ngIf="
+            venuesDetails?.general_attributes?.additional_benefits?.length > 0
+          "
+        >
+          <h3 class="h5 mb-4">Additional Benefits</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col"
+              *ngFor="
+                let item of venuesDetails?.general_attributes
+                  ?.additional_benefits
+              "
+            >
+              <i [class]="item.icon" class="align-middle mt-n1 me-2 fs-lg"></i>
+              {{ item.name }}
+            </li>
+          </ul>
+        </div>
+        <div
+          class="row mt-3"
+          *ngIf="
+            !venuesDetails?.general_attributes?.additional_benefits ||
+            venuesDetails.general_attributes.additional_benefits.length === 0
+          "
+        >
+          <h3 class="h5 mb-2">Additional Benefits</h3>
+          <div class="col-12 search-no-data">
+            <div
+              style="display: flex; justify-content: left; align-items: center"
+            >
+              <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+              <P class="text-muted" style="margin-left: 5px"
+                >No Additional Benefits Available.</P
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Details-->
+        <!-- <div class="mb-4 pb-md-3">
+                    <h3 class="h4">Pricing Details</h3>
+                    <ul class="list-unstyled mb-0">
+                        <li><b>Type: </b>{{venuesDetails?.type}}</li>
+                        <li><b>Per Unit: </b>₹{{venuesDetails?.pricing?.perUnit || "--"}}</li>
+                        <li><b>Per Unit Description: </b>{{venuesDetails?.pricing?.perUnitDesc || "--"}}</li>
+                        <li><b>Minimum Charges: </b>₹{{venuesDetails?.pricing?.minimumCharges || "--"}}</li>
+                        <li><b>Minimum Charges Description: </b>{{venuesDetails?.pricing?.minimumChargesDesc || "--"}}</li>
+                    </ul>
+                </div> -->
+
+        <!-- TERM & POLICIES -->
+        <!-- <div class="mb-4 pb-md-3">
+                    <h3 class="h4">Term & Policies</h3>
+                    <ul class="list-unstyled row row-cols-lg-3 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap">
+                        <li class="col">
+                            <div class="d-flex">
+                                <p class="roomDetailsText">Check In:</p>
+                                <p> {{venuesDetails?.terms_policies?.checkInTime}}</p>
+                            </div>
+
+                            <div class="d-flex">
+                                <p class="roomDetailsText">Check Out:</p>
+                                <p> {{venuesDetails?.terms_policies?.checkOutTime}}</p>
+                            </div>
+
+                            <div class="d-flex">
+                                <p class="roomDetailsText">Cancellation Terms:</p>
+                                <p> {{venuesDetails?.terms_policies?.cancellationTerm}}</p>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div> -->
+      </div>
+      <!-- Sidebar-->
+      <aside class="col-lg-4 col-md-5 ms-lg-auto pb-1">
+        <!-- Contact card-->
+        <div class="card mb-4 enquiry">
+          <div class="card-body" style="position: relative">
+            <div class="d-flex align-items-start justify-content-between">
+              <!-- <a class="text-decoration-none" routerLink="/vendor/properties"><img class="rounded-circle mb-2" src="assets/img/avatars/22.jpg" width="60" alt="Avatar">
+                              <div class="rounded-circle mb-2">
+                                {{venueContact.name?.charAt(0)}}
+                            </div> -->
+              <a class="text-decoration-none" routerLink="/vendor/properties">
+                <div class="avatar-container">
+                  <div class="initials">
+                    {{
+                      venueContact?.name ? getInitials(venueContact.name) : "VM"
+                    }}
+                  </div>
+                </div>
+
+                <h5 class="mb-1">
+                  {{ venueContact?.name || "Venue Manager" }}
+                </h5>
+                <p class="mb-1">
+                  {{ venueContact?.email || "support@spaces.one" }}
+                </p>
+                <div class="mb-1">
+                  <p class="text-muted">
+                    <i
+                      *ngFor="let item of [].constructor(venuesDetails?.rating)"
+                      class="bx bxs-star text-warning"
+                    ></i>
+                  </p>
+                </div>
+                <p class="text-body">Your Perfect Partner in the Quest</p>
+              </a>
+            </div>
+            <form
+              class="needs-validation"
+              novalidate
+              (ngSubmit)="validSubmit()"
+              [formGroup]="validationform"
+            >
+              <!-- *ngIf="!hideForm" -->
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Your name*"
+                  required
+                  formControlName="name"
+                  [ngClass]="{ 'is-invalid': submit && form['name'].errors }"
+                />
+                <div class="invalid-feedback">Please enter your name!</div>
+              </div>
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Email*"
+                  required
+                  formControlName="emailId"
+                  [ngClass]="{ 'is-invalid': submit && form['emailId'].errors }"
+                />
+                <div class="invalid-feedback">
+                  Please provide valid email address!
+                </div>
+              </div>
+              <input
+                class="form-control mb-3"
+                type="text"
+                placeholder="Phone*"
+                required
+                formControlName="mobileNumber"
+                [ngClass]="{
+                  'is-invalid': submit && form['mobileNumber'].errors
+                }"
+              />
+              <div class="invalid-feedback">
+                Please provide valid Mobile Number
+              </div>
+              <div class="input-group mb-3">
+                <input
+                  class="form-control date-picker rounded pe-5 flatpickr-input"
+                  type="text"
+                  mwlFlatpickr
+                  [altInput]="true"
+                  [convertModelValue]="true"
+                  placeholder="Choose date*"
+                  required
+                  formControlName="bookingDate"
+                  [ngClass]="{
+                    'is-invalid': submit && form['bookingDate'].errors
+                  }"
+                />
+                <div class="invalid-feedback">
+                  Please provide valid Booking Date!
+                </div>
+                <i
+                  class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"
+                ></i>
+              </div>
+              <div class="mb-3">
+                <input
+                  class="form-control"
+                  type="number"
+                  placeholder="Number of persons*"
+                  required
+                  formControlName="numberOfPeople"
+                  [ngClass]="{
+                    'is-invalid': submit && form['numberOfPeople'].errors
+                  }"
+                />
+                <div class="invalid-feedback">
+                  Please enter number of persons.
+                </div>
+              </div>
+              <textarea
+                class="form-control mb-3"
+                rows="3"
+                placeholder="Message"
+                style="resize: none"
+                formControlName="additionalMessage"
+                [ngClass]="{
+                  'is-invalid': submit && form['additionalMessage'].errors
+                }"
+              ></textarea>
+              <div class="invalid-feedback">
+                Please provide Additional Message
+              </div>
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  formControlName="emailQuotation"
+                />
+                <label class="form-check-label fs-sm"
+                  >Send quotations on email
+                </label>
+              </div>
+              <button
+                class="btn btn-lg btn-primary d-block w-100"
+                type="submit"
+                [disabled]="validationform?.invalid"
+              >
+                Send request
+              </button>
+            </form>
+            <div class="no-auth" *ngIf="!loggedInUser">
+              <p class="fs-sm">
+                Please <strong>Signup/Login </strong> to
+                <strong>Enquire</strong> or chat with the Space Manager.
+              </p>
+            </div>
+            <div *ngIf="hideForm" class="card bg-success text-center p-3">
+              <span
+                ><i
+                  class="fa-duotone fa-check-double mt-4 mb-3 text-light fs-lg"
+                ></i
+              ></span>
+              <h6 class="h6 text-light mb-2 fs-sm">
+                Thank you for submitting your enquiry!
+              </h6>
+              <p class="fs-sm text-light">
+                Our dedicated team of executives will promptly review your
+                request and respond accordingly. Expect to hear from us soon.
+              </p>
+              <h6 class="h6 text-light mb-2 fs-sm mt-4">
+                Also we have created a Chat channel for you to directly chat
+                with the Space Manager.
+              </h6>
+              <button class="btn btn-success" routerLink="/chat/main">
+                <span
+                  ><i
+                    class="fa-solid fa-message mt-2 mb-2 fs-lg"
+                    style="color: #fff"
+                  ></i
+                ></span>
+                <div>Chat Now</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="mt-5" style="border: 1px solid #f3f3f3"></div>
+
+    <div class="row mt-5">
+      <div
+        class="col-lg-6"
+        *ngIf="venuesDetails?.add_on_services?.add_on_services?.length > 0"
+      >
+        <div class="mb-4 pb-md-3">
+          <h3 class="h5 mb-4">AddOn's Services</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col mb-3"
+              *ngFor="
+                let item of venuesDetails?.add_on_services?.add_on_services
+              "
+            >
+              <h6 class="h6 fs-sm mb-3 text-capitalize">
+                {{ item.heading }}
+              </h6>
+              <div
+                class="d-flex align-items-center"
+                *ngFor="let x of item.items"
+              >
+                <i
+                  class="bx bx-check-circle align-middle mt-n1 me-2 fs-lg text-primary"
+                ></i>
+                <div>
+                  <p class="fs-sm mb-0">{{ x.title }}</p>
+                  <p class="fs-xs mb-2">{{ x.desc }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="row mt-3"
+        *ngIf="
+          !venuesDetails?.add_on_services?.add_on_services ||
+          venuesDetails?.add_on_services?.add_on_services.length === 0
+        "
+      >
+        <h3 class="h5 mb-2">AddOn's Services</h3>
+        <div class="col-12 search-no-data">
+          <div
+            style="display: flex; justify-content: left; align-items: center"
+          >
+            <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+            <P class="text-muted" style="margin-left: 5px"
+              >No AddOn's Services Available.</P
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-6"
+        *ngIf="
+          venuesDetails?.chargeable_services?.chargeable_services?.length > 0
+        "
+      >
+        <div class="mb-4 pb-md-3">
+          <h3 class="h5 mb-4">Chargeable Services</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col mb-3"
+              *ngFor="
+                let item of venuesDetails?.chargeable_services
+                  ?.chargeable_services
+              "
+            >
+              <h6 class="h6 fs-sm mb-3 text-capitalize">
+                {{ item.heading }}
+              </h6>
+              <div
+                class="d-flex align-items-center"
+                *ngFor="let x of item.items"
+              >
+                <i
+                  class="bx bx-check-circle align-middle mt-n1 me-2 fs-lg text-primary"
+                ></i>
+                <div>
+                  <p class="fs-sm mb-0">{{ x.title }}</p>
+                  <p class="fs-xs mb-2">{{ x.desc }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="row mt-3"
+        *ngIf="
+          !venuesDetails?.chargeable_services?.chargeable_services ||
+          venuesDetails?.chargeable_services?.chargeable_services.length === 0
+        "
+      >
+        <h3 class="h5 mb-2">Chargeable Services</h3>
+        <div class="col-12 search-no-data">
+          <div
+            style="display: flex; justify-content: left; align-items: center"
+          >
+            <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+            <P class="text-muted" style="margin-left: 5px"
+              >No Chargeable Services Available.</P
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-6"
+        *ngIf="venuesDetails?.custom_blocks?.custom_blocks?.length > 0"
+      >
+        <div class="mb-4 pb-md-3">
+          <h3 class="h5 mb-4">Additional Details</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col mb-3"
+              *ngFor="let item of venuesDetails?.custom_blocks?.custom_blocks"
+            >
+              <h6 class="h6 fs-sm mb-3 text-capitalize">
+                {{ item.heading }}
+              </h6>
+              <div
+                class="d-flex align-items-center"
+                *ngFor="let x of item.items"
+              >
+                <i
+                  class="bx bx-check-circle align-middle mt-n1 me-2 fs-lg text-primary"
+                ></i>
+                <div>
+                  <p class="fs-sm mb-0">{{ x.title }}</p>
+                  <p class="fs-xs mb-2">{{ x.desc }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="row mt-3"
+        *ngIf="
+          !venuesDetails?.custom_blocks?.custom_blocks ||
+          venuesDetails?.custom_blocks?.custom_blocks.length === 0
+        "
+      >
+        <h3 class="h5 mb-2">Additional Details</h3>
+        <div class="col-12 search-no-data">
+          <div
+            style="display: flex; justify-content: left; align-items: center"
+          >
+            <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+            <P class="text-muted" style="margin-left: 5px"
+              >No Additional Details Available.</P
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-6"
+        *ngIf="venuesDetails?.should_know?.should_know?.length > 0"
+      >
+        <div class="mb-4 pb-md-3">
+          <h3 class="h5 mb-4">Should Know</h3>
+          <ul
+            class="list-unstyled row row-cols-lg-2 row-cols-md-2 row-cols-1 gy-1 mb-1 text-nowrap"
+          >
+            <li
+              class="col mb-3"
+              *ngFor="let item of venuesDetails?.should_know?.should_know"
+            >
+              <h6 class="h6 fs-sm mb-3 text-capitalize">
+                {{ item.heading }}
+              </h6>
+              <div
+                class="d-flex align-items-center"
+                *ngFor="let x of item.items"
+              >
+                <i
+                  class="bx bx-check-circle align-middle mt-n1 me-2 fs-lg text-primary"
+                ></i>
+                <div>
+                  <p class="fs-sm mb-0">{{ x.title }}</p>
+                  <p class="fs-xs mb-2">{{ x.desc }}</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="row mt-3"
+        *ngIf="
+          !venuesDetails?.should_know?.should_know ||
+          venuesDetails?.should_know?.should_know.length === 0
+        "
+      >
+        <h3 class="h5 mb-2">Should Know</h3>
+        <div class="col-12 search-no-data">
+          <div
+            style="display: flex; justify-content: left; align-items: center"
+          >
+            <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+            <P class="text-muted" style="margin-left: 5px"
+              >No Queries Available.</P
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-lg-12"
+        *ngIf="venuesDetails?.terms_policies?.cancellationTerm"
+      >
+        <div class="mb-4 pb-md-3">
+          <h3 class="h5 mb-4">Cancellation Policy</h3>
+
+          <p class="fs-sm">
+            <i
+              class="bx bx-check-circle align-middle mt-n1 me-2 fs-lg text-danger"
+            ></i>
+            {{ venuesDetails?.terms_policies?.cancellationTerm }}
+          </p>
+        </div>
+      </div>
+      <div
+        class="row mt-3"
+        *ngIf="
+          !venuesDetails?.terms_policies?.cancellationTerm ||
+          venuesDetails?.terms_policies?.cancellationTerm.length === 0
+        "
+      >
+        <h3 class="h5 mb-2">Cancellation Policy</h3>
+        <div class="col-12 search-no-data">
+          <div
+            style="display: flex; justify-content: left; align-items: center"
+          >
+            <i class="bx bx-sleepy" style="margin-bottom: 19px"></i>
+            <P class="text-muted" style="margin-left: 5px"
+              >No Cancellation Policy Available.</P
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-2" style="border: 1px solid #f3f3f3"></div>
+
+    <!-- <div class="row mt-4">
+            <div class="col-12">
+                <div class="pt-2">
+                    <div class="position-relative mb-2"><img class="rounded-3" src="assets/img/real-estate/single/map.jpg" alt="Map">
+                        <div class="d-flex w-100 h-100 align-items-center justify-content-center position-absolute top-0 start-0">
+                            <a class="btn btn-primary stretched-link" href="javascript:void(0);" (click)="openMapModal(content)" data-iframe="true" data-bs-toggle="lightbox"><i class="fi-route me-2"></i>Get directions</a>
+                        </div>
+                    </div>
+                    <p class="h5 mb-2 fs-sm mt-3">{{venuesDetails?.address}}</p>
+                    <p class="mb-0 fs-sm "> The house is located in the north end of the old town. It's a 5 minute walk away from one of our favourite restaurants, La Ferme that serves delicious food. It is only a short walk from Le Jardin , La Terr…
+                    </p>
+                </div>
+            </div>
+        </div> -->
+  </section>
+
+  <!-- Recently viewed-->
+  <section
+    class="container mb-5 pb-2 pb-lg-4"
+    *ngIf="venuesSameType?.length > 0"
+  >
+    <div class="d-flex justify-content-between align-items-end mb-3">
+      <h2 class="h5 mb-2">Similar Space</h2>
+      <!-- <a class="btn btn-link fw-normal p-0" routerLink="/catalog/rent">View all</a> -->
+    </div>
+    <div class="swiper default-swiper rounded">
+      <swiper [config]="config">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" *ngFor="let data of venuesSameType">
+            <!-- Item-->
+            <div class="col p-2">
+              <div class="card shadow-sm card-hover border-0 h-100 card-v1">
+                <div class="card-img-top card-img-hover">
+                  <a class="img-overlay"></a>
+                  <img
+                    *ngIf="data?.gallery && data.gallery.length > 0"
+                    [src]="data.gallery[0]"
+                    alt="Image"
+                  />
+                </div>
+                <div class="card-body position-relative pb-3">
+                  <!-- <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">{{data.sale}}</h4> -->
+                  <h3 class="h6 mb-2 fs-base">
+                    <a
+                      [href]="getFrontBaseUrl() + data.id"
+                      target="_blank"
+                      class="nav-link stretched-link"
+                      style="cursor: pointer"
+                      >{{ data.name }}</a
+                    >
+                  </h3>
+                  <p class="mb-2 fs-sm text-muted">{{ data.address }}</p>
+                  <div class="fw-bold text-primary">
+                    ₹{{
+                      data.pricing?.perUnit | number : "1.0" : "en-INR" ?? " --"
+                    }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Item-->
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+      </swiper>
+    </div>
+  </section>
+
+  <!-- Review modal-->
+  <ng-template #reviewContent role="document" let-modal>
+    <div
+      class="modal-header d-block position-relative border-0 pb-0 px-sm-5 px-4"
+    >
+      <h3 class="modal-title mt-4 text-center">Leave a review</h3>
+      <button
+        class="btn-close position-absolute top-0 end-0 mt-3 me-3"
+        type="button"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body px-sm-5 px-4">
+      <form
+        class="needs-validation"
+        novalidate
+        (ngSubmit)="formSubmit()"
+        [formGroup]="signUpform"
+      >
+        <div class="mb-3">
+          <label class="form-label" for="review-name"
+            >Name <span class="text-danger">*</span></label
+          >
+          <input
+            class="form-control"
+            type="text"
+            id="review-name"
+            placeholder="Your name"
+            required
+            formControlName="name"
+            [ngClass]="{ 'is-invalid': formsubmit && formData['name'].errors }"
+          />
+          <div class="invalid-feedback">Please let us know your name.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="review-email"
+            >Email <span class="text-danger">*</span></label
+          >
+          <input
+            class="form-control"
+            type="email"
+            id="review-email"
+            placeholder="Your email address"
+            required
+            formControlName="email"
+            [ngClass]="{ 'is-invalid': formsubmit && formData['email'].errors }"
+          />
+          <div class="invalid-feedback">
+            Please provide a valid email address.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="review-rating"
+            >Rating <span class="text-danger">*</span></label
+          >
+          <select
+            class="form-select"
+            id="review-rating"
+            required
+            formControlName="rating"
+            [ngClass]="{
+              'is-invalid': formsubmit && formData['rating'].errors
+            }"
+          >
+            <option value="" selected disabled>Choose rating</option>
+            <option value="5 stars">5 stars</option>
+            <option value="4 stars">4 stars</option>
+            <option value="3 stars">3 stars</option>
+            <option value="2 stars">2 stars</option>
+            <option value="1 star">1 star</option>
+          </select>
+          <div class="invalid-feedback">Please rate the property.</div>
+        </div>
+        <div class="mb-4">
+          <label class="form-label" for="review-text"
+            >Review <span class="text-danger">*</span></label
+          >
+          <textarea
+            class="form-control"
+            id="review-text"
+            rows="5"
+            placeholder="Your review message"
+            required
+            formControlName="message"
+            [ngClass]="{
+              'is-invalid': formsubmit && formData['message'].errors
+            }"
+          ></textarea>
+          <div class="invalid-feedback">Please write your review.</div>
+        </div>
+        <button class="btn btn-primary d-block w-100 mb-4" type="submit">
+          Submit a review
+        </button>
+      </form>
+    </div>
+  </ng-template>
+
+  <!-- Map modal-->
+  <ng-template #content role="document" let-modal>
+    <div class="modal-header text-end position-relative bg-dark border-0 px-4">
+      <button
+        class="btn-close btn-close-white me-1"
+        type="button"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      ></button>
+    </div>
+    <div class="modal-body p-0 bg-dark">
+      <agm-map
+        [latitude]="latitude"
+        [longitude]="longitude"
+        class="interactive-map rounded-3"
+        style="height: 100%"
+      ></agm-map>
+    </div>
+  </ng-template>
+</main>
+<!-- Footer-->
+<app-footer></app-footer>

@@ -1,0 +1,105 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-4 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <div class="card card-body border-0 pb-1 me-lg-1" style="background-color: #f5f5f5;">
+                <div class="d-flex d-md-block align-items-center pt-lg-2 mb-4 text-center ">
+                    <div class="img-thumb" [ngStyle]="{'background-image': 'url('+ loggedInUser?.image +')'}" style="margin: 0 auto;">
+                    </div>
+                    <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ">
+                        <h2 class="fs-lg mb-0 mt-3">{{loggedInUser?.name}}</h2>
+                        <p class="fs-sm text-primary">
+                            {{loggedInUser?.email}}
+                        </p>
+                    </div>
+                </div>
+                <a class="btn btn-outline-secondary d-block d-md-none w-100 mb-3" href="javascript:void(0);" data-bs-toggle="collapse" (click)="SideBarMenu()"><i class="fi-align-justify me-2"></i>Menu</a>
+                <div class="collapse d-md-block mt-0" id="account-nav">
+                    <div class="card-nav">
+                        <a class="card-nav-link fs-sm " routerLink="/account/info"><i class="fi-user opacity-60 me-2"></i>Personal Info</a>
+                        <a class="card-nav-link fs-sm " routerLink="/account/security"><i class="fi-lock opacity-60 me-2"></i>Change Password</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/properties"><i class="fi-home opacity-60 me-2 fs-sm"></i>My Properties</a> -->
+                        <a class="card-nav-link fs-sm active" routerLink="/account/wishlist"><i class="fi-heart opacity-60 me-2"></i>Wishlist</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/reviews"><i class="fi-star opacity-60 me-2 fs-sm"></i>Reviews</a> -->
+                        <!-- <a class="card-nav-link" routerLink="/account/notifications"><i class="fi-bell opacity-60 me-2 fs-sm"></i>Notifications</a> -->
+                        <a class="card-nav-link fs-sm" routerLink="/pages/help-center"><i class="fi-help opacity-60 me-2"></i>Help</a>
+                        <a class="card-nav-link fs-sm" href="javascript:void(0);" (click)="logout()"><i class="fi-logout opacity-60 me-2"></i>Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-8 col-md-7 mb-0">
+            <div class=" mb-2 pb-2">
+                <h1 class="h4 mb-0">Saved Venues</h1>
+                <p class="fs-sm mt-1">Manage your password settings and secure your account.</p>
+            </div>
+
+            <div *ngIf="wishlistData?.length > 0">
+                <div class="card card-hover card-horizontal border-0 m mb-4" *ngFor="let data of wishlistData" style="box-shadow: none !important;">
+                    <div class="card-img-top position-relative" style="background-image: url({{data.gallery[0]}}); border-radius: 10px;">
+                        <a class="stretched-link" routerLink="/catalog/single-v1"></a>
+                        <div class="position-absolute start-0 top-0 pt-3 ps-3"></div>
+                        <div class="position-absolute end-0 top-0 pt-3 pe-3 zindex-5">
+                            <button class="btn btn-secondary btn-xs" type="button" placement="left" (click)="removeFromWishlist(data.id)">Remove</button>
+                        </div>
+                    </div>
+                    <div class="card-body position-relative pb-3">
+                        <h4 class="mb-1 fs-xs fw-normal text-uppercase text-primary">
+                            <span *ngFor="let data of data.type; let i = index">
+                            <span *ngIf="i > 0">, </span>{{data}}
+                            </span>
+                        </h4>
+                        <h3 class="h6 mb-2 fs-base"><a class="nav-link stretched-link" [routerLink]="['details/' + data.id]">{{data?.name}}</a></h3>
+                        <p class="mb-2 fs-sm text-muted">{{data?.address}}</p>
+
+                        <div class="d-flex justify-content-between  border-top mt-2 pt-2">
+                            <div *ngIf="data?.pricing?.perUnit">
+                                <div class="fs-xs">
+                                    Per Person Charges
+                                </div>
+                                <div class="fs-lg text-primary fw-bold ">
+                                    ₹{{data?.pricing?.perUnit | number:'1.0':'en-INR' ?? ' --'}}
+                                </div>
+                            </div>
+                            <div style="text-align: right;" *ngIf="data?.pricing?.minimumCharges">
+                                <div class="fs-xs">
+                                    Minimum Payable Charges
+                                </div>
+                                <div class="fs-xs fw-bold">
+                                    ₹{{data?.pricing?.minimumCharges | number:'1.0':'en-INR' ?? ' --'}}
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="wishlistData?.length == 0">
+                <h6 class="fs-sm mb-1 mt-3">
+                    No Venues in Wishlist
+                </h6>
+                <p class="fs-xs">
+                    Unfortunately, we were unable to find any results that align with your search. Might you be open to refining your search criteria to potentially yield better outcomes?
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Footer-->
+<app-footer></app-footer>

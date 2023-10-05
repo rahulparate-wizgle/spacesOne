@@ -1,0 +1,156 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        New Safety Rules
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item">
+          <a href="javascript: void(0);">Safety Rules List</a>
+        </li>
+        <li class="breadcrumb-item active">New Safety Rules</li>
+      </ol>
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="row d-flex justify-content-end">
+            <div class="col-12">
+              <form [formGroup]="safetyForm">
+                <div class="row">
+                  <div class="mb-2 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2"
+                      >Title</label
+                    >
+                    <input
+                      name="name"
+                      formControlName="name"
+                      type="text"
+                      class="form-control"
+                      placeholder="Eg. Wheel chair"
+                      [ngClass]="{
+                        'is-invalid': formsubmit && form.name.errors
+                      }"
+                    />
+                    <div *ngIf="formsubmit && form.name.errors">
+                      <span class="error-message" *ngIf="form.name.errors"
+                        >Please enter title</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-2 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2"
+                      >Description</label
+                    >
+                    <textarea
+                      style="height: 200px"
+                      type="text"
+                      class="form-control"
+                      formControlName="description"
+                      name="description"
+                      placeholder="Eg. Wheel chair available as per your need."
+                      [ngClass]="{
+                        'is-invalid': formsubmit && form.description.errors
+                      }"
+                    ></textarea>
+                    <div *ngIf="formsubmit && form.description.errors">
+                      <span
+                        class="error-message"
+                        *ngIf="form.description.errors"
+                        >Please enter description</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-2 col-12">
+                    <label for="projectname" class="col-form-label"
+                      >Venue Type</label
+                    >
+                    <ng-select
+                      name="type"
+                      [items]="venueType"
+                      bindLabel="title"
+                      bindValue="title"
+                      placeholder="Please Select Venue Type"
+                      formControlName="type"
+                      ngDefaultControl
+                      [multiple]="true"
+                      [ngClass]="{
+                        'is-invalid':
+                          (form.type.dirty || form.type.touched) &&
+                          form.type.errors
+                      }"
+                    >
+                    </ng-select>
+                    <div
+                      *ngIf="
+                        (form.type.dirty || form.type.touched) &&
+                        form.type.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="form.type.errors?.required"
+                        >required</span
+                      >
+                    </div>
+                  </div>
+
+                  <div class="mb-4 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2"
+                      >Icon <i [class]="selectedIcon" class="selectedIcon"></i>
+                    </label>
+                    <input
+                      name="icon"
+                      disabled="true"
+                      style="padding-left: 45px"
+                      formControlName="icon"
+                      type="text"
+                      class="form-control"
+                      placeholder="Eg. bx bx-sticker"
+                      [ngClass]="{
+                        'is-invalid': formsubmit && form.icon.errors
+                      }"
+                    />
+                    <div *ngIf="formsubmit && form.icon.errors">
+                      <span class="error-message" *ngIf="form.icon.errors"
+                        >Please select icon</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-12 flex-wrap d-flex justify-content-end">
+                      <button
+                        type="button"
+                        class="btn btn-danger me-2"
+                        (click)="postCancel()"
+                        style="margin-left: 10px"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        (click)="postSafetyRulesData($event)"
+                      >
+                        <i
+                          class="bx bx-send font-size-16 align-middle me-2"
+                          style="transform: rotate(-45deg); margin-top: -5px"
+                        ></i>
+                        Save & Publish
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <app-icon-picker [onSelectedIcon]="onSelectedIcon"></app-icon-picker>
+    </div>
+  </div>
+</div>

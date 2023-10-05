@@ -1,0 +1,41 @@
+<div class="row" style="margin-bottom: 15px; align-items: flex-end;">
+    <div class="col-6">
+        <div class="tabs">
+            <div (click)="setView('box')" [class]="'tab-view ' + (view == 'box' ? 'active':'')">
+                <p>Box Icons</p>
+            </div>
+            <div (click)="setView('line')" [class]="'tab-view '+ (view == 'line' ? 'active':'')">
+                <p> Line Icons</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <input type="text mt-3" (keyup)="SearchIcons($event)" placeholder="Search Icons Here" class="form-control">
+    </div>
+</div>
+
+
+<div class="card" style="height: 580px; overflow-y: auto; overflow-x: hidden;">
+
+
+    <div *ngIf="view == 'box'" class="card-body">
+        <div *ngIf="data.length > 0" class="row icon-demo-content" style="cursor: pointer;">
+            <div *ngFor="let item of data" (click)="LocalIconSelected(item)" class="col-xl-3 col-lg-4 col-sm-6"><i [class]="item.class"></i> {{item.name}} </div>
+        </div>
+        <div *ngIf="data.length <= 0" class="row no-icons">
+            <i class="bx bx-sad"></i>
+            <h6>No icons found matching your search.
+            </h6>
+        </div>
+    </div>
+    <div *ngIf="view == 'line'" class="card-body">
+        <div *ngIf="laData.length > 0" class="row icon-demo-content" style="cursor: pointer;">
+            <div *ngFor="let item of laData" (click)="LocalIconSelected(item)" class="col-xl-3 col-lg-4 col-sm-6"><i [class]="item.class"></i> {{item.class}} </div>
+        </div>
+        <div *ngIf="laData.length <= 0" class="row no-icons">
+            <i class="bx bx-sad"></i>
+            <h6>No icons found matching your search.
+            </h6>
+        </div>
+    </div>
+</div>

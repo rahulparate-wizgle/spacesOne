@@ -1,0 +1,74 @@
+<div class="container-fluid v-section">
+    <div class="row">
+        <div class="col-3">
+            <app-venue-details [venue]="venue" [currentTab]="5"></app-venue-details>
+
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header venue-card pt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>
+                                Location
+                            </h5>
+                            <p class="mb-0">
+                                "Include the exact location of your venue on the map."
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12 d-flex justify-content-end flex-wrap gap-2">
+
+                                <button type="button" class="btn btn-primary" (click)="goToCurrentLocation($event)">
+                                <i class="bx bx-send font-size-16 align-middle me-2"
+                                  style="transform: rotate(-45deg); margin-top: -5px"></i>
+                                Save & Publish
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <form>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="row mb-3">
+                                            <label for="horizontal-firstname-input" class="col-sm-12 col-form-label">Latitude</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="latitude" [(ngModel)]="lat" name="latitude" />
+                                                <span class="error-message">{{validationError.latitude}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="row">
+                                            <label for="horizontal-firstname-input" class="col-sm-12 col-form-label">
+                                        Longitude</label>
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="longitude" [(ngModel)]="lng" name="longitude" />
+                                                <span class="error-message">{{validationError.longitude}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <div id="geocoder" class="geocoder"></div>
+                        </div>
+                        <div class="col-lg-8">
+                            <button class="btn btn-dark master-venue" (click)="copyLocationFromMaster()"> Fetch from Master Venue </button>
+
+                            <div class="map-preview mt-4">
+                                <div class="map" name="map" id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+/*! _account.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Account header
+    2. Account categories
+    3. Account Layout
+    4. Account schedule
+
+*/
+
+
+/* ==========================================================================
+1. Account header
+========================================================================== */
+
+.account-header {
+    display: flex;
+    align-items: center;
+    .header-avatar {
+        display: block;
+        height: 60px;
+        width: 60px;
+        min-width: 60px;
+        border-radius: 50%;
+    }
+    .header-meta {
+        margin-left: 1rem;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .account-header {
+        flex-direction: column;
+        text-align: center;
+        .header-avatar {
+            height: 80px;
+            width: 80px;
+            min-width: 80px;
+            margin-bottom: 1rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Account categories
+========================================================================== */
+
+.account-categories {
+    .card {
+        display: block;
+        border-radius: 0.75rem;
+        border: 1px solid $border;
+        box-shadow: none;
+        transition: box-shadow 0.3s;
+        &:hover {
+            box-shadow: $light-box-shadow;
+            .title {
+                color: $primary;
+            }
+            .icon-text {
+                .icon {
+                    transform: translateX(5px);
+                }
+            }
+        }
+        .title {
+            transition: color 0.3s;
+        }
+        .icon-text {
+            display: flex;
+            align-items: center;
+            .icon {
+                transition: transform 0.3s;
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Account Layout
+========================================================================== */
+
+.account-breadcrumb {
+    font-family: $font;
+    ul {
+        li {
+            &:not(.is-active) {
+                a {
+                    font-weight: 500;
+                    color: $primary;
+                }
+            }
+            &.is-active {
+                a {
+                    color: $light-text;
+                }
+            }
+        }
+    }
+}
+
+.account-layout {
+    .media {
+        font-family: $font;
+        align-items: center;
+        .media-content {
+            span {
+                &:first-child {
+                    font-size: .9rem;
+                    color: $light-text;
+                }
+                &:nth-child(2) {
+                    color: $dark-text;
+                }
+            }
+        }
+        .media-right {
+            .default-link {
+                color: $primary;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Account schedule
+========================================================================== */
+
+.account-schedule {
+    .tabs-wrapper {
+        .tabs {
+            ul li {
+                &.is-active {
+                    a {
+                        color: $primary;
+                        border-color: $primary;
+                    }
+                }
+                a {
+                    font-family: $font;
+                    color: $light-text;
+                    border-width: 2px;
+                }
+            }
+        }
+    }
+}

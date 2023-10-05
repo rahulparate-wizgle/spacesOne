@@ -1,0 +1,86 @@
+<div class="container-fluid contactdata" >
+<div class="col-lg-6">
+  <div class="card">
+    <h3 class="heading contactdata">Contact Us</h3>
+    <p  class="contactdata">We will get back you asap!</p>
+    <div class="card-body">
+      <form [formGroup]="contactForm">
+          <div class="row">
+            <div class="col-12">
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Username</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="username" type="text" placeholder="Enter Username" formControlName="username">
+                  <span class="error-message">{{validationError.username}}</span>
+                </div>
+
+                <label class="col-md-3 col-form-label">Address</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="address" type="text" placeholder="Enter Username" formControlName="address">
+                  <span class="error-message">{{validationError.address}}</span>
+                </div>
+
+
+                <label class="col-md-3 col-form-label">Venue name</label>
+                <div class="col-md-9">
+                  <ng-select [items]="selectVenue" name="venueName" formControlName="venueName"
+                  ></ng-select>
+                  <span class="error-message">{{validationError.venueName}}</span>
+                </div>
+
+              </div>
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Email</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="email" type="text" placeholder="Enter email" formControlName="email" >
+                  <span class="error-message">{{validationError.email}}</span>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Mobile No.</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="mobNumber" type="number" placeholder="Enter Mobile No." formControlName="mobNumber">
+                  <span class="error-message">{{validationError.mobNumber}}</span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Enquiry Date:</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="enquiryDate" type="date" formControlName="enquiryDate">
+                  <span class="error-message">{{validationError.enquiryDate}}</span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Additional Message</label>
+                <div class="col-md-9">
+                <textarea type="text" cols="66" name="message" rows="3" placeholder="Please enter additional message.." formControlName="message"></textarea>
+                <span class="error-message">{{validationError.message}}</span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Status</label>
+                <div class="col-md-9">
+                  <ng-select [items]="selectValue" name="status" formControlName="status"
+                  ></ng-select>
+                  <span class="error-message">{{validationError.status}}</span>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-md-3 col-form-label">Internal Comment</label>
+                <div class="col-md-9">
+                  <input class="form-control" name="comment" type="string" placeholder="Enter Comment" formControlName="comment">
+                  <span class="error-message">{{validationError.comment}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ul class="list-inline wizard mb-0">
+            <li class="next list-inline-item float-end"><button class="btn btn-primary" (click)="postContactData($event)">Submit</button>
+            </li>
+          </ul>
+        </form>
+    </div>
+  </div>
+</div>
+</div>

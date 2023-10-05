@@ -1,0 +1,44 @@
+<div
+  class="mobile-sub-navigation"
+  x-data="initNavbarBottom()"
+  x-on:scroll.window="scroll()"
+  x-bind:class="{
+        '': isBottomNavActive,
+        'is-dismissed': !isBottomNavActive
+    }"
+>
+  <div class="mobile-sub-navigation--inner">
+    <div class="sub-links">
+      <a href="events.html" class="sub-link is-active">
+        <div>
+          <i data-feather="compass"></i>
+          <span>Explore</span>
+        </div>
+      </a>
+      <a x-show="$store.app.isLoggedIn === false" href="help-center.html" class="sub-link">
+        <div>
+          <i data-feather="life-buoy"></i>
+          <span>Help</span>
+        </div>
+      </a>
+      <a x-show="$store.app.isLoggedIn === false" href="login.html" class="sub-link">
+        <div>
+          <i data-feather="log-in"></i>
+          <span>Sign In</span>
+        </div>
+      </a>
+      <a x-show="$store.app.isLoggedIn === true" href="account-schedule.html" class="sub-link">
+        <div>
+          <i data-feather="calendar"></i>
+          <span>Schedule</span>
+        </div>
+      </a>
+      <a x-show="$store.app.isLoggedIn === true" href="account-main.html" class="sub-link">
+        <div>
+          <i data-feather="user"></i>
+          <span>Account</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

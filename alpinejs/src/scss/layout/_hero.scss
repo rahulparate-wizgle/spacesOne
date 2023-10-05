@@ -1,0 +1,321 @@
+/*! _hero.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Hero base styles
+    2. Media Queries
+    3. Hero video player
+*/
+
+
+/* ==========================================================================
+1. Hero base styles
+========================================================================== */
+
+.hero {
+    position: relative;
+    &.is-grey {
+        background: $widget-grey;
+    }
+    &.is-big {
+        min-height: 85vh;
+    }
+    &.is-big,
+    &.is-fullheight {
+        .hero-body {
+            display: flex;
+            align-items: center;
+            .hero-text {
+                .subtitle {
+                    max-width: 530px;
+                    &:not(.is-left) {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+            }
+        }
+    }
+    &.has-video {
+        position: relative;
+        .hero-overlay {
+            z-index: 2;
+            background: rgba($dark-text, 0.4);
+        }
+        .hero-body {
+            z-index: 3;
+        }
+    }
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba($dark-text, 0.6);
+        z-index: 0;
+    }
+    .hero-body {
+        .columns {
+            &.pushed-columns {
+                padding-top: 6rem;
+            }
+            &.pushed-columns-lg {
+                padding-top: 8rem;
+            }
+        }
+        .hero-text {
+            z-index: 2;
+            &.is-light {
+                .title,
+                .subtitle {
+                    color: $white;
+                }
+            }
+            .button {
+                min-width: 160px;
+            }
+        }
+        .hero-illustration {
+            display: block;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+        .hero-wide-illustration {
+            display: block;
+            max-width: 940px;
+            margin: 0 auto;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Media Queries
+========================================================================== */
+
+@media only screen and (max-width: 767px) {
+    .hero {
+        .hero-body {
+            .hero-text {
+                .button {
+                    min-width: 120px;
+                }
+            }
+        }
+        &.is-big {
+            .hero-body {
+                .hero-text {
+                    .title {
+                        &.is-1 {
+                            font-size: 2.5rem;
+                        }
+                    }
+                }
+            }
+        }
+        &.has-form {
+            .hero-body {
+                .hero-text {
+                    text-align: center;
+                    padding-top: 3.5rem;
+                    .title {
+                        font-size: 2.5rem;
+                    }
+                }
+            }
+        }
+        &.is-centered-mobile {
+            .hero-body {
+                .hero-text {
+                    text-align: center;
+                    .buttons {
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .hero {
+        &.is-big {
+            .hero-body {
+                .hero-text {
+                    .subtitle {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+            }
+        }
+        &.has-form {
+            .hero-body {
+                .hero-text {
+                    text-align: center;
+                    //padding-top: 3.5rem;
+                    .subtitle {
+                        margin-left: auto;
+                        margin-right: auto;
+                    }
+                }
+            }
+        }
+        &.is-centered-tablet-p {
+            .hero-body {
+                .hero-text {
+                    text-align: center;
+                    .subtitle {
+                        margin-left: auto !important;
+                        margin-right: auto !important;
+                    }
+                    .buttons {
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.faces-hero-wrapper {
+    padding-top: 4rem;
+}
+
+.hero-faces {
+    display: flex;
+    align-items: center;
+    .face-column {
+        width: 16.6%;
+        padding: 0 0.75rem;
+        &.is-2x {
+            width: 33.2%;
+        }
+        &.is-4x {
+            width: 66.4%;
+        }
+        .face-element {
+            position: relative;
+            min-height: 280px;
+            width: 100%;
+            border-radius: 1.5rem;
+            box-shadow: $light-box-shadow;
+            &:not(:last-child) {
+                margin-bottom: 1.5rem;
+            }
+            &.is-size-xs {
+                min-height: 100px;
+            }
+            &.is-size-sm {
+                min-height: 180px;
+            }
+            &.is-size-md {
+                min-height: 340px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .faces-side-wrapper {
+        padding-top: 4rem;
+        .hero-text {
+            text-align: center;
+        }
+    }
+    .hero-faces {
+        .face-column {
+            &:first-child,
+            &:nth-child(2),
+            &:nth-child(4) {
+                display: none;
+            }
+            &:nth-child(3),
+            &:nth-child(5) {
+                min-width: 50% !important;
+            }
+            .hero-faces {
+                .face-column {
+                    &:nth-child(2) {
+                        display: block;
+                        min-width: 100% !important;
+                        .face-element {
+                            border-radius: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+        &.is-side {
+            .face-column {
+                &:first-child {
+                    display: block;
+                    min-width: 50% !important;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .faces-side-wrapper {
+        .hero-text {
+            text-align: center;
+        }
+    }
+    .hero-faces {
+        .face-column {
+            &:nth-child(2) {
+                display: none;
+            }
+            &:nth-child(4) {
+                min-width: 33.3% !important;
+            }
+            .hero-faces {
+                .face-column {
+                    &:nth-child(2) {
+                        display: block;
+                        .face-element {
+                            border-radius: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+        &.is-side {
+            padding-top: 2rem;
+            .face-column {
+                &:nth-child(2) {
+                    min-width: 33.3% !important;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .faces-side-wrapper {
+        .hero-text {
+            .button {
+                min-width: 120px !important;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Hero video player
+========================================================================== */
+
+.hero-video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}

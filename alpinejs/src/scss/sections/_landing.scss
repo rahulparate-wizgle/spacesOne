@@ -1,0 +1,821 @@
+/*! _landing.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Landing Navigation
+    2. Landing page Hero
+    3. Landing stacks
+    4. Landing boxed features
+    5. Demo section
+    6. Demo item
+    7. Landing Features
+    8. CTA Section
+    9. Landing Footer
+*/
+
+
+/* ==========================================================================
+1. Landing Navigation
+========================================================================== */
+
+.landing-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    z-index: 5;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    &.is-scrolled {
+        background: $white;
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
+        .landing-navigation-inner {
+            .container {
+                .right {
+                    .button {
+                        opacity: 1;
+                        pointer-events: all;
+                    }
+                }
+            }
+        }
+    }
+    &.is-solid {
+        background: $white;
+    }
+    .landing-navigation-inner {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        padding: 0 1rem;
+        .container {
+            display: flex;
+            .left,
+            .right {
+                display: flex;
+                align-items: center;
+                height: 65px;
+                width: 25%;
+            }
+            .left {
+                .logo {
+                    display: block;
+                    max-width: 40px;
+                }
+                .logo-text {
+                    font-family: $font;
+                    font-size: 1rem;
+                    font-weight: 700;
+                    text-transform: uppercase;
+                    color: $dark-text;
+                    margin-left: 0.5rem;
+                }
+            }
+            .center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-grow: 2;
+                width: 50%;
+                .button {
+                    display: none;
+                    margin: 1rem;
+                    width: calc(100% - 2rem);
+                }
+                .landing-link {
+                    position: relative;
+                    display: inline-block;
+                    padding: 0.25rem 0;
+                    margin: 0 1rem;
+                    font-family: $font;
+                    font-size: 1.05rem;
+                    color: $medium-text;
+                    transition: color 0.3s;
+                    &:before {
+                        content: "";
+                        position: absolute;
+                        bottom: -4px;
+                        left: 2px;
+                        width: 50%;
+                        -webkit-transform-origin: right center;
+                        -ms-transform-origin: right center;
+                        transform-origin: right center;
+                        height: 3px;
+                        border-radius: 50px;
+                        background: $primary;
+                        -webkit-transform: scale(0, 1);
+                        -ms-transform: scale(0, 1);
+                        transform: scale(0, 1);
+                        -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        transition: -webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), -webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                    }
+                    &:hover,
+                    &.is-active {
+                        color: $primary;
+                        &:before {
+                            -webkit-transform-origin: left center;
+                            -ms-transform-origin: left center;
+                            transform-origin: left center;
+                            -webkit-transform: scale(1, 1);
+                            -ms-transform: scale(1, 1);
+                            transform: scale(1, 1);
+                        }
+                    }
+                }
+            }
+            .right {
+                justify-content: flex-end;
+                .button {
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.3s;
+                }
+                .navbar-burger {
+                    height: 65px;
+                    width: 65px;
+                    display: none;
+                    justify-content: center;
+                    align-items: center;
+                    background: none !important;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .landing-navigation {
+        .landing-navigation-inner {
+            padding-right: 0;
+            .container {
+                .left {
+                    .logo-text {
+                        display: none;
+                    }
+                }
+                .center {
+                    position: fixed;
+                    top: 64px;
+                    left: 0;
+                    display: none;
+                    width: 100%;
+                    flex-direction: column;
+                    background: $white;
+                    border-bottom: 1px solid $border;
+                    &.is-mobile-active {
+                        display: flex;
+                    }
+                    .landing-link {
+                        padding-top: 0.75rem;
+                        padding-bottom: 0.75rem;
+                    }
+                    .button {
+                        display: flex;
+                    }
+                }
+                .right {
+                    margin-left: auto;
+                    .button {
+                        display: none;
+                    }
+                    .navbar-burger {
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .landing-navigation {
+        .landing-navigation-inner {
+            .container {
+                .right {
+                    .button {
+                        display: flex !important;
+                        opacity: 1 !important;
+                        pointer-events: all !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Landing page Hero
+========================================================================== */
+
+.product-screenshots {
+    position: relative;
+    overflow: hidden;
+    .bg-circle {
+        position: absolute;
+        top: 0;
+        right: -300px;
+        height: 800px;
+        width: 800px;
+        border-radius: 50%;
+        background: $primary;
+        transform: scale(1.5);
+        z-index: 0;
+    }
+    .container {
+        position: static;
+    }
+    .midtitle {
+        font-family: $font;
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: $primary;
+        text-transform: uppercase;
+        padding: 0.25rem 0;
+    }
+    .subtitle {
+        color: $medium-text;
+    }
+    .buttons {
+        .button {
+            height: 48px;
+            min-width: 140px;
+        }
+    }
+}
+
+.screenshots-wrap {
+    min-height: 100vh;
+}
+
+.screenshots-group {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    width: 1080px;
+    transform: rotate(-45deg);
+    z-index: 2;
+    .screenshot {
+        position: relative;
+        display: block;
+        width: 340px;
+        height: auto;
+        margin: 0.5rem;
+        object-fit: contain;
+        cursor: pointer;
+        border-radius: 0.65rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+        &:first-child {
+            visibility: hidden;
+        }
+        &:first-child,
+        &:nth-child(4),
+        &:nth-child(7),
+        &:nth-child(10) {
+            top: -3.5rem;
+        }
+        &:nth-child(2),
+        &:nth-child(5),
+        &:nth-child(8),
+        &:nth-child(11) {
+            top: 2rem;
+        }
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: $light-box-shadow;
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .product-screenshots {
+        .bg-circle {
+            top: initial;
+            bottom: -30%;
+        }
+        .columns {
+            padding-top: 4rem;
+            text-align: center;
+        }
+        .column {
+            .py-6 {
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                padding-bottom: 0 !important;
+            }
+        }
+        .subtitle {
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .buttons {
+            justify-content: center;
+        }
+    }
+    .screenshots-wrap {
+        min-height: 90vh;
+        .screenshots-group {
+            right: -100%;
+            bottom: -30%;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+    .product-screenshots {
+        .columns {
+            padding-top: 4rem;
+            text-align: center;
+        }
+        .subtitle {
+            max-width: 540px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .buttons {
+            justify-content: center;
+        }
+    }
+    .screenshots-wrap {
+        min-height: 65vh;
+        .screenshots-group {
+            bottom: -30%;
+        }
+        .columns {
+            display: flex;
+            .py-6 {
+                padding-left: 2.5rem;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Landing stacks
+========================================================================== */
+
+.landing-stacks {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 16px 0 30px 0;
+    .landing-stack {
+        height: 54px;
+        width: 54px;
+        min-width: 54px;
+        border-radius: 50%;
+        background: $white;
+        border: 1px solid $fade-grey;
+        box-shadow: $light-box-shadow;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 6px;
+        img {
+            display: block;
+            height: 40px;
+            width: 40px;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .product-screenshots {
+        .bg-circle {
+            top: initial;
+            bottom: -30%;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .product-screenshots {
+        .bg-circle {
+            right: -53% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 1300px) {
+    .product-screenshots {
+        .bg-circle {
+            right: -35%;
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Landing boxed features
+========================================================================== */
+
+.landing-boxed-features {
+    padding: 40px 0;
+    .card {
+        padding: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 1rem;
+        .flex-cell {
+            width: 25%;
+            border-right: 1px solid $border;
+            text-align: center;
+            padding: 24px 16px;
+            &.is-bordered {
+                border-bottom: 1px solid $border;
+            }
+            &.no-border-edge {
+                border-right: none;
+            }
+            i {
+                font-size: 2.2rem;
+                color: $primary;
+            }
+            h3 {
+                font-weight: 500;
+                color: $dark-text;
+            }
+            p {
+                font-size: 0.95rem;
+                color: $light-text;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .landing-boxed-features {
+        .card {
+            .flex-cell {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid $border;
+                &:last-child {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .landing-boxed-features {
+        .card {
+            padding: 1rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+5. Demo section
+========================================================================== */
+
+.demo-section {
+    .demo-section-title {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+        img {
+            display: block;
+            width: 100%;
+            max-width: 100px;
+        }
+        .title-meta {
+            margin-left: 12px;
+            line-height: 1.2;
+            h3 {
+                font-family: $font-main;
+                font-weight: 500;
+                font-size: 1.3rem;
+                color: $dark-text;
+            }
+            p {
+                font-family: $font;
+                font-size: 1.1rem;
+                color: $light-text;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+6. Demo item
+========================================================================== */
+
+.demo-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: $light-box-shadow;
+    &:hover {
+        .circle-overlay {
+            transform: scale(35);
+        }
+        .demo-title {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0 !important;
+        }
+        .demo-link {
+            color: $white;
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0 !important;
+        }
+    }
+    .new-tag {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: red;
+        color: $white;
+        font-family: $font;
+        padding: 6px 16px;
+        border-radius: 8px;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        z-index: 8;
+    }
+    img {
+        border-radius: 10px;
+        display: block;
+    }
+    .circle-overlay {
+        position: absolute;
+        top: -60px;
+        left: -60px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: $primary;
+        transform: scale(1);
+        transition: all 0.5s;
+        z-index: 1;
+    }
+    .demo-info {
+        position: absolute;
+        margin: 0 auto;
+        top: 35%;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        color: $white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .demo-title {
+        color: $white;
+        font-family: $font-main;
+        font-size: 1.5rem;
+        font-weight: 600;
+        padding-bottom: 0;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        transition-delay: 0.1s;
+    }
+    .demo-link {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        transition-delay: 0.2s;
+        a {
+            color: $white;
+            font-size: 1rem;
+            i {
+                position: relative;
+                top: 2px;
+                opacity: 0;
+                transform: translateX(0);
+                transition: all 0.3s ease-out;
+            }
+            &:hover i {
+                opacity: 1;
+                transform: translateX(10px);
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+7. Landing Features
+========================================================================== */
+
+.landing-features {
+    .long-screenshot {
+        display: block;
+        border: 1px solid $border;
+        border-radius: 0.75rem;
+        box-shadow: $light-box-shadow;
+    }
+    .landing-feature {
+        padding-right: 2rem;
+        display: flex;
+        .svg-icon {
+            margin-right: 1rem;
+        }
+        .feature-meta {
+            .top-title {
+                font-family: $font;
+                font-weight: 500;
+                font-size: 0.8rem;
+                color: $primary;
+                text-transform: uppercase;
+            }
+            p {
+                color: $medium-text;
+                a {
+                    color: $primary;
+                    font-weight: 500;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .landing-features {
+        position: relative;
+        overflow: hidden;
+        .long-screenshot {
+            position: absolute;
+            top: 0;
+            right: -130px;
+            z-index: 0;
+        }
+        .landing-feature {
+            position: relative;
+            flex-direction: column;
+            padding: 1.5rem;
+            background: $white;
+            border: 1px solid $border;
+            border-radius: 0.65rem;
+            box-shadow: $light-box-shadow;
+            margin-bottom: 2rem;
+            z-index: 1;
+        }
+        .py-8 {
+            display: none;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .landing-features {
+        .long-screenshot {
+            position: sticky;
+            top: 110px;
+        }
+        .py-8 {
+            padding-top: 2rem !important;
+            padding-bottom: 2rem !important;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    .landing-features {
+        .long-screenshot {
+            position: sticky;
+            top: 110px;
+        }
+    }
+}
+
+
+/* ==========================================================================
+8. CTA Section
+========================================================================== */
+
+.landing-cta-wrapper {
+    padding-bottom: 3rem;
+    .cta-title {
+        text-align: center;
+        h3 {
+            font-family: $font-main;
+            font-weight: 300;
+            font-size: 1.5rem;
+            color: $light-text;
+            margin-bottom: 20px;
+        }
+        .custom-button {
+            display: flex;
+            align-items: center;
+            margin: 10px auto;
+            max-width: 200px;
+            font-family: $font;
+            border: 2px solid #d3f4ed;
+            border-radius: 100px;
+            background: #d3f4ed;
+            box-shadow: $light-box-shadow;
+            transition: all 0.3s;
+            img {
+                display: block;
+                height: 50px;
+                width: 50px;
+            }
+            span {
+                display: block;
+                font-family: $font;
+                font-weight: 600;
+                font-size: 1rem;
+                color: darken(#8edfcf, 18%);
+                margin-left: 22px;
+                transition: color 0.3s;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+9. Landing Footer
+========================================================================== */
+
+.landing-footer {
+    padding: 3rem 1.5rem !important;
+    background: $sidebar;
+    .footer-flex {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .Venues.One {
+            padding: 5px 0;
+            .logo,
+            .logo-text {
+                display: block;
+                color: $white;
+            }
+            .logo {
+                height: 45px;
+                margin: 10px auto;
+            }
+            .logo-text {
+                display: block;
+                font-family: $font;
+                font-weight: 300;
+                text-transform: uppercase;
+                color: $white;
+                letter-spacing: 4px;
+                font-size: 0.9rem;
+            }
+        }
+        .ninja {
+            color: $white;
+            font-family: $font;
+            font-size: 0.75rem;
+            div {
+                margin: 5px 0;
+            }
+            .made-by {
+                display: flex;
+                align-items: center;
+                font-size: 0.95rem;
+                color: $white;
+                padding: 1rem 0;
+            }
+            svg {
+                width: 14px;
+                height: 14px;
+                fill: $danger;
+                stroke: $danger;
+            }
+            .love {
+                margin: 0 5px;
+            }
+            a {
+                font-size: 0.85rem;
+                color: $primary;
+                svg {
+                    position: relative;
+                    top: 4px;
+                    left: 8px;
+                    width: 130px;
+                    height: 52px;
+                    stroke: $white;
+                    fill: $white;
+                    transition: all 0.3s;
+                }
+                &:hover {
+                    opacity: 0.7;
+                    svg {
+                        stroke: #be84f9;
+                        fill: #be84f9;
+                    }
+                }
+            }
+        }
+    }
+}

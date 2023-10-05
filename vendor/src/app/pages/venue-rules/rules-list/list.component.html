@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Rules List
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Rules List</li>
+      </ol>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-end">
+          <div class="flex-shrink-0 d-flex gap-1 w-100 justify-content-end">
+            <div class="col-xxl-3 col-lg-6" *ngIf="rulesData?.length > 0">
+              <input class="form-control" type="text" [(ngModel)]="filterBy" placeholder="Eg. Pet not allowed"
+                (keyup)="filter()">
+            </div>
+            <div class="col-xxl-2 col-lg-6">
+              <button type="button" class="btn btn-primary w-100"
+                (click)="router.navigate(['venue-rules/rules-form'])">New Rule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3" *ngIf="filteredUsers?.length > 0">
+    <div class="col-12">
+      <div class="card">
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle nowrap">
+              <thead>
+                <tr>
+                  <th>Icon</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">Venue Types</th>
+                  <th scope="col" style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of filteredUsers">
+                  <td>
+                    <i [class]="item.icon"></i>
+                  </td>
+                  <td scope="row">{{item.name}}</td>
+                  <td>{{item.description}}</td>
+
+                  <td class="d-flex gap-1">
+                    <span *ngFor="let type of item.type" class="badge badge-soft-primary">{{type}}</span>
+                  </td>
+                  <td>
+                    <ul class="list-unstyled hstack gap-1 mb-0 d-flex justify-content-end">
+                      <!-- <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
+                        <a routerLink="/enquiry-details" class="btn btn-sm btn-soft-primary"
+                          (click)="onDetails(item.id)"><i class="mdi mdi-eye-outline"></i></a>
+                      </li> -->
+                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-soft-info" (click)="onEdit(item.id)"><i
+                            class="mdi mdi-pencil-outline"></i></a>
+                      </li>
+                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete"
+                        (click)="deleteRulesData(item.id,$event)">
+                        <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i
+                            class="mdi mdi-delete-outline"></i></a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="table-bordered " *ngIf="filteredUsers?.length == 0"
+              style="text-align: left; margin: 30px; padding: 30px;">
+              <h4>No Data Available...</h4>
+            </div>
+          </div>
+          <div class="row justify-content-between align-items-center" *ngIf="filteredUsers?.length > 0">
+            <div class="col-auto me-auto">
+              <p class="text-muted mb-0">Showing <b>{{service.startIndex}}</b> to <b>{{service.endIndex}}</b> of
+                <b>{{service.totalRecords}}</b> entries
+              </p>
+            </div>
+            <div class="col-auto">
+              <div class="card d-inline-block ms-auto mb-0">
+                <div class="card-body p-2">
+                  <nav aria-label="Page navigation example" class="mb-0">
+                    <!-- <ul class="pagination mb-0">
+                      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    </ul> -->
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <!--end col-->
+          </div>
+          <!--end row-->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3" *ngIf="filteredUsers?.length == 0">
+    <div class="col-12 search-no-data">
+      <i class="bx bx-sleepy"></i>
+      <h6> No rules found matching your search</h6>
+    </div>
+  </div>
+</div>

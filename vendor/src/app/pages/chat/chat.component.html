@@ -1,0 +1,260 @@
+<div class="container-fluid">
+    <app-page-title title="Enquiry" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+    <div class="row flex-nowrap">
+        <div class="chat-leftsidebar col-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="pt-2 pb-4">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0 align-self-center me-3">
+                                <img src="assets/images/users/avatar-1.jpg" class="avatar-xs rounded-circle" alt="">
+                            </div>
+                            <div class="flex-grow-1">
+                                <h5 class="font-size-15 mb-1">Pratiksha Borkar</h5>
+                                <p class="text-muted mb-0"><i class="mdi mdi-circle text-success align-middle me-1"></i> Active</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="search-box chat-search-box py-2">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search..." (keyup)="ContactSearch()" id="searchContact" autocomplete="off" style="background: #eff2f7;
+                            padding: 10px 35px;">
+                            <i class="bx bx-search-alt search-icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="chat-leftsidebar-nav">
+                        <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav-pills nav-justified">
+                            <li [ngbNavItem]="1">
+
+                                <ng-template ngbNavContent>
+                                    <div>
+                                        <!-- <input [(ngModel)]="channelName" />
+                                        <button (click)="createOpenChannel(channelName,channelName)">
+                                        Create Channel
+                                        </button> -->
+                                        <ngx-simplebar style="position: relative; height: 510px;" #scrollEle>
+                                            <ul class="list-unstyled chat-list">
+                                                <li class="" *ngFor="let channel of channels">
+                                                    <a href="javascript: void(0);" (click)="selectChannel(channel._url)">
+                                                        <div class="d-flex">
+                                                            <div class="flex-shrink-0 align-self-center me-3">
+                                                                <i class="mdi mdi-circle text-{{chatData[0].color}} font-size-10"></i>
+                                                            </div>
+                                                            <div class="avatar-xs align-self-center me-3">
+                                                                <span class="avatar-title rounded-circle bg-soft bg-primary text-primary">
+                                                                  {{channel._name.charAt(0)}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="flex-grow-1 overflow-hidden">
+                                                                <h5 class="text-truncate font-size-14 mb-1">{{ channel._name }}</h5>
+                                                                <span>{{getCustomerNameForVendor(channel)}}</span>
+                                                                <p class="text-truncate mb-0">{{channel?.newMessageText}}</p>
+                                                            </div>
+                                                            <div class="font-size-11"> <i *ngIf="channel.isNewMessage == true" class="bx bx-cog"></i></div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+
+                                            </ul>
+                                        </ngx-simplebar>
+                                    </div>
+                                </ng-template>
+                            </li>
+                        </ul>
+                        <div [ngbNavOutlet]="nav" class="py-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-chat col-6">
+            <div *ngIf="currentChannel" class="card br-2">
+                <div class="p-4 border-bottom">
+                    <div class="row">
+                        <div class="col-md-4 col-9">
+                            <div class="d-flex">
+                                <div class="me-3">
+                                    <img src="assets/images/users/avatar-1.jpg" alt="" class="avatar-xs rounded-circle">
+                                </div>
+                                <div>
+                                    <h5 class="font-size-15 mb-1"> {{currentChannel?._name}}</h5>
+                                    <p class="text-muted mb-0"><i class="mdi mdi-circle text-success align-middle me-1"></i><span>{{getCustomerNameForVendor(currentChannel)}}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-3">
+                            <ul class="list-inline user-chat-nav text-end mb-0">
+                                <li class="list-inline-item d-none d-sm-inline-block">
+                                    <div class="dropdown" ngbDropdown>
+                                        <button class="btn nav-btn dropdown-toggle" ngbDropdownToggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="bx bx-search-alt-2"></i>
+                                      </button>
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-md" ngbDropdownMenu>
+                                            <form class="p-3">
+                                                <div class="m-0">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+
+                                                        <button class="btn btn-primary" type="submit"><i class="mdi mdi-magnify"></i></button>
+
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="chat-conversation p-3">
+                        <ngx-simplebar style="height: 500px" #scrollRef>
+                            <ul class="list-unstyled">
+                                <li *ngFor="let message of MessageList" [ngClass]="message.sender.userId == myUserId ? 'right' : 'left'">
+                                    <div class="conversation-list">
+
+                                        <div *ngIf="message.messageType != 'file'" class="ctext-wrap">
+                                            <h6  class="font-size-14">
+                                                {{message.message}}
+                                            </h6>
+                                            <p class="chat-time mb-0 font-size-10"><i class="bx bx-time-five align-middle me-1"></i>{{getDateFromStamp(message.createdAt)}}</p>
+                                        </div>
+
+                                        <div *ngIf="message.messageType == 'file'" class="ctext-wrap">
+                                          <img style="height: 100px;" [src]="message.url" >
+                                          <p> Attachment  <i (click)="downloadFile(message.url)" class="mdi mdi-download" ></i>  </p>
+                                          <p class="chat-time mb-0 font-size-10"><i class="bx bx-time-five align-middle me-1"></i>{{getDateFromStamp(message.createdAt)}}</p>
+                                      </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ngx-simplebar>
+                    </div>
+                    <div class="p-3 chat-input-section">
+
+                        <form class="row">
+                            <div class="col pe-0">
+                              <span *ngIf="attachedFile != null"> File Attached </span>
+                                <div class="position-relative">
+                                    <input type="text" name="messageText" class="form-control chat-input p-3" placeholder="Enter Message..." [(ngModel)]="messageText" [ngClass]="{'is-invalid': chatSubmit && form.message.errors}" [(ngModel)]="emoji" (blur)="onBlur()" (focus)="onFocus()">
+                                    <div *ngIf="chatSubmit && form.message.errors" class="invalid-feedback">
+                                        <span *ngIf="form.message.errors.required">This value is required.</span>
+                                    </div>
+                                    <div class="chat-input-links">
+                                      <input type="file" id="file-uploader" style="display: none;" (change)="fileUploaded($event)"  />
+                                        <ul class="list-inline mb-0">
+                                            <li class="list-inline-item"><a (click)="openFileUploader()" href="javascript: void(0);" data-toggle="tooltip" placement="top" ngbTooltip="Files"><i class="mdi mdi-file-document-outline"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button (click)="sendMessage()" type="submit" class="btn btn-primary btn-rounded chat-send w-md p-3"><span
+                    class="d-none d-sm-inline-block me-2">Send</span> <i class="mdi mdi-send"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="no-chat-details card p-5" *ngIf="!currentChannel" style="height: 700px;">
+                <div class="card-body d-flex justify-content-center align-items-center flex-column">
+                    <i class="bx bx-chat mb-4 h2 text-primary"></i>
+                    <h5 class="font-size-14"> Select a Enquiry to view the messages</h5>
+                    <p class="text-muted mb-0 font-size-12 text-center">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+
+            <div class="card">
+                <div class="border-bottom p-3 px-4 d-flex justify-content-between align-items-end">
+                    <h6 class="fw-semibold text-uppercase mb-0">Overview</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div><a class="btn btn-primary btn-label waves-light p-3" href="mailto:"><i   class="bx bx-envelope label-icon"></i></a></div>
+                        <div><a class="btn btn-success btn-label waves-light p-3" href="tel:"><i   class="bx bx-phone label-icon"></i></a></div>
+                    </div>
+                </div>
+                <div *ngIf="currentChannel" class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="col" class="pl-0">Customer Name</th>
+                                    <td scope="col">{{getCustomerNameForVendor(currentChannel)}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="pl-0">Email</th>
+                                    <td scope="col">jaosn@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <th scope="col" class="pl-0">Mobile Number</th>
+                                    <td scope="col">+91 8055844829</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Enquiry Date</th>
+                                    <td>NA</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Booking Date</th>
+                                    <td>{{currentEnquiry?.bookingDate}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">No of People</th>
+                                    <td>{{currentEnquiry?.numberOfPeople}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Message</th>
+                                    <td>{{currentEnquiry?.additionalMessage}}</td>
+                                </tr>
+                                <!-- <tr>
+                                    <th scope="row">Status</th>
+                                    <ng-select name="status" ngdefaultcontrol="" placeholder="Select Status" bindlabel="status" bindvalue="id" ng-reflect-placeholder="Select Status" ng-reflect-bind-label="status" ng-reflect-bind-value="id" ng-reflect-name="status" ng-reflect-items="[object Object],[object Object"
+                                        class="ng-select ng-select-single ng-select-searchable ng-select-clearable ng-untouched ng-pristine ng-valid">
+                                        <div class="ng-select-container">
+                                            <div class="ng-value-container">
+                                                <div class="ng-placeholder">Select Status</div>
+                                                <div role="combobox" aria-haspopup="listbox" class="ng-input" aria-expanded="false"><input aria-autocomplete="list" type="text" autocorrect="off" autocapitalize="off" autocomplete="a0d0b6f7a835"></div>
+                                            </div>
+                                            <span class="ng-arrow-wrapper"><span class="ng-arrow"></span></span>
+                                        </div>
+
+                                    </ng-select>
+                                </tr> -->
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="border-bottom p-3 px-4 d-flex justify-content-between align-items-end">
+                    <h6 class="fw-semibold text-uppercase mb-0">Venue Details</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div><a class="btn btn-primary btn-label waves-light p-3" href="mailto:"><i class="bx bx-right-arrow-alt label-icon" style="transform: rotate(-45deg);"></i></a></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/f7/b9/d4/executive-suite.jpg?w=700&h=-1&s=1" class="img-fluid" style="border-radius: 15px;">
+
+                    <div class="mt-3">
+                        <h5> The Creative Kitchen Radisson Blu </h5>
+                    </div>
+
+                    <div class="list-inline-item">
+                        <p class="font-size-12 mb-3"><i class="uil uil-wallet"></i>Packages starting at <span class="text-primary font-size-15 " style="font-weight: 900;">₹ 860 / person</span></p>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

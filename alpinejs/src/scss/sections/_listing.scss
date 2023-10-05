@@ -1,0 +1,2247 @@
+/*! _listing.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Listing navigation
+    2. Listing title
+    3. Listing cover
+    4. Listing details
+    5. Listing features
+    6. Listing content
+    7. Listing participation
+    8. Listing requirements
+    9. Listing calendar
+    10. Listing booking form
+    11. Listing host
+    12. Listing benefits
+    13. Host comments
+    14. Listing Map
+    15. Listing dates
+    16. Listing guidelines
+    17. More listings
+    18. Media Queries
+*/
+
+
+/* ==========================================================================
+1. Listing navigation
+========================================================================== */
+
+.listing-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    transform: translateY(-100%);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
+    background: $white;
+    z-index: 12;
+    transition: all 0.3s;
+    &.is-active {
+        transform: translateY(0);
+    }
+    .listing-nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 70px;
+        .left {
+            display: flex;
+            .nav-item {
+                display: flex;
+                align-items: center;
+                height: 70px;
+                margin-right: 1.5rem;
+                border-bottom: 3px solid transparent;
+                &:hover {
+                    border-color: $dark-text;
+                }
+                span {
+                    font-family: $font;
+                    font-weight: 500;
+                    color: $dark-text;
+                }
+            }
+        }
+        .right {
+            display: flex;
+            justify-content: flex-end;
+            a {
+                display: flex;
+                align-items: center;
+                margin-left: 1rem;
+                font-family: $font;
+                font-weight: 500;
+                color: $dark-text;
+                &.button {
+                    margin-left: 1.5rem;
+                }
+                span {
+                    position: relative;
+                    &:after {
+                        content: "" !important;
+                        border-bottom: 1px solid rgb(113, 113, 113) !important;
+                        bottom: 1px !important;
+                        left: 0px !important;
+                        position: absolute !important;
+                        width: 100% !important;
+                    }
+                }
+                svg {
+                    height: 16px;
+                    width: 16px;
+                    margin-right: 0.25rem;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Listing title
+========================================================================== */
+
+.listing-title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    .left {
+        h2 {
+            margin-bottom: 0 !important;
+        }
+        div {
+            display: flex;
+        }
+        a {
+            display: flex;
+            align-items: center;
+            font-family: $font;
+            font-weight: 500;
+            color: $dark-text;
+            &:first-child {
+                margin-right: 1rem;
+            }
+            &:nth-child(2) {
+                position: relative;
+                &:after {
+                    content: "" !important;
+                    border-bottom: 1px solid rgb(113, 113, 113) !important;
+                    bottom: 1px !important;
+                    left: 0px !important;
+                    position: absolute !important;
+                    width: 100% !important;
+                }
+            }
+            svg {
+                height: 16px;
+                width: 16px;
+                margin-right: 0.25rem;
+                stroke: #ffb536;
+                fill: #ffb536;
+            }
+        }
+    }
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        a {
+            display: flex;
+            align-items: center;
+            margin-left: 1rem;
+            font-family: $font;
+            font-weight: 500;
+            color: $dark-text;
+            span {
+                position: relative;
+                &:after {
+                    content: "" !important;
+                    border-bottom: 1px solid rgb(113, 113, 113) !important;
+                    bottom: 1px !important;
+                    left: 0px !important;
+                    position: absolute !important;
+                    width: 100% !important;
+                }
+            }
+            svg {
+                height: 16px;
+                width: 16px;
+                margin-right: 0.25rem;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Listing cover
+========================================================================== */
+
+.listing-cover-wrapper {
+    position: relative;
+    height: 380px;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    &.is-1 {
+        .listing-cover {
+            &:first-child {
+                width: 100%;
+                margin-right: 0;
+            }
+            &:not(:first-child) {
+                display: none;
+            }
+        }
+        .all-photos-button {
+            display: none;
+        }
+    }
+    &.is-2 {
+        .listing-cover {
+            height: 100%;
+            &:first-child {
+                width: calc(50% - 4px);
+                margin-right: 4px;
+            }
+            &:nth-child(2) {
+                width: calc(50% - 4px);
+                margin-left: 4px;
+                margin-right: 0;
+            }
+            &:not(:first-child):not(:nth-child(2)) {
+                display: none;
+            }
+        }
+        .all-photos-button {
+            display: none;
+        }
+    }
+    &.is-3 {
+        .listing-cover {
+            height: 100%;
+            &:first-child {
+                width: calc(33.3% - 4px);
+                margin-right: 4px;
+            }
+            &:nth-child(2) {
+                width: calc(33.3% - 4px);
+                margin-left: 4px;
+            }
+            &:nth-child(3) {
+                width: calc(33.3% - 4px);
+                margin-left: 4px;
+            }
+            &.is-container {
+                margin-right: 0;
+                .listing-subcover {
+                    &:first-child {
+                        height: 100%;
+                        margin-bottom: 0;
+                    }
+                    &:nth-child(2) {
+                        display: none;
+                    }
+                }
+            }
+            &:not(:first-child):not(:nth-child(2)):not(:nth-child(3)) {
+                display: none;
+            }
+        }
+        .all-photos-button {
+            display: none;
+        }
+    }
+    &.is-4 {
+        .listing-cover {
+            height: 100%;
+            &:first-child {
+                width: calc(33.3% - 4px);
+                margin-right: 4px;
+            }
+            &:nth-child(2) {
+                width: calc(33.3% - 4px);
+                margin-left: 4px;
+            }
+            &:nth-child(3) {
+                width: calc(33.3% - 4px);
+                margin-left: 4px;
+                margin-right: 0;
+            }
+            &:nth-child(4) {
+                display: none;
+            }
+        }
+        .all-photos-button {
+            display: none;
+        }
+    }
+    .listing-cover {
+        height: 100%;
+        background: $light-text;
+        &:first-child {
+            width: calc(34% - 4px);
+            margin-right: 4px;
+        }
+        &:nth-child(2) {
+            width: calc(26% - 8px);
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+        &:nth-child(3) {
+            width: calc(18% - 8px);
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+        &:nth-child(4) {
+            width: calc(22% - 4px);
+            margin-left: 4px;
+        }
+        .listing-subcover {
+            &:first-child {
+                margin-bottom: 8px;
+                height: calc(50% - 4px);
+            }
+            &:nth-child(2) {
+                margin-top: 8px;
+                height: calc(50% - 4px);
+            }
+        }
+        &.is-container {
+            background: none;
+        }
+    }
+    .listing-cover,
+    .listing-subcover {
+        display: block;
+    }
+    .all-photos-button {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: $primary;
+        border: 1px solid $primary;
+    }
+}
+
+
+/* ==========================================================================
+4. Listing details
+========================================================================== */
+
+.listing-details {
+    padding-bottom: 3rem;
+    border-bottom: 1px solid $border;
+}
+
+.listing-subtitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid $border;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    .left {
+        h3 {
+            font-family: $font-main;
+        }
+    }
+    .right {
+        display: flex;
+        justify-content: flex-end;
+        >a img {
+            display: block;
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+        }
+    }
+}
+
+
+/* ==========================================================================
+5. Listing features
+========================================================================== */
+
+.listing-features {
+    border-bottom: 1px solid $border;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    .listing-feature {
+        display: flex;
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+        .la,
+        .las {
+            font-size: 1.75rem;
+        }
+        .meta {
+            margin-left: 0.75rem;
+            span {
+                display: block;
+                &:first-child {
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    font-family: $font-main;
+                    color: $dark-text;
+                }
+                &:nth-child(2) {
+                    font-family: $font;
+                    color: $medium-text;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+6. Listing content
+========================================================================== */
+
+.translate-block {
+    margin: 2rem 0 1.25rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid $border;
+    padding: 1.25rem;
+    border-radius: 0.75rem;
+    i {
+        font-size: 2.25rem;
+    }
+}
+
+.listing-content {
+    border-bottom: 1px solid $border;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    p {
+        color: $medium-text;
+        margin-bottom: 1rem;
+    }
+}
+
+
+/* ==========================================================================
+7. Listing participation
+========================================================================== */
+
+.listing-participation {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid $border;
+    .participation-boxes {
+        padding: 1.5rem 0;
+        .columns {
+            .column {
+                padding: 0.35rem;
+            }
+        }
+        .participation-box {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border: 1px solid $border;
+            border-radius: 0.75rem;
+            height: 100%;
+            h4 {
+                font-family: $font;
+                font-weight: 500;
+            }
+            i {
+                font-size: 2.25rem;
+                margin-bottom: 0.75rem;
+            }
+            p {
+                font-size: 0.9rem;
+                color: $medium-text;
+                padding: 1rem 0;
+            }
+            a {
+                &.underlink {
+                    display: inline-block;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+8. Listing requirements
+========================================================================== */
+
+.listing-requirements,
+.listing-amenities {
+    &:not(:last-child) {
+        padding-bottom: 2rem;
+    }
+    .requirements-list {
+        padding: 1.5rem 0;
+        .requirements-item {
+            display: flex;
+            align-items: center;
+            font-family: $font;
+            &:not(:last-child) {
+                margin-bottom: 1rem;
+            }
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1.6px solid $medium-text;
+                border-radius: 50%;
+                height: 32px;
+                width: 32px;
+                min-width: 32px;
+                margin-right: 0.75rem;
+                svg {
+                    height: 16px;
+                    width: 16px;
+                }
+            }
+        }
+    }
+    .amenities-list {
+        padding: 1.5rem 0;
+        display: flex;
+        flex-wrap: wrap;
+        .amenities-item {
+            display: flex;
+            align-items: center;
+            margin: 0.75rem 0.5rem;
+            width: calc(50% - 1rem);
+            font-family: $font;
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 32px;
+                width: 32px;
+                min-width: 32px;
+                margin-right: 0.75rem;
+                font-size: 2rem;
+                svg {
+                    height: 28px;
+                    width: 28px;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+9. Listing participants
+========================================================================== */
+
+.listing-participants {
+    padding-top: 2rem;
+    border-top: 1px solid $border;
+    .participants-list {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 2rem 0;
+        .participant-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            img {
+                display: block;
+                height: 42px;
+                width: 42px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+9. Listing calendar
+========================================================================== */
+
+.listing-calendar {
+    padding-top: 2rem;
+    border-top: 1px solid $border;
+    .listing-calendar-inner {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2.5rem;
+        >input {
+            width: 50%;
+            display: none;
+        }
+    }
+    .qs-datepicker-container {
+        position: static;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        z-index: 0;
+    }
+}
+
+
+/* ==========================================================================
+10. Listing booking form
+========================================================================== */
+
+.sticky-outer {
+    position: relative;
+    height: 100%;
+}
+
+.sticky-wrapper {
+    position: sticky !important;
+    top: 110px !important;
+    z-index: 1 !important;
+    display: inline-block !important;
+    width: 100% !important;
+    padding-right: 1px !important;
+    .report-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        font-family: $font;
+        color: $medium-text;
+        svg {
+            height: 18px;
+            width: 18px;
+            margin-right: 0.5rem;
+        }
+        span {
+            position: relative;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                border-top: 1px solid $medium-text;
+            }
+        }
+    }
+}
+
+.booking-card {
+    border-radius: 12px;
+    padding: 1.5rem;
+    overflow: visible;
+    .head {
+        &.is-flex {
+            display: flex;
+            align-items: center;
+        }
+        span,
+        a {
+            display: inline-block;
+        }
+        >span {
+            font-family: $font-main;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: $dark-text;
+            small {
+                font-size: 0.95rem;
+                font-weight: 500;
+                color: $medium-text;
+            }
+        }
+        >a {
+            position: relative;
+            font-family: $font;
+            color: $medium-text;
+            transition: color 0.3s;
+            &:after {
+                content: "" !important;
+                border-bottom: 1px solid rgb(113, 113, 113) !important;
+                bottom: 1px !important;
+                left: 0px !important;
+                position: absolute !important;
+                width: 100% !important;
+            }
+            &:hover {
+                color: $primary;
+                &:after {
+                    border-color: $primary !important;
+                }
+            }
+        }
+        .rating {
+            margin-left: auto;
+            a {
+                position: relative;
+                display: flex;
+                align-items: center;
+                font-family: $font;
+                font-size: 0.9rem;
+                font-weight: 500;
+                color: $dark-text;
+                &::after {
+                    content: "" !important;
+                    border-bottom: 1px solid rgb(113, 113, 113) !important;
+                    bottom: 1px !important;
+                    left: 0px !important;
+                    position: absolute !important;
+                    width: 100% !important;
+                }
+                svg {
+                    height: 16px;
+                    width: 16px;
+                    margin-right: 0.25rem;
+                    stroke: #ffb536;
+                    fill: #ffb536;
+                }
+            }
+        }
+    }
+    .dual-picker-wrapper {
+        position: relative;
+        .dual-picker-panel {
+            position: absolute;
+            top: -1.5rem;
+            right: -1.5rem;
+            background: $white;
+            width: 660px;
+            min-height: 490px;
+            height: 490px;
+            border-radius: 0.75rem;
+            border: 1px solid $border;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 20px !important;
+            z-index: 1;
+            transition: all 0.3s;
+            &.is-compressed {
+                width: 420px;
+                height: 410px;
+                min-height: 410px;
+                .dual-picker-panel-inner {
+                    padding: 8rem 1.5rem 1.5rem 1.5rem;
+                }
+            }
+            .dual-picker-panel-inner {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                .dual-picker-panel-title {
+                    position: absolute;
+                    top: 3rem;
+                    left: 2.5rem;
+                    font-family: $font-main;
+                    font-weight: 600;
+                    color: $dark-text;
+                }
+                .booking-calendars {
+                    position: relative;
+                    display: flex;
+                    justify-content: center;
+                    padding-top: 7rem;
+                    .event-datepicker-start,
+                    .event-datepicker-end {
+                        display: none;
+                    }
+                    .qs-datepicker-container {
+                        position: relative;
+                        top: 0 !important;
+                        left: 0 !important;
+                        box-shadow: none !important;
+                        padding-bottom: 0 !important;
+                        border: none;
+                    }
+                }
+                .calendar-actions,
+                .participants-actions {
+                    position: absolute;
+                    left: 0;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    padding: 0 1.5rem;
+                    .button {
+                        margin-left: 0.5rem;
+                    }
+                }
+            }
+            .calendar-actions {
+                bottom: -80px;
+            }
+            .participants-actions {
+                bottom: 16px;
+            }
+        }
+        .dual-picker {
+            position: relative;
+            display: flex;
+            margin: 1.25rem 0;
+            border: 1px solid $border;
+            border-radius: 0.75rem;
+            z-index: 2;
+            .field {
+                position: relative;
+                margin-bottom: 0;
+                padding: 0.5rem 0.75rem;
+                border: 2px solid transparent;
+                cursor: pointer;
+                &.is-active {
+                    border-radius: 0.75rem;
+                    border-color: $primary !important;
+                    border-width: 2px !important;
+                    svg {
+                        transform: translateY(-50%) rotate(180deg);
+                    }
+                }
+                &:first-child {
+                    border-right: 1px solid $border;
+                    padding-right: 1rem;
+                }
+                &:last-child {
+                    padding-left: 1rem;
+                }
+                >* {
+                    cursor: pointer;
+                }
+                svg {
+                    position: absolute;
+                    top: 50%;
+                    right: 1rem;
+                    height: 18px;
+                    width: 18px;
+                    transform: translateY(-50%);
+                    transition: all 0.3s;
+                }
+                label {
+                    font-family: $font;
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                }
+                .control {
+                    .input {
+                        box-shadow: none !important;
+                        border: none !important;
+                        background: transparent;
+                        font-family: $font;
+                        font-size: 0.9rem;
+                        padding: 0;
+                        height: 26px;
+                    }
+                }
+            }
+        }
+    }
+    .group-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        span {
+            display: block;
+            font-family: $font;
+            font-size: 0.9rem;
+            color: $medium-text;
+        }
+    }
+    .booking-list {
+        padding: 1.5rem 0;
+        .booking-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid $border;
+            padding: 1.25rem 0;
+            &:last-child {
+                border-bottom: 1px solid $border;
+            }
+            .left,
+            .right {
+                h4 {
+                    font-family: $font-main;
+                    font-weight: 600;
+                    font-size: 0.85rem;
+                    color: $dark-text;
+                }
+                span {
+                    display: block;
+                    font-family: $font;
+                    font-size: 0.9rem;
+                    color: $medium-text;
+                }
+                a {
+                    position: relative;
+                    top: -4px;
+                    font-family: $font;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    color: $primary;
+                    &:after {
+                        content: "" !important;
+                        border-bottom: 1px solid $primary !important;
+                        bottom: 1px !important;
+                        left: 0px !important;
+                        position: absolute !important;
+                        width: 100% !important;
+                    }
+                }
+            }
+            .right {
+                span {
+                    font-weight: 600;
+                    color: $dark-text;
+                    small {
+                        font-size: 0.8rem;
+                        font-weight: 400;
+                        color: $medium-text;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+10. Listing host
+========================================================================== */
+
+.listing-host {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    &.is-boxed {
+        display: flex;
+        justify-content: space-between;
+        .left {
+            width: 50%;
+        }
+        .right {
+            width: 40%;
+        }
+        .host-action {
+            display: block;
+            .host-languages {
+                margin-bottom: 0.75rem;
+                p {
+                    color: $medium-text;
+                }
+            }
+            .disclaimer {
+                display: flex;
+                align-items: center;
+                margin-top: 0.75rem;
+                i {
+                    font-size: 1.75rem;
+                }
+                span,
+                .underlink {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+    .host-header {
+        display: flex;
+        align-items: center;
+        >a img {
+            display: block;
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+        }
+        .meta {
+            margin-left: 1rem;
+            span {
+                display: block;
+                color: $light-text;
+                font-family: $font;
+            }
+        }
+    }
+    .host-stats {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        p {
+            display: flex;
+            align-items: center;
+            font-family: $font;
+            color: $medium-text;
+            margin-right: 1.5rem;
+            svg {
+                margin-right: 0.25rem;
+                height: 16px;
+                width: 16px;
+            }
+        }
+    }
+    .host-bio {
+        p {
+            color: $medium-text;
+            margin-bottom: 1rem;
+        }
+    }
+    .host-action {
+        margin-top: 2.5rem;
+        display: flex;
+        align-items: center;
+        span {
+            margin-left: 1rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+11. Listing benefits
+========================================================================== */
+
+.listing-benefits {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    .benefits {
+        padding: 3rem 0 1rem 0;
+        .benefit {
+            display: flex;
+            svg {
+                min-width: 56px;
+            }
+            .meta {
+                margin-left: 1rem;
+                h4 {
+                    font-family: $font;
+                    font-weight: 500;
+                    color: $dark-text;
+                }
+                p {
+                    font-size: 0.9rem;
+                    max-width: 260px;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+12. Host comments
+========================================================================== */
+
+.host-comments {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    h4 {
+        svg {
+            height: 18px;
+            width: 18px;
+            stroke: #ffb536;
+            fill: #ffb536;
+        }
+    }
+    .reviews {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding-top: 3rem;
+        .review-item {
+            width: calc(50% - 1rem);
+            margin: 0.5rem;
+            .review-item-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                max-width: 440px;
+            }
+            .review-category {
+                font-family: $font;
+            }
+            .review-rating {
+                display: flex;
+                align-items: center;
+                flex-grow: 2;
+                max-width: 140px;
+                .progress {
+                    margin: 0;
+                }
+                .rating-value {
+                    font-family: $font;
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    margin-left: 0.75rem;
+                }
+            }
+        }
+    }
+    .comments {
+        padding: 3rem 0 0 0;
+        .comment {
+            margin-bottom: 2rem;
+            .comment-head {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.5rem;
+                >a img {
+                    display: block;
+                    height: 56px;
+                    width: 56px;
+                    border-radius: 50%;
+                }
+                .meta {
+                    margin-left: 1rem;
+                    p,
+                    span {
+                        font-family: $font;
+                        color: $light-text;
+                        font-size: 0.95rem;
+                    }
+                }
+            }
+            >p {
+                color: $medium-text;
+                max-width: 440px;
+            }
+        }
+    }
+    .comments-action {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        span {
+            margin-left: 1rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+13. Host Map
+========================================================================== */
+
+.host-map {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+}
+
+.listing-map-wrapper {
+    .listing-map-inner {
+        position: relative;
+        overflow: hidden;
+        padding: 2rem 0;
+        &:hover {
+            .listing-map-badge {
+                opacity: 1;
+            }
+        }
+        .listing-map-badge {
+            position: absolute;
+            bottom: 5rem;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            max-width: 300px;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-family: $font;
+            background: $primary;
+            color: $white;
+            box-shadow: $primary-box-shadow;
+            text-align: center;
+            display: inline-block;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .listing-map {
+            width: 100%;
+            min-height: 480px;
+            border-radius: 0.85rem;
+        }
+    }
+    .listing-map-content {
+        >p {
+            color: $medium-text;
+            padding: 1rem 0;
+        }
+    }
+}
+
+
+/* ==========================================================================
+15. Listing dates
+========================================================================== */
+
+.listing-dates {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    .dates-head {
+        display: flex;
+        align-items: center;
+        .meta {
+            margin-right: 5rem;
+        }
+    }
+    .available-dates {
+        position: relative;
+        padding: 2rem 0;
+        .glide__arrows {
+            position: absolute;
+            top: -76px;
+            right: -10px;
+            display: flex;
+            height: 40px;
+            .glide__arrow {
+                height: 40px;
+                width: 30px;
+                min-width: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                padding: 0;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: $light-text;
+                &:hover {
+                    color: $dark-text;
+                }
+                i {
+                    font-size: 20px;
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+        .available-date {
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border: 1px solid $border;
+            border-radius: 0.75rem;
+            transition: box-shadow 0.3s;
+            &:hover {
+                box-shadow: $light-box-shadow;
+            }
+            .top,
+            .bottom {
+                h4 {
+                    font-size: 0.9rem;
+                }
+                span {
+                    display: block;
+                    font-size: 0.9rem;
+                }
+                a {
+                    font-size: 0.9rem;
+                }
+            }
+            .top {
+                margin-bottom: 1.5rem;
+                h4 {
+                    font-family: $font-main;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    color: $dark-text;
+                }
+                span {
+                    font-family: $font;
+                    color: $medium-text;
+                }
+                a {
+                    font-family: $font;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                    color: $primary;
+                }
+            }
+            .bottom {
+                span {
+                    margin-bottom: 1rem;
+                    font-family: $font;
+                    font-size: 0.95rem;
+                    font-weight: 600;
+                    color: $dark-text;
+                    small {
+                        font-weight: 400;
+                        color: $medium-text;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+16. Listing guidelines
+========================================================================== */
+
+.listing-guidelines {
+    padding: 3rem 0;
+    border-bottom: 1px solid $border;
+    .guidelines-content {
+        padding: 2rem 0 0 0;
+        .guidelines-item {
+            p {
+                max-width: 440px;
+            }
+        }
+        .guidelines-block {
+            display: flex;
+            align-items: center;
+            font-family: $font;
+            &:not(:last-child) {
+                margin-bottom: 0.5rem;
+            }
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 32px;
+                width: 32px;
+                min-width: 32px;
+                margin-right: 0.5rem;
+                font-size: 1.75rem;
+                svg {
+                    height: 28px;
+                    width: 28px;
+                }
+            }
+        }
+        .underlink {
+            margin-top: 1.5rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+17. More listings
+========================================================================== */
+
+.more-listings {
+    padding: 3rem 0 0 0;
+    .scheduled-listings {
+        position: relative;
+        padding: 1.5rem 0;
+        .glide__arrows {
+            position: absolute;
+            top: -56px;
+            right: -10px;
+            display: flex;
+            height: 40px;
+            .glide__arrow {
+                height: 40px;
+                width: 30px;
+                min-width: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                padding: 0;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: $light-text;
+                &:hover {
+                    color: $dark-text;
+                }
+                i {
+                    font-size: 20px;
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+        .scheduled-listings-inner {
+            .scheduled-listing {
+                display: flex;
+                flex-direction: column;
+                &:hover {
+                    .scheduled-listing-image {
+                        .action-bar {
+                            .button {
+                                &.wishlist-button {
+                                    svg {
+                                        fill: $danger;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .scheduled-listing-content {
+                        .listing-name {
+                            a {
+                                color: $primary;
+                            }
+                        }
+                    }
+                }
+                .scheduled-listing-image {
+                    position: relative;
+                    border-radius: 0.75rem;
+                    min-height: 280px;
+                    overflow: hidden;
+                    .action-bar {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        .button {
+                            background: none;
+                            border: none;
+                            padding: 0 0.75rem 0 0.75rem;
+                            &.wishlist-button {
+                                svg {
+                                    stroke: $white;
+                                    fill: rgba($dark-text, 0.5);
+                                    transition: fill 0.3s;
+                                }
+                            }
+                        }
+                    }
+                }
+                .scheduled-listing-content {
+                    padding: 0.75rem 0;
+                    .scheduled-listing-rating {
+                        display: flex;
+                        align-items: center;
+                        font-family: $font;
+                        font-weight: 500;
+                        color: $dark-text;
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                            margin-right: 0.25rem;
+                            stroke: #ffb536;
+                            fill: #ffb536;
+                        }
+                    }
+                    .listing-name {
+                        font-family: $font-main;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        padding: 0.25rem 0;
+                        a {
+                            color: $dark-text;
+                            transition: color 0.3s;
+                        }
+                    }
+                    .listing-price {
+                        font-family: $font;
+                        font-weight: 400;
+                        font-size: 0.9rem;
+                        color: $light-text;
+                        small {
+                            font-size: 0.8rem;
+                            color: $light-text;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+18. Upcoming listings
+========================================================================== */
+
+.upcoming-listings-wrapper {
+    padding: 3rem 0;
+    .upcoming-listings {
+        position: relative;
+        padding: 1.5rem 0;
+        .glide__arrows {
+            position: absolute;
+            top: -55px;
+            right: -10px;
+            display: flex;
+            height: 40px;
+            .glide__arrow {
+                height: 40px;
+                width: 30px;
+                min-width: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                padding: 0;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: $light-text;
+                &:hover {
+                    color: $dark-text;
+                }
+                i {
+                    font-size: 20px;
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+        .upcoming-listings-inner {
+            .upcoming-listing {
+                position: relative;
+                display: flex;
+                background: $white;
+                border: 1px solid $border;
+                padding: 0.75rem;
+                border-radius: 0.7rem;
+                &:hover {
+                    .action-bar {
+                        .button {
+                            &.wishlist-button {
+                                svg {
+                                    fill: $danger;
+                                }
+                            }
+                        }
+                    }
+                    .upcoming-listing-content {
+                        .listing-name {
+                            a {
+                                color: $primary;
+                            }
+                        }
+                    }
+                }
+                .action-bar {
+                    position: absolute;
+                    top: 0.75rem;
+                    right: 0.75rem;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    .button {
+                        background: none;
+                        border: none;
+                        padding: 0 0.75rem 0 0.75rem;
+                        &.wishlist-button {
+                            svg {
+                                stroke: $white;
+                                fill: rgba($dark-text, 0.5);
+                                transition: fill 0.3s;
+                            }
+                        }
+                    }
+                }
+                .upcoming-listing-image {
+                    position: relative;
+                    border-radius: 0.75rem;
+                    min-height: 150px;
+                    min-width: 100px;
+                    overflow: hidden;
+                }
+                .upcoming-listing-content {
+                    padding: 0.75rem 0;
+                    margin-left: 1rem;
+                    .upcoming-listing-rating {
+                        display: flex;
+                        align-items: center;
+                        font-family: $font;
+                        font-weight: 500;
+                        color: $dark-text;
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                            margin-right: 0.25rem;
+                            stroke: #ffb536;
+                            fill: #ffb536;
+                        }
+                    }
+                    .listing-name {
+                        font-family: $font-main;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        padding: 0.25rem 0;
+                        a {
+                            color: $dark-text;
+                            transition: color 0.3s;
+                        }
+                    }
+                    .listing-price {
+                        font-family: $font;
+                        font-weight: 400;
+                        font-size: 0.9rem;
+                        color: $light-text;
+                        small {
+                            font-size: 0.8rem;
+                            color: $light-text;
+                        }
+                    }
+                }
+                .buttons {
+                    .button {
+                        border-radius: 0.5rem;
+                        padding: 0.25rem 0.75rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .upcoming-listings-wrapper {
+        .upcoming-listings {
+            .upcoming-listings-inner {
+                .upcoming-listing {
+                    .action-bar {
+                        .button {
+                            display: none;
+                        }
+                    }
+                    .upcoming-listing-content {
+                        .buttons {
+                            .button:nth-child(3) {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .upcoming-listings-wrapper {
+        .upcoming-listings {
+            .upcoming-listings-inner {
+                .upcoming-listing {
+                    .upcoming-listing-content {
+                        .buttons {
+                            .button:nth-child(3) {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+18. Media Queries
+========================================================================== */
+
+@media only screen and (max-width: 767px) {
+    .listing-nav {
+        .listing-nav-inner {
+            padding: 0 0.75rem;
+            .left {
+                .nav-item {
+                    margin-right: 1rem;
+                }
+            }
+            .right {
+                display: none;
+            }
+        }
+    }
+    .listing-title {
+        flex-direction: column;
+        .left {
+            margin-bottom: 1.5rem;
+            h2 {
+                margin-bottom: 0.75rem !important;
+            }
+        }
+    }
+    .listing-cover-wrapper {
+        height: 220px;
+        .all-photos-button {
+            bottom: inherit;
+            top: 12px !important;
+        }
+        .listing-cover {
+            &:not(:first-child) {
+                display: none !important;
+            }
+            &:first-child {
+                width: 100% !important;
+                margin: 0 !important;
+            }
+        }
+    }
+    .listing-subtitle {
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        .left {
+            padding-left: 1rem;
+        }
+        .right>a img {
+            min-width: 56px;
+        }
+    }
+    .listing-requirements {
+        .requirements-list {
+            .requirements-item {
+                .icon-container {
+                    min-width: 32px;
+                }
+            }
+        }
+    }
+    .listing-host {
+        .host-header {
+            >a img {
+                min-width: 56px;
+            }
+        }
+        .host-action {
+            flex-direction: column;
+            .button {
+                width: 100%;
+                margin-bottom: 0.75rem;
+            }
+        }
+    }
+    .listing-map-wrapper {
+        .location-action {
+            .button {
+                width: 100%;
+            }
+        }
+    }
+    .listing-dates {
+        .available-dates {
+            .glide__arrows {
+                display: none;
+            }
+            .glide__track {
+                padding-bottom: 1rem;
+            }
+        }
+    }
+    .listing-calendar {
+        .listing-calendar-inner {
+            flex-direction: column;
+            .qs-datepicker-container+.qs-datepicker-container {
+                margin-top: 2rem;
+            }
+        }
+    }
+    .listing-host {
+        &.is-boxed {
+            flex-direction: column;
+            .left,
+            .right {
+                width: 100%;
+            }
+        }
+    }
+    .host-comments .reviews {
+        .review-item {
+            width: calc(100% - 1rem);
+        }
+    }
+    .more-listings {
+        >.title {
+            margin-bottom: 0 !important;
+        }
+    }
+    .listing-guidelines {
+        .guidelines-content {
+            .guidelines-item {
+                margin-bottom: 2rem;
+            }
+        }
+    }
+    .booking-card {
+        .dual-picker-wrapper {
+            .dual-picker-panel {
+                max-width: 340px;
+                .dual-picker-panel-inner {
+                    .dual-picker-panel-title {
+                        display: none;
+                    }
+                    .booking-calendars {
+                        flex-direction: column;
+                        overflow-y: auto;
+                        min-height: 485px;
+                        justify-content: flex-start;
+                        .qs-datepicker-container {
+                            width: 100%;
+                            &:nth-of-type(2) {
+                                display: none;
+                            }
+                        }
+                        .calendar-actions {
+                            bottom: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .listing-nav {
+        .listing-nav-inner {
+            padding: 0 1.5rem;
+        }
+    }
+    .listing-benefits {
+        .benefits {
+            .benefit {
+                svg {
+                    min-width: 38px;
+                }
+            }
+        }
+    }
+    .booking-card {
+        .dual-picker-wrapper {
+            .dual-picker-panel {
+                width: 725px;
+                .dual-picker-panel-inner {
+                    .dual-picker-panel-title {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.listing-categories-wrapper {
+    padding: 3rem 0;
+    .listing-categories {
+        position: relative;
+        padding: 1.5rem 0;
+        .glide__arrows {
+            position: absolute;
+            top: -55px;
+            right: -10px;
+            display: flex;
+            height: 40px;
+            .glide__arrow {
+                height: 40px;
+                width: 30px;
+                min-width: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                padding: 0;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: $light-text;
+                &:hover {
+                    color: $dark-text;
+                }
+                i {
+                    font-size: 20px;
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+        .listing-categories-inner {
+            .listing-category {
+                position: relative;
+                overflow: hidden;
+                border-radius: 1rem;
+                .category-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(darken($primary, 10%), 0.7);
+                    z-index: 1;
+                }
+                .category-content {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    min-height: 280px;
+                    padding: 2rem;
+                    z-index: 2;
+                    p {
+                        line-height: 1.2;
+                        max-width: 260px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+Dual container layout
+========================================================================== */
+
+.dual-container {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    .dual-container-left {
+        margin-top: 70px;
+        min-height: calc(100vh - 70px);
+        width: 55%;
+        padding: 2rem;
+        .left-header {
+            >h4 {
+                font-size: 0.9rem;
+                font-family: $font;
+                text-transform: uppercase;
+                color: $light-text;
+            }
+            .filters {
+                .buttons .button {
+                    &.is-active {
+                        box-shadow: $light-box-shadow;
+                    }
+                }
+            }
+        }
+    }
+    .dual-container-right {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        height: calc(100% - 70px);
+        width: 45%;
+        z-index: 0;
+    }
+}
+
+//Flat carousels
+.flat-carousels-wrapper {
+    padding: 1.5rem 0;
+    .flats {
+        position: relative;
+        padding: 1.5rem 0;
+        &:last-child {
+            padding-bottom: 0;
+        }
+        .glide__arrows {
+            position: absolute;
+            top: -56px;
+            right: -10px;
+            display: flex;
+            height: 40px;
+            .glide__arrow {
+                height: 40px;
+                width: 30px;
+                min-width: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: none;
+                padding: 0;
+                outline: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                color: $light-text;
+                &:hover {
+                    color: $dark-text;
+                }
+                i {
+                    font-size: 20px;
+                }
+                svg {
+                    height: 18px;
+                    width: 18px;
+                }
+            }
+        }
+        .flats-inner {
+            .flat {
+                display: flex;
+                flex-direction: column;
+                &:hover {
+                    .flat-image {
+                        .action-bar {
+                            .button {
+                                &.wishlist-button {
+                                    svg {
+                                        fill: $danger;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .flat-content {
+                        .listing-name {
+                            a {
+                                color: $primary;
+                            }
+                        }
+                    }
+                }
+                .flat-image {
+                    position: relative;
+                    border-radius: 0.75rem;
+                    min-height: 280px;
+                    overflow: hidden;
+                    .action-bar {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        .button {
+                            background: none;
+                            border: none;
+                            padding: 0 0.75rem 0 0.75rem;
+                            &.wishlist-button {
+                                svg {
+                                    stroke: $white;
+                                    fill: rgba($dark-text, 0.5);
+                                    transition: fill 0.3s;
+                                }
+                            }
+                        }
+                    }
+                }
+                .flat-content {
+                    padding: 0.75rem 0;
+                    .flat-rating {
+                        display: flex;
+                        align-items: center;
+                        font-family: $font;
+                        font-weight: 500;
+                        color: $dark-text;
+                        svg {
+                            height: 16px;
+                            width: 16px;
+                            margin-right: 0.25rem;
+                            stroke: #ffb536;
+                            fill: #ffb536;
+                        }
+                    }
+                    .flat-name {
+                        font-family: $font-main;
+                        font-weight: 600;
+                        font-size: 0.9rem;
+                        padding: 0.25rem 0;
+                        a {
+                            color: $dark-text;
+                            transition: color 0.3s;
+                        }
+                    }
+                    .flat-price {
+                        font-family: $font;
+                        font-weight: 400;
+                        font-size: 0.9rem;
+                        color: $light-text;
+                        small {
+                            font-size: 0.8rem;
+                            color: $light-text;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.flat-list {
+    .flat-list-item {
+        position: relative;
+        display: flex;
+        background: $white;
+        border: 1px solid $border;
+        padding: 0.75rem;
+        border-radius: 0.7rem;
+        &:not(:last-child) {
+            margin-bottom: 1.5rem;
+        }
+        &:hover {
+            .action-bar {
+                .button {
+                    &.wishlist-button {
+                        svg {
+                            fill: $danger;
+                        }
+                    }
+                }
+            }
+            .list-item-content {
+                .listing-name {
+                    a {
+                        color: $primary;
+                    }
+                }
+            }
+        }
+        .action-bar {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            .button {
+                background: none;
+                border: none;
+                padding: 0 0.75rem 0 0.75rem;
+                &.wishlist-button {
+                    svg {
+                        stroke: $white;
+                        fill: rgba($dark-text, 0.5);
+                        transition: fill 0.3s;
+                    }
+                }
+            }
+        }
+        .list-item-image {
+            position: relative;
+            border-radius: 0.75rem;
+            height: 175px;
+            width: 220px;
+            overflow: hidden;
+        }
+        .list-item-content {
+            display: flex;
+            flex-direction: column;
+            margin-left: 1rem;
+            flex-grow: 2;
+            .list-item-info {
+                .list-item-precontent {
+                    display: flex;
+                    align-items: center;
+                    font-family: $font;
+                    font-weight: 500;
+                    font-size: 0.8rem;
+                    text-transform: uppercase;
+                    color: $medium-text;
+                }
+                .list-item-name {
+                    font-family: $font-main;
+                    font-weight: 600;
+                    font-size: 0.9rem;
+                    padding: 0.25rem 0;
+                    a {
+                        color: $dark-text;
+                        transition: color 0.3s;
+                    }
+                }
+                .list-item-details {
+                    font-family: $font;
+                    font-weight: 400;
+                    font-size: 0.9rem;
+                    color: $light-text;
+                    small {
+                        font-size: 0.8rem;
+                        color: $light-text;
+                    }
+                }
+            }
+            .list-item-amount {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: auto;
+                >span {
+                    font-family: $font;
+                    font-weight: 600;
+                    color: $dark-text;
+                }
+                .list-item-rating {
+                    display: flex;
+                    align-items: center;
+                    font-family: $font;
+                    font-weight: 500;
+                    color: $dark-text;
+                    svg {
+                        height: 16px;
+                        width: 16px;
+                        margin-right: 0.25rem;
+                        stroke: #ffb536;
+                        fill: #ffb536;
+                    }
+                }
+            }
+        }
+        .buttons {
+            .button {
+                border-radius: 0.5rem;
+                padding: 0.25rem 0.75rem;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .dual-container {
+        flex-direction: column;
+        .dual-container-left {
+            width: 100%;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            .left-header {
+                .title {
+                    font-size: 1.75rem;
+                }
+            }
+        }
+        .dual-container-right {
+            display: none;
+        }
+    }
+    .flat-list {
+        .flat-list-item {
+            .action-bar {
+                .button {
+                    display: none;
+                }
+            }
+            .list-item-image {
+                width: 140px;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .dual-container {
+        flex-direction: column;
+        .dual-container-left {
+            width: 100%;
+        }
+        .dual-container-right {
+            display: none;
+        }
+    }
+}

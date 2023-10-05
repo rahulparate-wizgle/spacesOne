@@ -1,0 +1,225 @@
+/*! _auth.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Auth Nav
+    2. Setting item
+    3. Auth wrapper
+*/
+
+
+/* ==========================================================================
+1. Auth Nav
+========================================================================== */
+
+.auth-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    .left,
+    .right {
+        display: flex;
+        align-items: center;
+        width: 20%;
+    }
+    .right {
+        justify-content: flex-end;
+        .dark-mode {
+            transform: scale(0.7);
+        }
+    }
+    .center {
+        flex-grow: 2;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                display: block;
+                width: 100%;
+                max-width: 50px;
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Setting item
+========================================================================== */
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    .setting-meta {
+        font-family: $font;
+        color: $light-text;
+        margin-left: 8px;
+    }
+}
+
+
+/* ==========================================================================
+3. Auth wrapper
+========================================================================== */
+
+.auth-wrapper {
+    overflow: hidden !important;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    &.is-gapless:not(:last-child) {
+        margin-bottom: 0 !important;
+    }
+    &.is-single {
+        background: $widget-grey;
+        min-height: 100vh;
+    }
+    .hero-banner {
+        background: $widget-grey;
+    }
+    .hero-heading {
+        position: relative;
+        max-width: 360px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 20px 0 0 0;
+        .dark-mode {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            transform: scale(0.6);
+            z-index: 2;
+        }
+        .auth-logo {
+            display: flex;
+            justify-content: center;
+            .top-logo {
+                height: 42px;
+            }
+        }
+    }
+    .hero {
+        &.is-white {
+            background: $white;
+        }
+        .hero-body {
+            .login {
+                padding: 10px 0;
+            }
+            .auth-content {
+                max-width: 320px;
+                width: 100%;
+                margin: 0 auto;
+                margin-top: -40px;
+                margin-bottom: 40px;
+                h2 {
+                    font-size: 2rem;
+                    font-family: $font;
+                    line-height: 1;
+                }
+                p {
+                    font-size: 1rem;
+                    margin-bottom: 8px;
+                    color: $medium-text;
+                }
+                a {
+                    font-size: 0.9rem;
+                    font-family: $font-main;
+                    font-weight: 500;
+                    color: $primary;
+                }
+            }
+            .auth-form-wrapper {
+                max-width: 320px;
+                width: 100%;
+                margin: 0 auto;
+            }
+        }
+    }
+    .forgot-link {
+        margin-top: 10px;
+        a {
+            font-family: $font-main;
+            font-size: 0.9rem;
+            color: $light-text;
+            transition: color 0.3s;
+            &:hover {
+                color: $primary;
+            }
+        }
+    }
+    .setting-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        .setting-meta {
+            font-family: $font;
+            color: $light-text;
+            margin-left: 8px;
+        }
+    }
+    .h-button {
+        min-height: 44px;
+    }
+    .single-form-wrap {
+        min-height: 690px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .inner-wrap {
+            width: 100%;
+            max-width: 400px;
+            margin: 40px auto 0 auto;
+            .auth-head {
+                max-width: 320px;
+                width: 100%;
+                margin: 0 auto;
+                margin-bottom: 20px;
+                text-align: center;
+                h2 {
+                    font-size: 2rem;
+                    font-family: $font;
+                    line-height: 1;
+                }
+                p {
+                    font-size: 1rem;
+                    margin-bottom: 8px;
+                    color: $medium-text;
+                }
+                a {
+                    font-size: 0.9rem;
+                    font-family: $font-main;
+                    font-weight: 500;
+                    color: $primary;
+                }
+            }
+            .form-card {
+                background: $white;
+                border: 1px solid $border;
+                border-radius: 10px;
+                padding: 50px;
+                margin-bottom: 16px;
+                .h-button {
+                    margin-top: 10px;
+                }
+            }
+        }
+    }
+    .signup-image-wrap {
+        width: 100%;
+        img {
+            display: block;
+            max-height: 610px;
+            margin: 0 auto;
+        }
+    }
+}

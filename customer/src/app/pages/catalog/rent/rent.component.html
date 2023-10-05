@@ -1,0 +1,489 @@
+<main class="page-wrapper">
+    <!-- Header-->
+    <app-header id="top"></app-header>
+
+    <!-- Page container-->
+    <div class="container-fluid mt-5 pt-5 p-0" style="padding-top: 31px !important;">
+        <div class="row g-0 mt-n3 map-listing">
+            <!-- Filters sidebar (Offcanvas on mobile)-->
+            <aside class="col-lg-12 px-3 px-xl-4 px-xxl-5 pt-lg-2">
+                <div class="offcanvas offcanvas-start offcanvas-collapse" id="filters-sidebar">
+                    <div class="offcanvas-header d-flex  align-items-center">
+                        <h5 class="h5 text-uppercase mb-0 fs-sm font-normal">Filters</h5>
+                        <button class="btn-close" id="btnCloseFilter" type="button" data-bs-dismiss="offcanvas" (click)="SidebarHide()"></button>
+
+
+                    </div>
+                    <!-- <div class="offcanvas-header d-block border-bottom pt-0 pt-lg-4 px-lg-0">
+                        <ul class="nav nav-tabs mb-0">
+                            <li class="nav-item"><a class="nav-link active" routerLink="/catalog/rent"><i
+                    class="fi-rent fs-base me-2"></i>For rent</a></li>
+                            <li class="nav-item"><a class="nav-link" routerLink="/catalog/sale"><i
+                    class="fi-home fs-base me-2"></i>For sale</a></li>
+                        </ul>
+                    </div> -->
+                    <div class="border-top py-4 d-flex justify-content-end">
+                        <button class="btn btn-dark btn-sm me-2" type="button" style="font-weight: normal;" (click)="resetFilter()"><i class="fi-rotate-right me-2"></i>Reset filters</button>
+                        <button class="btn btn-success btn-sm" type="button" style="font-weight: normal;" (click)="applyGlobalFilter()"><i class="fa-solid fa-filter"></i>Apply filters</button>
+                    </div>
+                    <div class="offcanvas-body py-lg-4">
+                        <!-- <div class="pb-4 mb-2">
+                            <h3 class="h6 fs-sm">City</h3>
+                            <select [(ngModel)]="globalFilter.city" class="form-select mb-2" id="location">
+                                <option value="" disabled>Choose city</option>
+                                <option *ngFor="let city of venuesCities" [value]="city">{{city}}</option>
+                            </select>
+                        </div> -->
+
+                        <div class="pb-4 mb-2 simplebar-scroll-show">
+                            <div class="h6 fs-sm ">Ratings</div>
+                            <ngx-simplebar class="overflow-auto">
+                                <div class="form-check">
+                                    <input class="form-check-input" (change)="changePropertyRating($event,3)" type="checkbox">
+                                    <span class="star-rating">
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                    </span>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" (change)="changePropertyRating($event,4)" type="checkbox">
+                                    <span class="star-rating">
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                    </span> </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" (change)="changePropertyRating($event,5)" type="checkbox">
+                                    <span class="star-rating">
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                        <i  class="star-rating-icon fi-star-filled active"></i>
+                                    </span>
+                                </div>
+                            </ngx-simplebar>
+                        </div>
+
+                        <!-- <div class="pb-4 mb-2">
+                            <h3 class="h6 fs-sm ">Price</h3>
+                            <div class="range-slider" data-start-min="1100" data-start-max="3000" data-min="200" data-max="5000" data-step="100">
+                                <ngx-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="valueChange($event,true)" (highValueChange)="valueChange($event,false)"></ngx-slider>
+                                <div class="d-flex align-items-center">
+                                    <div class="w-50 pe-2">
+                                        <div class="input-group"><span class="input-group-text fs-base">₹</span>
+                                            <input class="form-control range-slider-value-min" type="text" value="{{minValue}}">
+                                        </div>
+                                    </div>
+                                    <div class="text-muted">&mdash;</div>
+                                    <div class="w-50 ps-2">
+                                        <div class="input-group"><span class="input-group-text fs-base">₹</span>
+                                            <input class="form-control range-slider-value-max" type="text" value="{{maxValue}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="pb-4 mb-2">
+                            <h3 class="h6 fs-sm">Price</h3>
+                            <div class="range-slider" data-start-min="1100" data-start-max="3000" data-min="200" data-max="5000" data-step="100">
+                                <ngx-slider #slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="valueChange($event, true)" (highValueChange)="valueChange($event, false)"></ngx-slider>
+                                <div class="d-flex align-items-center">
+                                    <div class="w-50 pe-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text fs-base">₹</span>
+                                            <input class="form-control range-slider-value-min" type="text" [(ngModel)]="minValue" (input)="updateSlider()">
+                                        </div>
+                                    </div>
+                                    <div class="text-muted">&mdash;</div>
+                                    <div class="w-50 ps-2">
+                                        <div class="input-group">
+                                            <span class="input-group-text fs-base">₹</span>
+                                            <input class="form-control range-slider-value-max" type="text" [(ngModel)]="maxValue" (input)="updateSlider()">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pb-4 mb-2 simplebar-scroll-show">
+                            <div class="h6 fs-sm ">Type</div>
+                            <ngx-simplebar style="height: 11rem;" class="overflow-auto">
+                                <div *ngFor="let type of venueTypes" class="form-check">
+                                    <input class="form-check-input" [checked]="isSelectedType(type.title)" type="checkbox" [id]="type.title" (change)="changePropertyType($event,type.title)">
+                                    <label class="form-check-label fs-sm" for="house">{{type.title}}</label>
+                                </div>
+                            </ngx-simplebar>
+                        </div>
+
+                        <div class="pb-4 mb-2 simplebar-scroll-show">
+                            <div class="h6 fs-sm ">Locations</div>
+                            <input type="text" placeholder="Search Locations" (keyup)="searchLocations($event)" class="form-control" style="
+                            width: 90%;
+                            padding: 10px 10px;
+                            font-size: 12px;
+                            margin-bottom: 10px;
+                            " />
+                            <ngx-simplebar style="height: 11rem;" class="overflow-auto">
+                                <div *ngFor="let location of searchedLocations" class="form-check">
+                                    <input class="form-check-input" (change)="changePropertyLocation($event,location)" type="checkbox">
+                                    <label class="form-check-label fs-sm" for="house">{{location ?? '--' }} {{getCountOnLocation(location)}}</label>
+                                </div>
+                            </ngx-simplebar>
+                        </div>
+
+
+                    </div>
+                </div>
+            </aside>
+            <!-- Page content-->
+            <div class="col-lg-7  position-relative overflow-hidden pb-5 pt-4 px-3 px-xl-4 px-xxl-5 venue-listing">
+                <!-- Breadcrumb-->
+                <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+                <!-- Title-->
+                <div class="d-sm-flex align-items-center justify-content-between pb-2 pb-sm-4" style="margin-top: -15px;">
+                    <div>
+                        <!-- <h1 class="h2 mb-sm-0">500+ Venues found in Mumbai</h1> -->
+                        <p class="fs-sm mb-0"> <strong>{{this.venues?.length}}</strong> space in <strong> {{ this.globalFilter?.city }}</strong> have been found based on your search criteria.
+                        </p>
+                    </div>
+                    <!-- <a class="d-inline-block fw-bold text-decoration-none py-1" href="javascript:void(0);" data-bs-toggle-class="invisible" data-bs-target="#map" (click)="openMapModal()"><i class="fi-filter me-2"></i>Map view</a> -->
+                </div>
+
+                <ul *ngIf="globalFilterKeys.length > 0" class="nav nav-pills nav-pills-dark flex-row fs-sm mx-0 mb-4">
+                    <li *ngFor="let filterKey of globalFilterKeys" class="nav-item mb-2 me-2"><button type="button" class="nav-link px-3">{{filterKey}}: <b class="mx-1">
+                        {{globalFilter[filterKey]}}
+                    </b>
+                    </button></li>
+                    <li *ngIf="globalFilterKeys.length > 1"><button (click)="resetFilter()" type="button" class="nav-link px-3 bg-dark text-white">Reset Filters
+                      <i class="fi-x fs-xxs ms-2"></i>
+                    </button></li>
+                </ul>
+                <!-- Sorting-->
+                <div class="d-flex flex-sm-row flex-column align-items-sm-center align-items-stretch m1-2">
+                    <div class="d-flex align-items-center flex-shrink-0">
+                        <label class="fs-sm me-2 pe-1 text-nowrap" for="sortby"><i
+                            class="fi-arrows-sort text-muted mt-n1 me-2"></i>Sort by:</label>
+                        <select (change)="sortListBy($event)" class="form-select form-select-sm" id="sortby">
+                          <option value="Aprice">Low - High Price</option>
+                          <option value="Dprice">High - Low Price</option>
+                          <option value="rating">Rating</option>
+                        </select>
+                    </div>
+                    <hr class="d-none d-sm-block w-100 mx-4">
+
+                    <div class="btn btn-light btn-sm" data-bs-toggle="offcanvas " data-bs-target="#filters-sidebar" (click)="FilterSidebar()" style="cursor: pointer;">
+                        <i class="fi-filter me-2 fs-sm"></i><span class="fs-sm mt-n1">Filter</span></div>
+                </div>
+                <!-- Catalog grid-->
+
+                <div class="row  mt-4" *ngIf="isLoading">
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-4">
+                        <div class="ph-item">
+                            <div class="ph-col">
+                                <div class="ph-picture"></div>
+                                <div class="ph-row">
+                                    <div class="ph-col-6 big"></div>
+                                    <div class="ph-col-4 empty big"></div>
+                                    <div class="ph-col-2 big"></div>
+                                    <div class="ph-col-4"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row g-4 py-4" *ngIf="venues?.length != 0">
+                    <!-- Item-->
+                    <div class="col-sm-6 col-xl-4" *ngFor="
+                      let venue of venues | sortBy : sortBy : sortField;
+                      let i = index
+                    ">
+                        <div class="card shadow-sm card-hover border-0 h-100 card-v1">
+
+                            <div class="noProduct center-container" *ngIf="venue?.gallery?.length < 1">
+                                <p class="text-center fs-xs mb-0">No Image Found</p>
+                            </div>
+                            <div class="product" [style.background-image]="'url(' + venue.gallery[0] + ')'" *ngIf="venue?.gallery?.length == 1" style="max-width: 100%; display: block">
+                                <div class="text-white rounded-circle" type="button" (click)="flyToLocation(i)" placement="left" ngbTooltip="Locate on map" style="
+                                    width: 30px;
+                                    height: 30px;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    background: transparent;
+                                    font-size: 22px;
+                                    background: #671cc9bb;
+                                    margin: 10px 10px 10px auto;">
+                                    <i class="bx bx-map"></i>
+                                </div>
+                            </div>
+                            <ngx-light-carousel *ngIf="venue?.gallery?.length > 1" style="max-width: 100%; display: block" [options]="options3" [data]="venue.gallery" class="wrapper c-accent image-carousel">
+                                <section ngx-light-carousel-container class="content">
+                                    <article class="cursor-pointer" ngx-light-carousel-item *ngFor="let product of venue.gallery; let i = index">
+                                        <div class="product" [style.background-image]="'url(' + product + ')'">
+                                            <div class="text-white rounded-circle" type="button" (click)="flyToLocation(i)" placement="left" ngbTooltip="Locate on map" style="
+                                  width: 30px;
+                                  height: 30px;
+                                  display: flex;
+                                  justify-content: center;
+                                  align-items: center;
+                                  background: transparent;
+                                  font-size: 22px;
+                                  background: #671cc9bb;
+                                  margin: 10px 10px 10px auto;
+                                ">
+                                                <i class="bx bx-map"></i>
+                                            </div>
+                                        </div>
+                                    </article>
+                                    <ng-template #infiniteContainer></ng-template>
+                                </section>
+                            </ngx-light-carousel>
+
+                            <div class="card-body position-relative pb-3">
+                                <h4 class="mb-1 fs-xs fw-normal text-uppercase text-dark">
+                                    <span *ngFor="let data of venue.type; let i = index">
+                            <span *ngIf="i > 0">, </span>{{ data }}
+                                    </span>
+                                </h4>
+                                <h3 class="h6 mb-2 fs-base">
+                                    <a class="nav-link stretched-link" [routerLink]="['details/' + venue.id]">{{ venue.name }}</a
+                          >
+                        </h3>
+                        <p class="mb-2 fs-sm text-muted">
+                          {{ venue.address.slice(0, 90) }}
+                        </p>
+                        <div class="d-flex justify-content-between">
+                          <div *ngIf="venue?.pricing?.perUnit">
+                            <div class="fs-xs">Per Person Charges</div>
+                            <div class="fs-lg text-primary fw-bold">
+                              ₹{{
+                                venue?.pricing?.perUnit
+                                  | number : "1.0" : "en-INR" ?? " --"
+                              }}
+                            </div>
+                          </div>
+                          <div
+                            style="text-align: right"
+                            *ngIf="venue?.pricing?.minimumCharges"
+                          >
+                            <div class="fs-xs">Minimum Payable Charges</div>
+                            <div class="fs-xs fw-bold">
+                              ₹{{
+                                venue?.pricing?.minimumCharges
+                                  | number : "1.0" : "en-INR" ?? " --"
+                              }}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="card-footer d-flex align-items-center justify-content-center mx-3 pt-3 text-nowrap "><span class="d-inline-block mx-1 px-2 fs-sm ">{{topOfferDatas[0].bad}}<i
+                            class="fi-bed ms-1 mt-n1 fs-lg text-muted "></i></span><span class="d-inline-block mx-1 px-2 fs-sm ">{{topOfferDatas[0].bath}}<i
+                            class="fi-bath ms-1 mt-n1 fs-lg text-muted "></i></span><span class="d-inline-block mx-1 px-2 fs-sm ">{{topOfferDatas[0].car}}<i
+                            class="fi-car ms-1 mt-n1 fs-lg text-muted "></i></span></div> -->
+                      <div class="has-bookings" *ngIf="venue.venueBookings">
+                        <p class="mb-0 fs-sm">Not available for selected dates</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="no-venues" *ngIf="venues?.length == 0">
+
+                    <h6 class="fs-sm mb-1 mt-3">
+                        No Space Found
+                    </h6>
+                    <p class="fs-xs">
+                        Unfortunately, we were unable to find any results that align with your search. Might you be open to refining your search criteria to potentially yield better outcomes?
+                    </p>
+                </div>
+                <!-- Pagination-->
+                <!-- <nav class="border-top pb-md-4 pt-4 mt-2 " aria-label="Pagination ">
+                    <ul class="pagination mb-1 ">
+                        <li class="page-item d-sm-none "><span class="page-link page-link-static ">1 / 5</span></li>
+                        <li class="page-item active d-none d-sm-block " aria-current="page "><span class="page-link ">1<span
+                  class="visually-hidden ">(current)</span></span>
+                        </li>
+                        <li class="page-item d-none d-sm-block "><a class="page-link " href="javascript:void(0); ">2</a></li>
+                                    <li class="page-item d-none d-sm-block "><a class="page-link " href="javascript:void(0); ">3</a></li>
+                                    <li class="page-item d-none d-sm-block ">...</li>
+                                    <li class="page-item d-none d-sm-block "><a class="page-link " href="javascript:void(0); ">8</a></li>
+                                    <li class="page-item "><a class="page-link " href="javascript:void(0); " aria-label="Next "><i
+                  class="fi-chevron-right "></i></a></li>
+                                    </ul>
+                                    </nav> -->
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="map-loader" *ngIf="isLoading">
+                                    <img src="../../../../assets/img/venuesv2/maploader.gif">
+                                </div>
+                                <!-- Map popup-->
+                                <div class="map-popup " id="map-container">
+                                    <div style="height: calc(100vh - 60px);" class="map" name="map" id="map"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+</main>
+<!-- Footer-->
+<app-footer></app-footer>
+
+<!-- Filters sidebar toggle button (mobile)-->
+<button class="btn btn-primary btn-sm w-100 rounded-0 fixed-bottom d-lg-none " type="button " data-bs-toggle="offcanvas " data-bs-target="#filters-sidebar " (click)="FilterSidebar() "><i class="fi-filter me-2 "></i>Filters</button>
+<div class="vertical-overlay " (click)="SidebarHide() "></div>

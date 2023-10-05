@@ -1,0 +1,69 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <app-venue-details [venue]="venue" [currentTab]="2"></app-venue-details>
+        </div>
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header venue-card pt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>
+                                Overview
+                            </h5>
+                            <p class="mb-0">
+                                "Please provide the basic details Name, address, and a description of the venue."
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12 d-flex justify-content-end flex-wrap gap-2">
+                                <button type="button" [disabled]="!files" class="btn btn-primary" (click)="postAttachedFiles()">
+                            <i class="bx bx-send font-size-16 align-middle me-2"
+                              style="transform: rotate(-45deg);margin-top: -5px;"></i> Save & Publish
+                          </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mb-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <form>
+                                <div class="row">
+                                    <p class="font-size-12 text-info" *ngIf="isUploadStarted">The image upload is started, This will take some time to reflect. Please switch the tabs to see the changes.</p>
+                                    <div class="mb-3 col-12">
+                                        <input type="file" multiple name="file" (change)="fileChangeEvent($event)">
+                                    </div>
+                                </div>
+                            </form>
+                            <div>
+                                <div class="row gallery" *ngIf="gallery">
+                                    <div class="col-3 d-flex flex-column mb-2" *ngFor="let item of gallery; let i=index ">
+                                        <img (click)="setMainImage(item)" class="img-tile" [src]="item">
+                                        <span (click)="deleteImage(i)" class="bg-danger delete"> <i class="bx bxs-trash"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="gallery-preview mt-4" [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+                                        <div *ngIf="!image">
+                                            <i class="bx bx-image font-16"></i>
+                                            <h6 class="mt-4 text-uppercase">Preview</h6>
+                                            <p>
+                                                Click the images on the left to see the preview
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,250 @@
+<div class="container-fluid p-0">
+  <div class="row g-0">
+
+    <div class="col-xl-8">
+      <div class="auth-full-bg pt-lg-5 p-4">
+        <div class="w-100">
+          <div class="bg-overlay"></div>
+          <div class="d-flex h-100 flex-column">
+
+            <div class="p-4 mt-auto">
+              <div class="row justify-content-center">
+                <div class="col-lg-7">
+                  <div class="text-center text-white">
+
+                    <h4 class="mb-3"><i class="bx bxs-quote-alt-left text-primary h1 align-middle me-3"></i><span
+                        class="text-primary">500</span>+ Satisfied Clients</h4>
+
+                    <div dir="ltr">
+                      <owl-carousel-o class="owl-theme auth-review-carousel" [options]="carouselOption">
+                        <ng-template carouselSlide>
+                          <div class="item">
+                            <div class="py-3">
+                              <p class="font-size-16 mb-4">" Booked a package and got really good service from them.
+                                Special thanks to Ankit for giving us complete information related to my trip. They are
+                                always available to help you if needed. Had a
+                                really smooth trip. Will definitely recommend for a foreign trip. Thanks"
+                              </p>
+
+                              <div>
+                                <h4 class="font-size-16 text-primary">kumar kundan</h4>
+                                <p class="font-size-14 mb-0">Local Guide</p>
+                              </div>
+                            </div>
+
+                          </div>
+                        </ng-template>
+                        <ng-template carouselSlide>
+                          <div class="item">
+                            <div class="py-3">
+                              <p class="font-size-16 mb-4">" We have booked package through WTfares recently in May 2022
+                                and we really got good service from them. Special thanks to Neha for giving us complete
+                                clarity on how to plan Tadoba trip, how many
+                                Safari’s to take, which gates are having better sighting currently. Commercially also we
+                                got very good offer from them and multiple options for resort stay. Thanks WTFARES. "
+                              </p>
+
+                              <div>
+                                <h4 class="font-size-16 text-primary">Vaibhab Ghadge</h4>
+                                <p class="font-size-14 mb-0">Social Traveller</p>
+                              </div>
+                            </div>
+
+                          </div>
+                        </ng-template>
+                      </owl-carousel-o>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end col -->
+
+    <div class="col-xl-4">
+      <div class="auth-full-page-content p-md-5 p-4">
+        <div class="w-100">
+
+          <div class="d-flex flex-column h-100">
+            <div class="mb-4 mb-md-5 text-center">
+              <a routerLink="/" class="auth-logo">
+                <img src="assets/images/logo-dark.png" alt="" height="18" class="auth-logo-dark">
+                <img src="assets/images/logo-white.png" alt="" height="18" class="auth-logo-light">
+              </a>
+            </div>
+
+            <div class="my-auto">
+              <div>
+                <h5 class="text-primary text-center ">Register Account</h5>
+                <p class="text-muted text-center">Get your free account now.</p>
+              </div>
+
+              <aw-wizard [navBarLayout]="'large-empty-symbols'">
+                <!-- (ngSubmit)="onSubmit($event)" -->
+                <form style="width: 100%;" [formGroup]="signupForm">
+                  <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Registration successful.
+                  </ngb-alert>
+
+                  <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+                  <aw-wizard-step>
+
+                    <ng-template awWizardStepSymbol>
+                      <i class="fas fa-user"></i>
+                    </ng-template>
+                    <div class="row justify-content-center">
+
+                      <div class="col-9">
+                        <div class=" mb-3">
+                          <label for="name">Name</label>
+
+                          <input class="form-control" name="name" type="text" placeholder="Eg. Sikhar Kumar"
+                            formControlName="name" [ngClass]="{ 'is-invalid': (f.name.dirty || f.name.touched) && f.name.errors }">
+                          <div *ngIf="(f.name.dirty || f.name.touched) && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Name is required</div>
+
+                          </div>
+                        </div>
+                        <div class=" mb-3">
+                          <label for="cname">Venue/Company Name</label>
+                          <input class="form-control" name="cname" type="text" placeholder="Eg. Empress Group"
+                            formControlName="cname" [ngClass]="{ 'is-invalid': (f.cname.dirty || f.name.touched) && f.cname.errors }">
+                          <div *ngIf="(f.cname.dirty || f.name.touched) && f.cname.errors" class="invalid-feedback">
+                            <div *ngIf="f.cname.errors.required">Company name is required</div>
+                          </div>
+                        </div>
+                        <div class=" mb-3">
+                          <label for="number">Mobile Number</label>
+                          <input class="form-control" name="number" type="text" placeholder="Eg. 8055844829"
+                            formControlName="number" [ngClass]="{ 'is-invalid': (f.number.dirty || f.number.touched) && f.number.errors }">
+                          <div *ngIf="(f.number.dirty || f.number.touched) && f.number.errors" class="invalid-feedback">
+                            <div *ngIf="f.number.errors?.required">Mobile number is required</div>
+                            <span *ngIf="f.number.errors?.pattern">Enter valid mobile number</span>
+
+                          </div>
+                        </div>
+                        <div class=" mb-3">
+                          <label for="password" aria-label="Show/hide password">Password</label>
+                          <input class="form-control" name="password" type="password" placeholder="Eg. Goodday@01012023"
+                            formControlName="password" [ngClass]="{ 'is-invalid': (f.password.dirty || f.password.touched) && f.password.errors }">
+                          <div *ngIf="(f.password.dirty || f.password.touched) && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                          </div>
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="email">Email ID</label>
+                          <input type="email" class="form-control" id="email" formControlName="email" (keyup)="checkEmail($event)"
+                            [ngClass]="{ 'is-invalid': (f.email.dirty || f.email.touched ) && f.email.errors || emailError}"
+                            placeholder="Eg. empress.group@gmail.com"
+
+                            >
+                          <div *ngIf="(f.email.dirty || f.email.touched) && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                            <div *ngIf="f.email.errors.email">Email must be a valid email address
+                            </div>
+                          </div>
+                          <div *ngIf="this.emailError" class="error">
+
+                            <div *ngIf="this.emailError">Email already exist!   </div>
+                          </div>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" (change)="switchTerms()" type="checkbox" id="remember-check">
+                          <label class="form-check-label" for="remember-check">
+                            I have read, accepted and agreed to the<a href="javascript: void(0);"
+                              class="text-primary">Terms and Conditions and Privacy Policy</a>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <ul class="list-inline wizard mb-0">
+                      <li class="next list-inline-item mt-5 d-flex justify-content-center"><button
+                          [disabled]="signupForm.status == 'INVALID' || !checkedTerms "(click)="next()" [awGoToStep]="stepIndex"  class="btn btn-primary w-lg"
+                          awNextStep>Next</button>
+                      </li>
+                    </ul>
+                  </aw-wizard-step>
+                  <aw-wizard-step >
+                    <ng-template  awWizardStepSymbol>
+                      <i class="fas fa-check-circle"></i>
+                    </ng-template>
+                    <div   class="row">
+                      <div class="col-12">
+
+                        <div class="card">
+
+                          <div class="card-body">
+
+                            <div class="p-2">
+                              <div class="text-center">
+
+                                <div class="avatar-md mx-auto">
+                                  <div class="avatar-title rounded-circle bg-light">
+                                    <i class="bx bx-check-shield
+                                              h1 mb-0 text-primary"></i>
+                                  </div>
+                                </div>
+                                <div class="p-2 mt-4">
+
+                                  <h4>Verify using your email</h4>
+                                  <p class="mb-5">Please enter the 4 digit code sent to <span
+                                      class="fw-semibold">{{signUpData?.email}}</span></p>
+
+                                  <form>
+                                    <ng-otp-input (onInputChange)="onOTPInputChange($event)" [config]="config"></ng-otp-input>
+
+                                  </form>
+                                  <div *ngIf="otpError" class="error">
+
+                                    <div *ngIf="otpError">{{ otpErrorMsg }}   </div>
+                                  </div>
+                                  <div class="resend-otp-timer" *ngIf="loginOtpTimeStatus">Resend OTP after {{ otpTime }} sec
+                                  </div>
+                                  <div *ngIf="!loginOtpTimeStatus || otpError">
+                                      <h2 class="resend-otp" (click)="resendOtp()">Resend OTP
+                                      </h2>
+                                  </div>
+
+                                </div>
+
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <ul class="list-inline wizard mb-0">
+                      <li class="previous list-inline-item"><button class="btn btn-secondary"
+                          awPreviousStep>Previous</button>
+                      </li>
+                      <li class="next list-inline-item float-end"><button [disabled]="!currentOTP" class="btn btn-primary w-lg" awNextStep
+                          type="submit" (click)="verifyOtp()">Sign Up</button>
+                        <!-- (click)="router.navigate(['account/login'])" -->
+                      </li>
+                    </ul>
+                  </aw-wizard-step>
+                </form>
+              </aw-wizard>
+              <div class="mt-5 text-center">
+                <p>Already have an account ? <a routerLink="/account/login" class="fw-medium text-primary"> Login</a>
+                </p>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- end col -->
+  </div>
+  <!-- end row -->
+</div>
+<!-- end container-fluid -->

@@ -1,0 +1,144 @@
+<div class="container-fluid v-section">
+    <div class="row">
+        <div class="col-3">
+            <app-venue-details [venue]="venue" [currentTab]="8"></app-venue-details>
+        </div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header venue-card pt-4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5>
+                                Capacity
+                            </h5>
+                            <p class="mb-0">
+                                "Specify the seating capacities for different styles at your venue."
+                            </p>
+                        </div>
+                        <div class="col-6">
+                            <div class="col-12 d-flex justify-content-end flex-wrap">
+                                <button type="button" class="btn btn-primary" style="margin-left: 10px" (click)="postAttributeData($event)">
+                          <i
+                            class="bx bx-send font-size-16 align-middle me-2"
+                            style="transform: rotate(-45deg); margin-top: -5px"
+                          ></i>
+                          Save & Publish
+                        </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body mb-3">
+                    <div class="row">
+                        <div class="col-12">
+                            <form [formGroup]="attributeForm">
+                                <div class="row">
+                                    <div class="mb-3 col-6">
+                                        <label for="standing" class="col-form-label col-6">
+                                            <i class="bx bx-body me-1 text-primary"></i>Standing capacity</label>
+
+                                        <input name="standing" type="text" class="form-control" placeholder="Eg. 175" formControlName="standing">
+                                        <span class="error-message">{{validationError.standing}}</span>
+
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="dinning" class="col-form-label col-6">
+                                            <i class="bx bx-restaurant me-1 text-primary"></i>Dining capacity</label>
+
+                                        <input name="dinning" type="text" class="form-control" placeholder="Eg. 80" formControlName="dinning">
+                                        <span class="error-message">{{validationError.dinning}}</span>
+
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="theater" class="col-form-label col-6">
+                                            <i class="bx bx-movie me-1 text-primary"></i>Theatre capacity</label>
+
+                                        <input name="theater" type="text" class="form-control" placeholder="Eg. 75" formControlName="theater">
+                                        <span class="error-message">{{validationError.theater}}</span>
+
+                                    </div>
+                                    <div class="mb-3 col-6">
+                                      <label for="musicValue" class="col-form-label col-6">
+                                          <i class="bx bx-movie me-1 text-primary"></i>Music & Sound Effect</label>
+
+                                      <input name="musicValue" type="text" class="form-control" placeholder="Eg. 75" formControlName="musicValue">
+                                      <span class="error-message">{{validationError.musicValue}}</span>
+
+                                  </div>
+                                  <div class="mb-3 col-6">
+                                    <label for="accessibilityValue" class="col-form-label col-6">
+                                        <i class="bx bx-movie me-1 text-primary"></i>Accessibility Value</label>
+
+                                    <input name="accessibilityValue" type="text" class="form-control" placeholder="Eg. 75" formControlName="accessibilityValue">
+                                    <span class="error-message">{{validationError.accessibilityValue}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                  <label for="cateringValue" class="col-form-label col-6">
+                                      <i class="bx bx-movie me-1 text-primary"></i>Catering Value</label>
+
+                                  <input name="cateringValue" type="text" class="form-control" placeholder="Eg. 75" formControlName="cateringValue">
+                                  <span class="error-message">{{validationError.cateringValue}}</span>
+
+                              </div>
+                                    <div class="mb-3 col-6">
+                                        <label for="cabaret" class="col-form-label col-6">
+                                            <i class="bx bx-music me-1 text-primary"></i>Cabaret capacity</label>
+
+                                        <input name="cabaret" type="text" class="form-control" placeholder="Eg. 100" formControlName="cabaret">
+                                        <span class="error-message">{{validationError.cabaret}}</span>
+
+                                    </div>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="casual" class="col-form-label col-6">Casual</label>
+
+                                    <input name="casual" type="text" class="form-control" placeholder="Eg. 100" formControlName="casual">
+                                    <span class="error-message">{{validationError.casual}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="cluster" class="col-form-label col-6">Cluster/ round table</label>
+
+                                    <input name="cluster" type="text" class="form-control" placeholder="Eg. 100" formControlName="cluster">
+                                    <span class="error-message">{{validationError.cluster}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="schoolroom" class="col-form-label col-6">Schoolroom</label>
+
+                                    <input name="schoolroom" type="text" class="form-control" placeholder="Eg. 100" formControlName="schoolroom">
+                                    <span class="error-message">{{validationError.schoolroom}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="conference" class="col-form-label col-6">Conference</label>
+
+                                    <input name="conference" type="text" class="form-control" placeholder="Eg. 100" formControlName="conference">
+                                    <span class="error-message">{{validationError.conference}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="ushaped" class="col-form-label col-6">U-Shaped</label>
+
+                                    <input name="ushaped" type="text" class="form-control" placeholder="Eg. 100" formControlName="ushaped">
+                                    <span class="error-message">{{validationError.ushaped}}</span>
+
+                                </div>
+                                <div class="mb-3 col-6">
+                                    <label for="boardroom" class="col-form-label col-6">Boardroom</label>
+
+                                    <input name="boardroom" type="text" class="form-control" placeholder="Eg. 100" formControlName="boardroom">
+                                    <span class="error-message">{{validationError.boardroom}}</span>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

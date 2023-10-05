@@ -1,0 +1,380 @@
+<div class="main-navigation is-scrolled" x-data="initNavbar()" x-init="startDatepicker(), endDatepicker()" x-on:scroll.window="scroll()" x-on:mouseleave="megamenuOpened = false" x-bind:class="{
+        'is-scrolled': scrolled,
+        '': !scrolled,
+        'is-expanded': searchExpanded,
+        '': !searchExpanded,
+        'is-solid': megamenuOpened,
+        '': !megamenuOpened,
+    }">
+    <div class="main-navigation--menu">
+        <div class="container">
+            <div class="main-navigation--menu-inner">
+                <div class="left">
+                    <a href="/" class="brand">
+                        <img class="light-logo" src="img/logo/logo-w.svg" alt="" />
+                        <img class="dark-logo" src="img/logo/logo.svg" alt="" />
+                    </a>
+                </div>
+
+                <div class="center">
+                    <!-- <div class="navigation-link has-caret" x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-1'">
+                        <a class="is-flex is-align-items-center">
+                            <span>Events</span>
+                            <i data-feather="chevron-down"></i>
+                        </a>
+                    </div>
+                    <div class="navigation-link has-caret" x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-2'">
+                        <a class="is-flex is-align-items-center">
+                            <span>Trips</span>
+                            <i data-feather="chevron-down"></i>
+                        </a>
+                    </div>
+                    <div class="navigation-link has-caret" x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-3'">
+                        <a class="is-flex is-align-items-center">
+                            <span>Flats</span>
+                            <i data-feather="chevron-down"></i>
+                        </a>
+                    </div> -->
+                    <div class="search-fold" x-on:click="expandSearch()">
+                        <span>Search venues near you</span>
+                        <button class="mini-search-button">
+                          <i data-feather="search"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="right">
+                    <div class="navigation-link">
+                        <a href="how.html" class="host-btn">Host a Venue</a>
+                    </div>
+                    <!-- <button class="navigation-link is-icon mx-4 modal-trigger" data-modal="languages-modal">
+                      <i data-feather="globe"></i>
+                    </button>  -->
+                    <div class="account-drop">
+
+                        <button x-on:click="openDrop('account-drop')" x-on:click.away="closeDrop('account-drop')" class="navigation-link is-icon mx-4 modal-trigger">
+                          <i data-feather="menu"></i>
+                        </button>
+                        <div x-show.transition="accountDropOpened" class="drop-menu">
+                            <div class="drop-menu-inner">
+                                <a href="#" class="drop-menu-item is-heavy">About us</a>
+                                <a href="#" class="drop-menu-item">Why list with us</a>
+                                <a href="contact.html" class="drop-menu-item">Contact us</a>
+                                <hr />
+                                <a href="terms.html" class="drop-menu-item">Terms & Conditions</a>
+                                <a href="privacy.html" class="drop-menu-item">Privacy Policy</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-navigation--search" x-data="getDataLocation()" x-init="init()" style="margin-top: 250px;">
+
+        <form id="search-form" x-data="form" @submit="submit">
+
+            <div class="search-bar" x-on:click.away="disableSearch()" x-data="locationVenue()">
+
+                <div class="ninja-toggle" style=" max-width: none;
+                display: flex;
+                white-space: nowrap;
+                position: absolute;
+                bottom: -10px;
+                align-items: center;
+                color: #fff;
+                font-weight: 500;">
+                    <span style="margin: 0 10px 0 30px;"> Multi Day</span>
+                    <input id="multi-day" type="checkbox" />
+                    <label for="multi-day" class="no-margin">
+                    <span class="track" x-on:click="changeSearch()">
+                    <span class="track-inner"></span>
+                    <span class="track-knob">
+                        <i class="inactive" data-feather="circle"></i>
+                        <i class="active" data-feather="check"></i>
+                    </span>
+                    </span>
+                </label>
+                </div>
+
+                <div class="block-30 single show">
+                    <div class="field">
+                        <label>Location</label>
+                        <div class="control">
+                            <!-- <input x-ref="locationInput" required="required" placeholder="Where are you?" name="location" id="location" type="text" data-rules='["required"]' @input="input" x-model="loc" />
+                            <p x-show="location.errorMessage && location.blurred" x-text="location.errorMessage"></p>
+                            <button type="reset" class="clear-value">
+                                <i data-feather="x"></i>
+                            </button> -->
+                        </div>
+                        <select id="slLocation-s" class="new-select">
+                            <option disabled value = ''>Select Location</option>
+                            <template x-for="city in venuesCities" :key="city">
+                                <option value="city" x-text="city" ></option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <div x-show.transition="locationDropOpened" class="location-dropdown">
+                        <div class="location-dropdown-inner">
+                            <!-- <a class="near-link">
+                                <div class="near-icon">
+                                    <i data-feather="map-pin"></i>
+                                </div>
+                                <span>Explore events near you</span>
+                            </a> -->
+                            <div class="near-tags">
+                                <h4>Select from the following cities</h4>
+                                <div class="tags">
+                                    <template x-for="item in venuesCities" :key="item">
+                                        <span class="tag" x-text="item" @click="setLocation(item)"></span>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 single show">
+                    <div class="field">
+                        <label>Event Date</label>
+                        <div class="control">
+                            <!-- <input required="required" class="" placeholder="Select a date" name="startDate" id="_startDate" type="date" data-rules='["required"]' @input="input" x-model="startDate" />
+                            <p x-show="eventDate.errorMessage && eventDate.blurred" x-text="eventDate.errorMessage"></p>
+                            <button type="reset" class="clear-value">
+                                <i data-feather="x"></i>
+                            </button> -->
+                            <input required="required" class="" placeholder="Select a date" name="startDate2" id="startDate2-s" type="date" data-rules='["required"]' @input="input" x-text="startDate2" x-model="startDate2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 single show">
+                    <div class="field">
+                        <label>Audience</label>
+                        <div class="control">
+                            <input type="number" required="required" placeholder="No of People" name="number" id="number" type="number" data-rules='["required"]' @input="input" x-model="number" />
+                            <p x-show="number.errorMessage && number.blurred" x-text="number.errorMessage"></p>
+                            <button type="reset" class="clear-value">
+                                <i data-feather="x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-30 single show" x-on:click.away="closeDrop('type-drop')" x-bind:class="{
+                    'is-active': typeDropOpened,
+                    '': !typeDropOpened
+                }">
+                    <div class="field has-search-button">
+                        <label>Venue Type</label>
+                        <div class="control" x-on:click="openDrop('type-drop'), $refs.typeInput.focus()" x-data="venueTypeData()">
+                            <input x-ref="typeInput" required="required" placeholder="Select a type" name="venueType" id="venueType" type="text" data-rules='["required"]' @input="input" style="width: 100px;" />
+                            <p x-show="venueType.errorMessage && venueType.blurred" x-text="venueType.errorMessage"></p>
+                            <!-- <button type="reset" class="clear-value">
+                                <i data-feather="x"></i>
+                            </button> -->
+                        </div>
+                    </div>
+
+                    <div x-show.transition="typeDropOpened" class="type-dropdown">
+                        <div class="type-dropdown-inner">
+                            <template x-for="item in venuesTypes" :key="item.id">
+                                <div class="type-block">
+                                    <div class="meta">
+                                        <span x-text="item.title" ></span>
+                                    </div>
+                                    <div class="action">
+                                        <label class="form-switch is-primary">
+                                            <input type="checkbox" x-bind:value="item.title"  @click="setType(item.title)" name="search_type_radio" class="is-switch" />
+                                            <i></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <button type="button" class="search-button is-expanded" type="submit" x-data="searchVenue()">
+                        <i data-feather="search"></i>
+                        <span @click="searchVenueLocation()"> Search</span>
+                    </button>
+                </div>
+
+                <div class="block-20 multi">
+                    <div class="field">
+                        <label>Location</label>
+                        <!-- <div class="control">
+                            <input x-ref="locationInput" required="required" placeholder="Where are you?" name="location" id="location" type="text" data-rules='["required"]' @input="input" x-model="loc" />
+                            <p x-show="location.errorMessage && location.blurred" x-text="location.errorMessage"></p>
+                            <button type="reset" class="clear-value">
+                                      <i data-feather="x"></i>
+                                  </button>
+                        </div> -->
+                        <select id="slLocation-m" class="new-select">
+                            <option disabled value = ''>Select Location</option>
+                            <template x-for="city in venuesCities" :key="city">
+                                <option value="city" x-text="city" ></option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <div x-show.transition="locationDropOpened" class="location-dropdown">
+                        <div class="location-dropdown-inner">
+                            <!-- <a class="near-link">
+                                      <div class="near-icon">
+                                          <i data-feather="map-pin"></i>
+                                      </div>
+                                      <span>Explore events near you</span>
+                                  </a> -->
+                            <div class="near-tags">
+                                <h4>Select from the following cities</h4>
+                                <div class="tags">
+                                    <template x-for="item in venuesCities" :key="item">
+                                              <span class="tag" x-text="item" @click="setLocation(item)"></span>
+                                          </template>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 multi">
+                    <div class="field">
+                        <label>Start Date</label>
+                        <div class="control">
+                            <input required="required" class="" placeholder="Select a date" name="startDate2" id="startDate2-m" type="date" data-rules='["required"]' @input="input" x-text="startDate2" x-model="startDate2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 multi">
+                    <div class="field">
+                        <label>End Date</label>
+                        <div class="control">
+                            <input required="required" class="" placeholder="Select a date" name="endDate" id="endDate-m" type="date" data-rules='["required"]' @input="input" x-text="endDate" x-model="endDate" @click="setDate(endDate)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 multi">
+                    <div class="field">
+                        <label>Audience</label>
+                        <div class="control">
+                            <input type="number" required="required" placeholder="No of People" name="number" id="number" type="number" data-rules='["required"]' @input="input" x-model="number" />
+                            <p x-show="number.errorMessage && number.blurred" x-text="number.errorMessage"></p>
+                            <button type="reset" class="clear-value">
+                                      <i data-feather="x"></i>
+                                  </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-20 multi" x-on:click.away="closeDrop('type-drop')" x-bind:class="{
+                          'is-active': typeDropOpened,
+                          '': !typeDropOpened
+                      }">
+                    <div class="field has-search-button">
+                        <label>Venue Type</label>
+                        <div class="control" x-on:click="openDrop('type-drop'), $refs.typeInput.focus()" x-data="venueTypeData()">
+                            <input x-ref="typeInput" required="required" placeholder="Select a type" name="venueType" id="venueType" type="text" data-rules='["required"]' @input="input" style="width: 100px;" />
+                            <p x-show="venueType.errorMessage && venueType.blurred" x-text="venueType.errorMessage"></p>
+                            <!-- <button type="reset" class="clear-value">
+                                      <i data-feather="x"></i>
+                                  </button> -->
+                        </div>
+                    </div>
+
+                    <div x-show.transition="typeDropOpened" class="type-dropdown">
+                        <div class="type-dropdown-inner">
+                            <template x-for="item in venuesTypes" :key="item.id">
+                                      <div class="type-block">
+                                          <div class="meta">
+                                              <span x-text="item.title" ></span>
+                                          </div>
+                                          <div class="action">
+                                              <label class="form-switch is-primary">
+                                                  <input type="checkbox" x-bind:value="item.title"  @click="setType(item.title)" name="search_type_radio" class="is-switch" />
+                                                  <i></i>
+                                              </label>
+                                          </div>
+                                      </div>
+                                  </template>
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
+                    <button type="button" class="search-button is-expanded" type="submit" x-data="searchVenue()">
+                              <i data-feather="search"></i>
+                              <span @click="searchVenueLocation()"> Search</span>
+                          </button>
+                </div>
+            </div>
+            <!-- <div>
+                <label>Location</label>
+                <select id="slLocation">
+                    <option disabled value = ''>Select Location</option>
+                    <template x-for="city in venuesCities" :key="city">
+                        <option value="city" x-text="city" ></option>
+                    </template>
+                </select>
+                <label>Start Date</label>
+                <input required="required" class="" placeholder="Select a date" name="startDate2" id="startDate2" type="date" data-rules='["required"]' @input="input" x-text="startDate2" x-model="startDate2" />
+                <label>End Date</label>
+                <input required="required" class="" placeholder="Select a date" name="endDate" id="endDate" type="date" data-rules='["required"]' @input="input" x-text="endDate" x-model="endDate" @click="setDate(endDate)" />
+
+            </div> -->
+
+        </form>
+    </div>
+
+    {{> megamenu}}
+</div>
+<style>
+    .search-bar .single {
+        display: none !important;
+    }
+    
+    .search-bar .multi {
+        display: none !important;
+    }
+    
+    .search-bar .show {
+        display: flex !important;
+    }
+</style>
+<script>
+    function changeSearch() {
+        isMulti = document.getElementById('multi-day').checked
+        console.log(isMulti);
+
+        multiArray = document.getElementsByClassName('multi');
+        singleArray = document.getElementsByClassName('single');
+
+        if (isMulti == false) {
+
+            for (i = 0; i < multiArray.length; i++) {
+                multiArray[i].classList.add('show');
+            }
+            for (i = 0; i < singleArray.length; i++) {
+                singleArray[i].classList.remove('show');
+            }
+        }
+        if (isMulti == true) {
+
+            for (i = 0; i < multiArray.length; i++) {
+                multiArray[i].classList.remove('show');
+            }
+            for (i = 0; i < singleArray.length; i++) {
+                singleArray[i].classList.add('show');
+            }
+
+        }
+    }
+</script>
+<style>
+    .new-select {
+        position: relative;
+        background: transparent;
+        border: none;
+        width: 100%;
+        font-size: 16px;
+        margin: 3px 0 0 -5px;
+        color: #a2a5b9;
+        cursor: pointer;
+    }
+</style>

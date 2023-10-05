@@ -1,0 +1,105 @@
+.image {
+  height: 140px;
+  width: 100%;
+  border-radius: 10px;
+  background-size: cover;
+}
+
+.job-filter {
+  background: transparent;
+
+  .card-body {
+    padding: 0;
+  }
+}
+
+.type {
+  padding: 30px;
+  max-width: 1366px;
+  margin: 0 auto;
+}
+
+.type-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  img {
+    margin: 0 15px 0 0 !important;
+  }
+}
+
+.type .card.active {
+  border: 2px solid#556ee6;
+  cursor: pointer;
+}
+
+.type .card {
+  cursor: pointer;
+  border: 2px solid#eff2f7;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  color: #09142d;
+}
+
+.nameBinding {
+  margin-top: 10px;
+}
+
+.error-message {
+  color: red;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.button-container button {
+  flex: 1;
+}
+
+.button-container button.btn-success {
+  white-space: nowrap;
+}
+
+.product {
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  width: 100%;
+  position: relative;
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  background-color: #8080806e;
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.noProduct {
+  height: 140px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 15px;
+  width: 100%;
+  position: relative;
+}

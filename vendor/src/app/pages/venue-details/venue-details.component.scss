@@ -1,0 +1,11 @@
+.nav-tabs-custom .nav-item .nav-link {
+    border-radius: 10px !important;
+    text-align: left;
+    padding: 10px;
+    &::after {
+        display: none;
+    }
+    &.active {
+        color: #fff;
+    }
+}

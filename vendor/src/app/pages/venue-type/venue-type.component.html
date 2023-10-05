@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <app-page-title title="Venue Type" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+    <div class="row mt-3">
+        <div class="row">
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="name">Name</label>
+                    <input type="name" class="form-control" id="name" formControlName="name" placeholder="Eg.Enter Name">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="mb-3">
+                    <label for="email">Description</label>
+                    <textarea type="email" class="form-control" id="email" formControlName="email" placeholder=" Eg.Enter Description"></textarea>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6" *ngFor="let list of listData ; let i = index">
+            <div class="card" [ngClass]="i== statusClass ? 'active':''" (click)="setActiveClass(i)">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="text-lg-center">
+                                <div *ngIf="!list.image" class="avatar-sm me-3 mx-lg-auto mb-3 mt-1 float-start float-lg-none">
+                                    <span class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-16">
+                    {{ list.name.charAt(0)}}
+                  </span>
+                                </div>
+                                <img *ngIf="list.image" src="{{list.image}}" class="avatar-sm me-3 mx-lg-auto mb-3 mt-1 float-start float-lg-none rounded-circle" alt="img">
+                            </div>
+                        </div>
+                        <div class="col-lg-8 mt-3 ">
+                            <div>
+                                <h5 class="text-truncate mb-1 mb-lg-2">{{ list.title }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div class="row">
+        <div class="col-12 btnNext">
+            <button class="btn btn-primary btnBlock" (click)="router.navigate(['venue'])">Next</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,749 @@
+<div *ngIf="pageFor == 'Profile'" class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Company Profile
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Company Profile</li>
+      </ol>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-xl-3">
+      <div class="col">
+        <div class="card bg-info bg-soft">
+          <div class="card-body">
+            <div class="text-center mb-4">
+              <img
+                *ngIf="vendorData?.logo"
+                [src]="vendorData?.logo"
+                class="avatar-sm rounded-circle mx-auto d-block mt-3"
+              />
+              <img
+                *ngIf="!vendorData?.logo"
+                src="assets/images/dummy-image.png"
+                class="avatar-sm rounded-circle mx-auto d-block mt-3"
+              />
+              <h5 class="mt-3 mb-1">{{ vendorData?.name }}</h5>
+              <p class="text-muted mb-3">{{ vendorData?.address || "--" }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="card-title mt-2">General Details</h4>
+              <a
+                href="javascript:void(0);"
+                class="btn btn-soft-primary btn-hover rounded"
+                (click)="editProfile()"
+              >
+                <i class="bx bxs-pencil"></i>
+              </a>
+            </div>
+
+            <ul class="list-unstyled mt-4">
+              <li>
+                <div class="d-flex">
+                  <i class="bx bx-phone text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Mobile</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ vendorData?.mobileNumber || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-mail-send text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Email</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ vendorData?.companyEmail || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-globe text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Website</h6>
+                    <p class="text-muted fs-14 text-break mb-0">
+                      {{ vendorData?.companyWebsite || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-map text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Address</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ vendorData?.address || "--" }},
+                    </p>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ vendorData?.city || "--" }},
+                    </p>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ vendorData?.state || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="card-title mt-2">Contact Person Name</h4>
+            </div>
+
+            <ul class="list-unstyled mt-4">
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-user-circle text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Contact Person</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ user?.name || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-mobile text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Mobile Number</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ user?.mobileNumber || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="mt-3">
+                <div class="d-flex">
+                  <i class="bx bx-map text-primary fs-4"></i>
+                  <div class="ms-3">
+                    <h6 class="fs-14 mb-2">Email</h6>
+                    <p class="text-muted fs-14 mb-0">
+                      {{ user?.email || "--" }}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-9" style="margin-top: -51px">
+      <div class="row align-items-end">
+        <div class="col-lg-6"></div>
+        <div
+          class="col-lg-6 d-flex align-items-center justify-content-end mb-3"
+        >
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="filterBy"
+            placeholder="Eg. Sumit Raghav"
+            (keyup)="filter()"
+            style="width: unset"
+          />
+          <div class="position-relative h-100 hstack" style="margin-left: 10px">
+            <ng-template #content role="document" let-modal>
+              <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Filter</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  (click)="modal.dismiss('Cross click')"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="userslist">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="mb-3" *ngIf="dropData == 'admin'">
+                        <label class="form-label">Company Name</label>
+                        <select
+                          name="cName"
+                          formControlName="cName"
+                          ngDefaultControl
+                          class="form-control"
+                          placeholder="Eg. Select City"
+                        >
+                          <option value="" selected>
+                            Please select company name
+                          </option>
+                          <option
+                            *ngFor="let item of filterData"
+                            [ngValue]="item"
+                          >
+                            {{ item.name }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3" *ngIf="dropData == 'vendor'">
+                        <label class="form-label">Company Name</label>
+                        <input
+                          name="cName"
+                          formControlName="cName"
+                          disabled
+                          class="form-control"
+                          value="companyDataList.name"
+                        />
+                      </div>
+
+                      <div class="mb-3" *ngIf="dropData == 'vendor'">
+                        <label class="form-label">Location</label>
+                        <select
+                          name="location"
+                          formControlName="location"
+                          ngDefaultControl
+                          class="form-control"
+                        >
+                          <option value="" selected>
+                            Please Select Location
+                          </option>
+                          <option
+                            *ngFor="let item of locations"
+                            [ngValue]="item"
+                          >
+                            {{ item }}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <ng-select
+                          [items]="status"
+                          name="status"
+                          placeholder="Select Status"
+                          formControlName="status"
+                          bindLabel="selectStatus"
+                          bindValue="selectStatus"
+                        >
+                        </ng-select>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary waves-effect"
+                  data-bs-dismiss="modal"
+                  (click)="modal.close('Close click')"
+                >
+                  Close
+                </button>
+              </div>
+            </ng-template>
+            <button
+              type="button"
+              class="btn btn-primary waves-effect waves-light"
+              (click)="router.navigate(['users-list/users-form'])"
+            >
+              New User
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card-body">
+          <div class="col-12">
+            <div class="row" *ngIf="filteredUsers?.length > 0">
+              <div class="col-xl-3 col-sm-6" *ngFor="let data of filteredUsers">
+                <div class="card text-center user">
+                  <div class="card-body">
+                    <div class="avatar-sm mx-auto mb-4" *ngIf="!data.image">
+                      <span
+                        class="avatar-title rounded-circle bg-soft bg-primary text-primary font-size-16"
+                      >
+                        {{ data.name?.charAt(0) | titlecase }}
+                      </span>
+                    </div>
+                    <div *ngIf="data.image" class="mb-4">
+                      <img
+                        class="rounded-circle avatar-sm"
+                        [src]="data.image ?? 'assets/images/users/avatar-4.jpg'"
+                        alt
+                      />
+                    </div>
+                    <h5 class="font-size-15 mb-1">
+                      <a href="javascript: void(0);" class="text-dark">{{
+                        data.name
+                      }}</a>
+                    </h5>
+                    <h6 class="mb-1">
+                      <a href="javascript: void(0);" class="text-dark">{{
+                        getCompanyNameById(data?.company)
+                      }}</a>
+                    </h6>
+                    <p class="text">{{ data.email }}</p>
+                    <!-- <p class="text-muted">{{ data.designation }}</p> -->
+                    <p class="text-muted">
+                      {{ data.designation }} </p>
+                  </div>
+                  <div class="card-footer bg-transparent border-top">
+                    <div class="contact-links d-flex font-size-20">
+                      <div class="flex-fill" (click)="goToEdit(data.id)">
+                        <a href="javascript: void(0);" ngbTooltip="Edit"
+                          ><i class="mdi mdi-pencil-outline"></i
+                        ></a>
+                      </div>
+                      <div
+                        class="flex-fill"
+                        (click)="deleteUsersData(data.id, $event)"
+                      >
+                        <a href="javascript: void(0);" ngbTooltip="Delete"
+                          ><i class="mdi mdi-delete-outline"></i
+                        ></a>
+                      </div>
+                      <div class="flex-fill" (click)="onDetails(data.id)">
+                        <a href="javascript: void(0);" ngbTooltip="Profile"
+                          ><i class="bx bx-user-circle"></i
+                        ></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-4" *ngIf="filteredUsers?.length == 0">
+              <div class="col-12 search-no-data">
+                <i class="bx bx-sleepy"></i>
+                <h6>No users found matching your search</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="pageFor == 'Edit'" class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Update Company Profile
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Update Company Profile</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row d-flex justify-content-end">
+            <div class="col-12">
+              <form [formGroup]="profileForm">
+                <div class="row">
+                  <h4 class="card-title mb-2">Basic Details</h4>
+                  <div class="mb-3 col-12">
+                    <label class="col-form-label">Company Name*</label>
+                    <input
+                      name="name"
+                      formControlName="name"
+                      type="text"
+                      class="form-control"
+                      disabled
+                    />
+                  </div>
+                  <div class="mb-3 col-12">
+                    <label class="col-form-label">Mailing Address*</label>
+                    <input
+                      type="text"
+                      name="address"
+                      placeholder="Eg. Plot no 123,"
+                      formControlName="address"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.address.dirty || f.address.touched) &&
+                          f.address.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.address.dirty || f.address.touched) &&
+                        f.address.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.address.errors?.required"
+                        >required</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">City*</label>
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="Eg. Mumbai"
+                      formControlName="city"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.city.dirty || f.city.touched) && f.city.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="(f.city.dirty || f.city.touched) && f.city.errors"
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.city.errors?.required"
+                        >required</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">State*</label>
+                    <input
+                      type="text"
+                      name="state"
+                      placeholder="Eg. Maharashtra"
+                      formControlName="state"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.state.dirty || f.state.touched) && f.state.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.state.dirty || f.state.touched) && f.state.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.state.errors?.required"
+                        >required</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">Pin Code*</label>
+                    <input
+                      type="text"
+                      name="pincode"
+                      placeholder="Eg. 444444"
+                      formControlName="pincode"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.pincode.dirty || f.pincode.touched) &&
+                          f.pincode.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.pincode.dirty || f.pincode.touched) &&
+                        f.pincode.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.pincode.errors?.required"
+                        >required</span
+                      >
+                      <span
+                        class="error-message"
+                        *ngIf="f.pincode.errors?.pattern"
+                        >Enter valid pin code</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">Email*</label>
+                    <input
+                      name="companyEmail"
+                      placeholder="Eg. abc@gmail.com"
+                      formControlName="companyEmail"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.companyEmail.dirty || f.companyEmail.touched) &&
+                          f.companyEmail.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.companyEmail.dirty || f.companyEmail.touched) &&
+                        f.companyEmail.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.companyEmail.errors.required"
+                        >required</span
+                      >
+                      <span
+                        class="error-message"
+                        *ngIf="f.companyEmail.errors.pattern"
+                        >Enter valid email</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">Mobile Number*</label>
+                    <input
+                      name="mobileNumber"
+                      placeholder="Eg. 9999999999"
+                      formControlName="mobileNumber"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.mobileNumber.dirty || f.mobileNumber.touched) &&
+                          f.mobileNumber.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.mobileNumber.dirty || f.mobileNumber.touched) &&
+                        f.mobileNumber.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.mobileNumber.errors.required"
+                        >required</span
+                      >
+                      <span
+                        class="error-message"
+                        *ngIf="f.mobileNumber.errors?.pattern"
+                        >Enter valid mobile number</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">Company Website*</label>
+                    <input
+                      name="companyWebsite"
+                      placeholder="Eg. www.abc.com"
+                      formControlName="companyWebsite"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.companyWebsite.dirty ||
+                            f.companyWebsite.touched) &&
+                          f.companyWebsite.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="
+                        (f.companyWebsite.dirty || f.companyWebsite.touched) &&
+                        f.companyWebsite.errors
+                      "
+                    >
+                      <span
+                        class="error-message"
+                        *ngIf="f.companyWebsite.errors.required"
+                        >required</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 row">
+                  <h4 class="card-title mb-2">Legal Details</h4>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">GSTN*</label>
+                    <input
+                      name="gstn"
+                      placeholder="Eg. 01AAAAA2222B3CC"
+                      formControlName="gstn"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.gstn.dirty || f.gstn.touched) && f.gstn.errors
+                      }"
+                    />
+                    <div
+                      *ngIf="(f.gstn.dirty || f.gstn.touched) && f.gstn.errors"
+                    >
+                      <span class="error-message" *ngIf="f.gstn.errors.required"
+                        >required</span
+                      >
+                      <span class="error-message" *ngIf="f.gstn.errors?.pattern"
+                        >Enter Valid GSTN</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">CIN*</label>
+                    <input
+                      name="cin"
+                      placeholder="Eg. L11111BB2222CCC333333"
+                      formControlName="cin"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.cin.dirty || f.cin.touched) && f.cin.errors
+                      }"
+                    />
+                    <div *ngIf="(f.cin.dirty || f.cin.touched) && f.cin.errors">
+                      <span class="error-message" *ngIf="f.cin.errors.required"
+                        >required</span
+                      >
+                      <span class="error-message" *ngIf="f.cin.errors?.pattern"
+                        >Enter Valid CIN</span
+                      >
+                    </div>
+                  </div>
+                  <div class="mb-3 col-6">
+                    <label class="col-form-label">TAN*</label>
+                    <input
+                      name="tan"
+                      placeholder="Eg. AAAA01111B"
+                      formControlName="tan"
+                      type="text"
+                      class="form-control"
+                      [ngClass]="{
+                        'is-invalid':
+                          (f.tan.dirty || f.tan.touched) && f.tan.errors
+                      }"
+                    />
+                    <div *ngIf="(f.tan.dirty || f.tan.touched) && f.tan.errors">
+                      <span class="error-message" *ngIf="f.tan.errors.required"
+                        >required</span
+                      >
+                      <span class="error-message" *ngIf="f.tan.errors?.pattern"
+                        >Enter Valid TAN</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="mt-3 row">
+                  <h4 class="card-title mb-2">Company Logo</h4>
+                  <div class="mb-3 col-12">
+                    <label class="col-form-label">Select Logo*</label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      (change)="uploadLogo($event)"
+                    />
+                  </div>
+
+                  <div>
+                    <img class="img-tile" [src]="logo" />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-12 mt-3 d-flex justify-content-end">
+              <button type="button" class="btn btn-danger" (click)="cancel()">
+                Cancel
+              </button>
+              <button
+                type="submit"
+                (click)="confirmPost()"
+                class="btn btn-primary"
+                [disabled]="profileForm.invalid"
+                style="margin-left: 10px"
+              >
+                <i
+                  class="bx bx-send font-size-16 align-middle me-2"
+                  style="transform: rotate(-45deg); margin-top: -5px"
+                ></i>
+                Save & Publish
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="row d-flex justify-content-end">
+            <div class="col-12">
+              <h4 class="card-title mb-4">Locations</h4>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="w-100">
+                  <input
+                    type="text"
+                    class="form-control"
+                    [(ngModel)]="locationName"
+                  />
+                  <div *ngIf="locationError">
+                    <span class="error-message">required</span>
+                  </div>
+                </div>
+                <div style="margin-left: 10px; min-width: 40px">
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="addLocation()"
+                  >
+                    <i class="bx bx-plus font-size-16 align-middle"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div *ngIf="vendorData?.locations?.length > 0">
+                  <table class="table mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th>Title</th>
+                        <th style="text-align: right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of locationArr; let i = index">
+                        <td>{{ item.name }}</td>
+
+                        <td
+                          [class.disabled]="item.disable"
+                          style="text-align: right"
+                        >
+                          <i
+                            (click)="removeLocation(i)"
+                            class="las la-trash text-danger"
+                          ></i>
+                        </td>
+                      </tr>
+                      <div *ngIf="venueLocationError">
+                        <span class="error-message"
+                          >Location can't remove. This location have
+                          venues.</span
+                        >
+                      </div>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

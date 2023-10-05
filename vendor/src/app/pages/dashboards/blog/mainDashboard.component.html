@@ -1,0 +1,262 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Dashboard
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Dashboard</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-xl-3">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="flex-shrink-0 me-3">
+              <img
+                [src]="user?.image"
+                alt=""
+                class="avatar-sm rounded-circle img-thumbnail"
+              />
+            </div>
+            <div class="flex-grow-1">
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <div>
+                    <h5 class="mb-1">{{ user?.name | titlecase }}</h5>
+                    <p class="mb-0">{{ user?.email }}</p>
+
+                    <p class="mt-2 mb-0 text-primary">
+                      <span class="font-size-12 text-muted"> Role: </span>
+                      {{ user?.designation | titlecase }}
+                    </p>
+                  </div>
+                </div>
+                <div
+                  *ngIf="designation !== constDesignations.manager"
+                  class="flex-shrink-0 dropdown ms-2"
+                >
+                  <button
+                    dropdown-toggle
+                    type="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    class="btn btn-light btn-sm"
+                    (click)="router.navigate(['/vendor/vendor-profile'])"
+                  >
+                    <i class="bx bxs-cog align-middle"></i>
+                  </button>
+                </div>
+                <!---->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-9">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18"
+                  >
+                    <i class="bx bxs-map"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Total Locations</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ totalVenues?.length }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18"
+                  >
+                    <i class="bx bxs-building-house"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Total Venues</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ totalVenues?.length }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center mb-3">
+                <div class="avatar-xs me-3">
+                  <span
+                    class="avatar-title rounded-circle bg-primary bg-soft text-primary font-size-18"
+                  >
+                    <i class="bx bxs-phone-incoming"></i>
+                  </span>
+                </div>
+                <h5 class="font-size-14 mb-0">Total Enquiries</h5>
+              </div>
+              <div class="text-muted mt-4">
+                <h4>{{ enquiryData?.length }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <h5 class="card-title me-2 mb-3">Enquiries</h5>
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">New</p>
+                  <h5 class="mb-0">{{ upcomingTasks?.length }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card mini-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">In Progress</p>
+                  <h5 class="mb-0">{{ inprogressTasks?.length }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="me-3">
+                  <p class="text-muted mb-2">Booked</p>
+                  <h5 class="mb-0">{{ bookedTasks?.length }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="card blog-stats-wid">
+            <div class="card-body">
+              <div class="d-flex flex-wrap">
+                <div class="mr-3">
+                  <p class="text-muted mb-2">Cancelled</p>
+                  <h5 class="mb-0">{{ cancelledTasks?.length }}</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end row -->
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h5>Recent Enquiries</h5>
+            <a
+              class="text-primary btn-all-enquiry"
+              style="cursor: pointer"
+              type="a"
+              data-bs-toggle="modal"
+              (click)="allEnquiries()"
+              >View All</a
+            >
+          </div>
+          <div class="table-responsive mt-3">
+            <table class="table table-bordered align-middle nowrap">
+              <thead>
+                <tr>
+                  <th scope="col">Customer Name</th>
+                  <th scope="col">Venue</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Enquiry Date</th>
+                  <th scope="col">Booking Date</th>
+                  <th scope="col">Number Of Person</th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="
+                  let data of upcomingTasks | slice : 0 : 5;
+                  let i = index
+                "
+              >
+                <tr>
+                  <td class="text-primary">
+                    <a
+                      routerLink="/enquiry-details"
+                      (click)="onDetails(data.id)"
+                      >{{ data.customer.name | titlecase }}</a
+                    >
+                  </td>
+                  <td>{{ data?.venue?.name }}</td>
+                  <td scope="row">{{data.vendor.address }}</td>
+                  <td>{{ data.enquiryDate }}</td>
+                  <td>{{ data.bookingDate }}</td>
+                  <td>{{ data.numberOfPeople }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #dropdown>
+  <div class="dropdown ms-2" ngbDropdown>
+    <a
+      class="text-muted dropdown-toggle font-size-14"
+      ngbDropdownToggle
+      href="javascript: void(0);"
+      role="button"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <i class="mdi mdi-dots-horizontal"></i>
+    </a>
+
+    <div class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+      <a ngbDropdownItem href="javascript::void(0);">Action</a>
+      <a ngbDropdownItem href="javascript: void(0);">Another action</a>
+      <a ngbDropdownItem href="javascript: void(0);">Something else here</a>
+    </div>
+  </div>
+</ng-template>

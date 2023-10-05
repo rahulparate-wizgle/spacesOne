@@ -1,0 +1,108 @@
+<div class="container-fluid mx-0 " style="max-width: 100%;">
+
+    <div class="row align-items-start">
+        <div class="col-lg-8">
+            <h6 class="text-uppercase">
+                <strong>{{venue?.name }}</strong>
+            </h6>
+        </div>
+        <div class="col-lg-4 d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary" (click)="openPreview(venue.id)">
+            <i class="bx bx-image font-size-16 align-middle me-2"></i> Preview
+          </button>
+        </div>
+        <div class="col-12 mt-3">
+            <p>
+                <i class="bx bx-map"></i> {{venue?.address}}
+            </p>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <ul ngbNav #customNav="ngbNav" [activeId]="currentTab" class="nav-pills nav-tabs-custom nav-justified d-flex flex-column">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink (click)="switchTab('overview')">
+                        <span class="me-2"><i class="bx bx-grid-alt"></i></span>
+                        <span class="">Overview</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="2">
+                    <a ngbNavLink (click)="switchTab('gallery')">
+                        <span class="me-2"><i class="bx bx-image"></i></span>
+                        <span>Gallery</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="3">
+                    <a ngbNavLink (click)="switchTab('pricing')">
+                        <span class="me-2"><i class="bx bx-money"></i></span>
+                        <span>Pricing</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="4">
+                    <a ngbNavLink (click)="switchTab('attributes')">
+                        <span class="me-2"><i class="bx bx-area"></i></span>
+                        <span>General Attribute</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="5">
+                    <a ngbNavLink (click)="switchTab('mapping')">
+                        <span class="me-2"><i class="bx bx-map"></i></span>
+                        <span>Location</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="6">
+                    <a ngbNavLink (click)="switchTab('terms-policies')">
+                        <span class="me-2"><i class="bx bx-file"></i></span>
+                        <span>Terms & Policies</span>
+                    </a>
+
+                </li>
+
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="8">
+                    <a ngbNavLink (click)="switchTab('capacity')">
+                        <span class="me-2"><i class="bx bx-group"></i></span>
+                        <span>Capacity</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="9">
+                    <a ngbNavLink (click)="switchTab('custom-block')">
+                        <span class="me-2"><i class="bx bx-selection"></i></span>
+                        <span>Custom Blocks</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="10">
+                    <a ngbNavLink (click)="switchTab('add-on-services')">
+                        <span class="me-2"><i class="bx bx-command"></i></span>
+                        <span>Add On Services</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="11">
+                    <a ngbNavLink (click)="switchTab('chargeable-services')">
+                        <span class="me-2"><i class="bx bx-receipt"></i></span>
+                        <span>Chargeable</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="12">
+                    <a ngbNavLink (click)="switchTab('other-key-details')">
+                        <span class="me-2"><i class="bx bx-purchase-tag-alt"></i></span>
+                        <span>Other Key Details</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="13">
+                    <a ngbNavLink (click)="switchTab('should-know')">
+                        <span class="me-2"><i class="bx bx-file-blank"></i></span>
+                        <span>Should Know</span>
+                    </a>
+                </li>
+                <li [disabled]="isDisableOtherTabs" [ngbNavItem]="14">
+                    <a ngbNavLink (click)="switchTab('room-tnc')">
+                        <span class="me-2"><i class="bx bx-bed"></i></span>
+                        <span>Room T&C</span>
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+</div>

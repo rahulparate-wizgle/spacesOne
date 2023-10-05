@@ -1,0 +1,198 @@
+/* Importing Bootstrap SCSS file. */
+
+@import '~bootstrap/scss/bootstrap';
+
+/* You can add global styles to this file, and also import other style files */
+
+.mapboxgl-canvas {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-holder {
+    animation-name: example;
+    animation-duration: 0.3s;
+}
+
+@keyframes example {
+    0% {
+        transform: scale(0.5)
+    }
+    100% {
+        transform: scale(1)
+    }
+}
+
+.carousel-item {
+    transition: opacity 0.7s ease !important;
+    position: absolute !important;
+    display: block !important;
+    opacity: 0;
+}
+
+.carousel-item.active {
+    position: relative !important;
+    opacity: 1;
+}
+
+.br-1 {
+    border-radius: 5px !important;
+}
+
+.br-2 {
+    border-radius: 10px !important;
+}
+
+.br-3 {
+    border-radius: 15px !important;
+}
+
+.br-4 {
+    border-radius: 20px !important;
+}
+
+.br-5 {
+    border-radius: 25px !important;
+}
+
+.btn {
+    border-radius: 10px !important;
+}
+
+.btn-secondary {
+    background-color: #09142d !important;
+}
+
+.search-no-data {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    i {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+}
+
+// ng-select {
+//     .ng-select-container {
+//         background: #2a3042 !important;
+//         border: 1px solid var(--bs-input-border-color) !important;
+//         color: var(--bs-gray-700) !important;
+//     }
+//     .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+//         background: #2a3042 !important;
+//         border: 1px solid var(--bs-input-border-color) !important;
+//         color: var(--bs-gray-700) !important
+//     }
+//     .ng-value-container .ng-input>input {
+//         color: #fff !important;
+//     }
+// }
+.preview {
+    background: var(--bs-gray-200);
+    height: 100%;
+    border: 1px dashed var(--bs-gray-500);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    i {
+        color: #09142d;
+        font-size: 40px;
+        opacity: 0.6;
+    }
+    h6 {
+        font-weight: bold;
+    }
+}
+
+// Global Custom CSS Start
+// Global Custom CSS End
+// Form Controls Start
+// input {
+//     height: 46px;
+//     border: none !important;
+//     border-radius: 0 !important;
+//     border-bottom: 2px solid var(--bs-gray-500) !important;
+//     background: var(--bs-gray-200) !important;
+//     padding: 10px 10px 5px 10px !important;
+//     &:hover {
+//         border-color: var(--bs-primary) !important;
+//     }
+//     &:focus {
+//         border-color: var(--bs-primary) !important;
+//     }
+// }
+// textarea {
+//     border: none !important;
+//     border-radius: 0 !important;
+//     border-bottom: 2px solid var(--bs-gray-500) !important;
+//     background: var(--bs-gray-200) !important;
+//     padding: 10px 10px 5px 10px !important;
+//     &:hover {
+//         border-color: var(--bs-primary) !important;
+//     }
+//     &:focus {
+//         border-color: var(--bs-primary) !important;
+//     }
+// }
+// .ng-select-container {
+//     height: 46px;
+//     border: none !important;
+//     border-radius: 0 !important;
+//     border-bottom: 2px solid var(--bs-gray-500) !important;
+//     input {
+//         background: unset !important;
+//     }
+// }
+// Form Controls Start
+.page-content {
+    background: var(--bs-gray-200) !important;
+    min-height: 100vh;
+}
+
+.card {
+    border-radius: 15px !important;
+    box-shadow: none !important;
+    overflow: hidden;
+    .card-header {
+        background: #fff !important;
+    }
+}
+
+input,
+textarea {
+    border-radius: 10px !important;
+}
+
+.ng-select-container {
+    border-radius: 10px !important;
+}
+
+.main-navigation--search .ninja-toggle {
+    max-width: none;
+    display: flex;
+    white-space: nowrap;
+    position: absolute;
+    bottom: -10px;
+    align-items: center;
+    color: #fff;
+    font-weight: 500;
+    span {
+        margin: 0 10px 0 0;
+    }
+}
+
+.v-section {
+    .form {
+        background-color: transparent !important;
+    }
+}

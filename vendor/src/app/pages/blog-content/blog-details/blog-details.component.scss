@@ -1,0 +1,33 @@
+.containers{
+    display: flex;
+    grid-template-columns: 1fr;
+    grid-gap: 70px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.photo-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.image{
+    width: 100%;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px;
+    transition: 0.25s;
+}
+.image:hover{
+    transform: scale(1.1);
+}
+@media screen and (min-width: 600px) {
+    .container{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .container{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}

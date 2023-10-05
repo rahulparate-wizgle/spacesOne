@@ -1,0 +1,136 @@
+<div
+  class="main-navigation-light"
+  x-data="initNavbarLight()"
+  x-on:scroll.window="scroll()"
+  x-on:mouseleave="megamenuOpened = false"
+  x-bind:class="{
+        'is-scrolled': scrolled,
+        '': !scrolled,
+        'is-solid': megamenuOpened,
+        '': !megamenuOpened,
+    }"
+>
+  <div class="main-navigation--menu">
+    <div class="container">
+      <div class="main-navigation--menu-inner">
+        <div class="left">
+          <a href="/" class="brand">
+            <img class="light-logo" src="img/logo/logo-w.svg" alt="" />
+            <img class="dark-logo" src="img/logo/logo.svg" alt="" />
+          </a>
+        </div>
+
+        <div class="center">
+          <div
+            class="navigation-link has-caret"
+            x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-1'"
+          >
+            <a class="is-flex is-align-items-center">
+              <span>Events</span>
+              <i data-feather="chevron-down"></i>
+            </a>
+          </div>
+          <div
+            class="navigation-link has-caret"
+            x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-2'"
+          >
+            <a class="is-flex is-align-items-center">
+              <span>Trips</span>
+              <i data-feather="chevron-down"></i>
+            </a>
+          </div>
+          <div
+            class="navigation-link has-caret"
+            x-on:mouseover="megamenuOpened = true, openedMegamenu = 'megamenu-3'"
+          >
+            <a class="is-flex is-align-items-center">
+              <span>Flats</span>
+              <i data-feather="chevron-down"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="right">
+          <div class="navigation-link is-host">
+            <a>Host Event</a>
+          </div>
+          <button
+            class="navigation-link is-icon mx-4 modal-trigger"
+            data-modal="languages-modal"
+          >
+            <i data-feather="globe"></i>
+          </button>
+          <div class="account-drop">
+            <button
+              x-on:click="openDrop('account-drop')"
+              x-on:click.away="closeDrop('account-drop')"
+            >
+              <span class="image is-32x32">
+                <img
+                  x-show="$store.app.isLoggedIn === false"
+                  class="is-rounded"
+                  src="https://dummyimage.com/150x150"
+                  data-demo-src="img/photo/avatar/placeholder.png"
+                  alt=""
+                />
+                <img
+                  x-show="$store.app.isLoggedIn === true"
+                  class="is-rounded"
+                  src="https://dummyimage.com/150x150"
+                  data-demo-src="img/photo/avatar/19.jpg"
+                  alt=""
+                />
+              </span>
+            </button>
+            <div x-show.transition="accountDropOpened" class="drop-menu">
+              <div class="drop-menu-inner">
+                <a
+                  href="login.html"
+                  x-show="$store.app.isLoggedIn === false"
+                  class="drop-menu-item is-heavy"
+                  >Sign In</a
+                >
+                <a
+                  href="signup.html"
+                  x-show="$store.app.isLoggedIn === false"
+                  class="drop-menu-item"
+                  >Register</a
+                >
+                <a
+                  href="account-main.html"
+                  x-show="$store.app.isLoggedIn === true"
+                  class="drop-menu-item"
+                  >Account</a
+                >
+                <a
+                  href="account-main.html"
+                  x-show="$store.app.isLoggedIn === true"
+                  class="drop-menu-item"
+                  >Settings</a
+                >
+                <a
+                  href="account-schedule.html"
+                  x-show="$store.app.isLoggedIn === true"
+                  class="drop-menu-item"
+                  >Schedule</a
+                >
+                <hr />
+                <a href="host.html" class="drop-menu-item">Host Event</a>
+                <a href="events.html" class="drop-menu-item">Explore Events</a>
+                <a href="how.html" class="drop-menu-item">Help</a>
+                <a
+                  x-show="$store.app.isLoggedIn === true"
+                  class="drop-menu-item"
+                  x-on:click="logout()"
+                  >Logout</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{> megamenu}}
+</div>

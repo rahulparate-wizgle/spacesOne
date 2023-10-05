@@ -1,0 +1,20 @@
+.attributes {
+    font-weight: 400;
+}
+
+.error-message {
+    color: red;
+}
+
+.block {
+    margin-bottom: 40px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.head {
+    display: flex;
+    button {
+        height: 30px;
+    }
+}

@@ -1,0 +1,13 @@
+.error-message {
+    color: red;
+}
+
+.map-preview {
+    min-height: 400px;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1040;
+    .map {
+        height: 400px;
+    }
+}

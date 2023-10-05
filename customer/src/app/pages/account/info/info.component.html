@@ -1,0 +1,138 @@
+c
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <!-- Page content-->
+    <div class="row">
+        <!-- Sidebar-->
+        <aside class="col-lg-4 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <div class="card card-body border-0 pb-1 me-lg-1" style="background-color: #f5f5f5;">
+                <div class="d-flex d-md-block align-items-center pt-lg-2 mb-4 text-center ">
+                    <div class="img-thumb" [ngStyle]="{'background-image': 'url('+ loggedInUser?.image +')'}" style="margin: 0 auto;">
+                    </div>
+                    <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ">
+                        <h2 class="fs-lg mb-0 mt-3">{{loggedInUser?.name}}</h2>
+                        <p class="fs-sm text-primary">
+                            {{loggedInUser?.email}}
+                        </p>
+                    </div>
+                </div>
+                <a class="btn btn-outline-secondary d-block d-md-none w-100 mb-3" href="javascript:void(0);" data-bs-toggle="collapse" (click)="SideBarMenu()"><i class="fi-align-justify me-2"></i>Menu</a>
+                <div class="collapse d-md-block mt-0" id="account-nav">
+                    <div class="card-nav">
+                        <a class="card-nav-link fs-sm active" routerLink="/account/info"><i class="fi-user opacity-60 me-2"></i>Personal Info</a>
+                        <a class="card-nav-link fs-sm" routerLink="/account/security"><i class="fi-lock opacity-60 me-2"></i>Change Password</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/properties"><i class="fi-home opacity-60 me-2 fs-sm"></i>My Properties</a> -->
+                        <a class="card-nav-link fs-sm" routerLink="/account/wishlist"><i class="fi-heart opacity-60 me-2"></i>Wishlist</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/reviews"><i class="fi-star opacity-60 me-2 fs-sm"></i>Reviews</a> -->
+                        <!-- <a class="card-nav-link" routerLink="/account/notifications"><i class="fi-bell opacity-60 me-2 fs-sm"></i>Notifications</a> -->
+                        <a class="card-nav-link fs-sm" routerLink="/pages/help-center"><i class="fi-help opacity-60 me-2"></i>Help</a>
+                        <a class="card-nav-link fs-sm" href="javascript:void(0);" (click)="logout()"><i class="fi-logout opacity-60 me-2"></i>Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-8 col-md-7 mb-5">
+            <div class="flex-fill d-flex ">
+                <h1 class="h4 me-3">Personal Info</h1>
+                <a href="javascript:void(0);" (click)="editProfileData(toggleProfileModal)" class="h4">
+                    <i class="bx bx-pencil text-primary"></i>
+                </a>
+            </div>
+            <form [formGroup]="profileForm" class="mt-3">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-lg-7 d-flex align-items-end">
+                            <div class="preview-image mt-0 me-3">
+                                <div class="img-prof" [ngStyle]="{'background-image': 'url('+ image +')'}">
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-end">
+                                <div class="mb-1 me-2">
+                                    <label class="col-form-label fs-sm">Upload Image</label>
+                                    <input name="image" type="file" class="form-control btn-sm" (change)="uploadLogo($event)" />
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center pb-1 mb-0 ml-2">
+                                    <button class="btn btn-primary btn-sm px-3 px-sm-4" type="button" (click)="postAttachedFiles()">Upload</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="pe-2">
+                                    <label class="form-label fw-normal fs-sm fw-bold">Full name</label>
+                                    <div id="name-value" class="fs-md">{{loggedInUser.name}}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="pe-2">
+                                    <label class="form-label fw-normal fs-sm fw-bold">Email</label>
+                                    <div id="email-value" class="fs-md">{{loggedInUser.email}}</div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="pe-2">
+                                    <label class="form-label fw-normal fs-sm fw-bold">Phone number</label>
+                                    <div id="phone-value" class="fs-md">+91 {{loggedInUser.mobileNo ? loggedInUser.mobileNo :'00000 00000'}} </div>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <div class="pe-2">
+                                    <label class="form-label fw-normal fs-sm fw-bold">Address</label>
+                                    <div id="phone-value" class="fs-md">{{loggedInUser.address ? loggedInUser.address :'Not Specified'}} </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <ng-template id="toggleProfileModal" #toggleProfileModal let-modal>
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Profile</h5>
+                <button class="btn-close position-absolute top-0 end-0 mt-3 me-3" type="button" data-bs-dismiss="modal" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body p-3">
+                <div class="row mx-0 align-items-center my-3">
+                    <form class="needs-validation" (ngSubmit)="onSave()" [formGroup]="profileForm">
+                        <div class="mb-4">
+                            <label class="form-label mb-2 fs-sm">Full Name</label>
+                            <input class="form-control" type="name" id="name-value" placeholder="Enter Full Name" formControlName="name" required [ngClass]="{'is-invalid': form['name'].invalid && (form['name'].dirty || form['name'].touched)}">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label mb-2 fs-sm">Email</label>
+                            <div id="email-value" class="fs-sm">{{loggedInUser.email}}</div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label mb-2 fs-md">Phone Number</label>
+                            <input class="form-control" type="number" id="phone-value" placeholder="Enter Mobile Number" formControlName="mobileNo" required [ngClass]="{'is-invalid': form['mobileNo'].invalid && (form['mobileNo'].dirty || form['mobileNo'].touched)}">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label mb-2 fs-sm">Address</label>
+                            <input class="form-control" type="text" id="address-value" placeholder="Enter Your Address" formControlName="address" required [ngClass]="{'is-invalid': form['address'].invalid && (form['address'].dirty || form['address'].touched)}">
+                        </div>
+                        <button class="btn btn-primary w-100" type="submit" [disabled]="profileForm.invalid">Save Changes</button>
+                    </form>
+                    <!-- <div *ngIf="hideForm" class="card bg-success text-center p-3">
+                          <span><i class="fa-duotone fa-check-double mt-4 mb-3 text-light fs-lg"></i></span>
+                          <h6 class="h6 text-light mb-2">
+                              You are Logged in succesfully!
+                          </h6>
+                      </div> -->
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+
+<!-- Footer-->
+<app-footer></app-footer>

@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        New Event Type
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item">
+          <a href="javascript: void(0);">Event Type List</a>
+        </li>
+        <li class="breadcrumb-item active">New Event Type</li>
+      </ol>
+      <div class="card mt-3">
+        <div class="card-body">
+          <div class="row d-flex justify-content-end">
+            <div class="col-12">
+              <form [formGroup]="eventTypeForm">
+                <div class="row">
+                  <div class="mb-2 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2">Title</label>
+                    <input name="title" formControlName="title" type="text" class="form-control"
+                      placeholder="Eg. 18th Birthday Party"
+                      [ngClass]="{'is-invalid':( form.title.dirty || form.title.touched) && form.title.errors }" />
+                    <div *ngIf="(form.title.dirty || form.title.touched) && form.title.errors" class="invalid-feedback">
+                      <div class="error-message" *ngIf="form.title.errors.required">Please enter title</div>
+                    </div>
+                  </div>
+                  <div class="mb-2 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2">Description</label>
+                    <textarea style="height: 200px" type="text" class="form-control" formControlName="description"
+                      name="description" placeholder="Eg.Bar open till 2am"
+                      [ngClass]="{'is-invalid':( form.description.dirty || form.description.touched) && form.description.errors }"></textarea>
+                    <div *ngIf="(form.description.dirty || form.description.touched) && form.description.errors"
+                      class="invalid-feedback">
+                      <div class="error-message" *ngIf="form.description.errors.required">Please enter description</div>
+                    </div>
+                  </div>
+
+                  <div class="mb-4 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2">Icon <i [class]="selectedIcon"
+                        class="selectedIcon"></i>
+                    </label>
+                    <input name="icon" disabled="true" style="padding-left: 45px" formControlName="icon" type="text"
+                      class="form-control" placeholder="Eg. bx bx-sticker"
+                      [ngClass]="{'is-invalid':( form.icon.dirty || form.icon.touched) && form.icon.errors }" />
+                    <div *ngIf="(form.icon.dirty || form.icon.touched) && form.icon.errors" class="invalid-feedback">
+                      <div class="error-message" *ngIf="form.icon.errors.required">Please select icon</div>
+                    </div>
+                  </div>
+
+                  <div class="mb-2 col-12">
+                    <div class="form-check form-check-primary mb-3">
+                      <input class="form-check-input" type="checkbox" checked name="featured" formControlName="featured"
+                        (click)="status($event)"
+                        [ngClass]="{'is-invalid':( form.featured.dirty || form.featured.touched) && form.featured.errors }" />
+                      <label class="form-check-label" for="formCheckcolor1">
+                        Featured
+                      </label>
+                    </div>
+                    <div *ngIf="(form.featured.dirty || form.featured.touched) && form.featured.errors"
+                      class="invalid-feedback">
+                      <div class="error-message" *ngIf="form.featured.errors.required">Please select featured</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-12 flex-wrap d-flex justify-content-end">
+                      <button type="button" class="btn btn-danger me-2" (click)="postCancel()"
+                        style="margin-left: 10px">
+                        Cancel
+                      </button>
+                      <button type="button" class="btn btn-primary" (click)="postEventTypeData($event)" [disabled]="eventTypeForm.invalid">
+                        <i class="bx bx-send font-size-16 align-middle me-2"
+                          style="transform: rotate(-45deg); margin-top: -5px"></i>
+                        Save & Publish
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <app-icon-picker [onSelectedIcon]="onSelectedIcon"></app-icon-picker>
+    </div>
+  </div>
+</div>

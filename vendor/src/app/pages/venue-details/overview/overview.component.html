@@ -1,0 +1,166 @@
+<div class="container-fluid v-section">
+  <div class="row">
+    <div class="col-3">
+      <app-venue-details [venue]="venue" [currentTab]="1"></app-venue-details>
+    </div>
+    <div class="col-9">
+      <div class="card">
+        <div class="card-header venue-card pt-4">
+          <div class="row">
+            <div class="col-6">
+              <h5>
+                Overview
+              </h5>
+              <p class="mb-0">
+                "Please provide the basic details Name, address, and a description of the venue."
+              </p>
+            </div>
+            <div class="col-6">
+              <div class="d-flex justify-content-end flex-wrap gap-2">
+                <button type="button" class="btn btn-primary" (click)="postRulesData($event)">
+                  <i class="bx bx-send font-size-16 align-middle me-2"
+                    style="transform: rotate(-45deg); margin-top: -5px"></i>
+                  Save & Publish
+                </button><br />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="overviewForm" style="background-color: transparent;">
+            <div class="row">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-8">
+                    <div class="mb-1">
+                      <label for="projectname" class="col-form-label col-lg-2">Status</label>
+                    </div>
+                    <div class="mb-3">
+                      <ui-switch color="#556ee6" [checked]="overviewForm.value.isActive == true"
+                        (change)="StatusChange($event)" width="47px" uncheckedLabel="Inactive" checkedLabel="Active"
+                        size="small" class="me-1" name="rulesValue"></ui-switch>
+                    </div>
+                  </div>
+                  <div class="mb-3 col-8">
+                    <label for="projectname" class="col-form-label col-lg-2">Title</label>
+                    <input name="name" formControlName="name" type="text" class="form-control"
+                      placeholder="Eg. Title" />
+                    <span class="error-message">{{ validationError.name }}</span>
+                  </div>
+                  <div class="mb-3 col-12">
+                    <label for="projectname" class="col-form-label col-lg-2">Address</label>
+                    <textarea name="address" formControlName="address" type="text" class="form-control"
+                      placeholder="Eg. Address"></textarea>
+                    <span class="error-message">{{ validationError.address }}</span>
+                  </div>
+                  <div class="mb-3">
+                    <label for="projectname" class="col-form-label col-lg-2">Description</label>
+                    <textarea name="description" formControlName="description" type="text" class="form-control"  placeholder="Eg. Description"
+                      rows="6"></textarea>
+                    <span class="error-message">{{ validationError.name }}</span>
+                  </div>
+                  <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-8">Master Venue</label>
+                      <ng-select [items]="masterVenueList" name="location" formControlName="master_venue"
+                        placeholder="Select Master Venue"></ng-select>
+                      <span class="error-message">{{ validationError?.location }}</span>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-8">Venue Type</label>
+                      <ng-select [items]="venueType" name="type" formControlName="type" bindLabel="title"
+                        bindValue="title" placeholder="Select Venue Type"></ng-select>
+                      <span class="error-message">{{ validationError.type }}</span>
+                    </div>
+                  </div>
+                  <!-- <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-2">Location</label>
+                      <ng-select [items]="locationList" name="location" formControlName="location"
+                        placeholder="Select Location"></ng-select>
+                      <span class="error-message">{{ validationError?.location }}</span>
+                    </div>
+                  </div> -->
+                  <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-2">City</label>
+                      <ng-select [items]="cities" name="city" formControlName="city" bindLabel="value" bindValue="key"
+                        placeholder="Select City"></ng-select>
+                      <span class="error-message">{{ validationError.city }}</span>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-2">Rating</label>
+                      <ng-select [items]="ratingArr" name="rating" formControlName="rating" bindLabel="value"
+                        bindValue="key" placeholder="Select Location"></ng-select>
+                      <span class="error-message">{{ validationError?.location }}</span>
+                    </div>
+                  </div>
+
+                  <div class="col-6" *ngIf="selectedCity === 'Nagpur'">
+                    <div class="mb-3">
+                      <label class="col-form-label col-lg-12">Localities</label>
+                      <ng-select [items]="nagpurLocations" name="nagpurLocations" formControlName="nagpurLocations"
+                        placeholder="Select Location"></ng-select>
+                    </div>
+                  </div>
+
+                  <div class="col-6" *ngIf="selectedCity === 'Mumbai'">
+                    <div class="mb-3">
+                      <label class="col-form-label col-lg-12">Localities</label>
+                      <ng-select [items]="mumbaiLocations" name="mumbaiLocations" formControlName="mumbaiLocations"
+                        placeholder="Select Location"></ng-select>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="mb-3">
+                      <label for="projectname" class="col-form-label col-lg-12">Event Type</label>
+                    <ng-select
+                    name="type"
+                    [items]="eventTypes"
+                    bindLabel="title"
+                    bindValue="eventTypes"
+                    placeholder="Please Select Venue Type"
+                    formControlName="eventType"
+                    ngDefaultControl
+                    [multiple]="true"
+                    [compareWith]="compareEventType"
+                  >
+                  </ng-select>
+
+
+                      <!-- <span class="error-message">{{ validationError.eventType }}</span> -->
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+<div class="col-6" *ngIf="selectedCity === 'Nagpur'">
+  <div class="mb-3">
+    <label class="col-form-label col-lg-12">Localities</label>
+    <ng-select [items]="nagpurLocations" name="nagpurLocations" formControlName="nagpurLocations"
+      placeholder="Select Location"></ng-select>
+  </div>
+
+</div>
+
+<div class="col-6" *ngIf="selectedCity === 'Mumbai'">
+  <div class="mb-3">
+    <label class="col-form-label col-lg-12">Localities</label>
+    <ng-select [items]="mumbaiLocations" name="mumbaiLocations" formControlName="mumbaiLocations"
+      placeholder="Select Location"></ng-select>
+  </div>
+</div> -->

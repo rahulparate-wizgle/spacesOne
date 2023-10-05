@@ -1,0 +1,869 @@
+<!--Main Navbar-->
+{{> main-navigation-v2}}
+
+<!--Event Wrapper-->
+<div id="presentation" class="section has-navbar-padding" data-listing="flat" x-data="getVenueData()" x-init="init()">
+    <div class="container">
+
+
+        <div class="listing-title">
+            <div class="left">
+                <div>
+                    <input type="hidden" x-bind:value="venues.id" id="venueId">
+                    <input type="hidden" x-bind:value="venues.vendorId" id="vendorId">
+                    <input type="hidden" x-bind:value="venues?.pricing?.perUnit" id="venuePrice">
+                    <h2 class="title is-bold is-4" x-text="venues?.name">
+                    </h2>
+
+                </div>
+                <p x-text="venues?.type">
+                </p>
+                <div class="mt-2">
+                    <a>
+                        <i data-feather="star"></i> (
+                        <span x-text="venues?.rating"></span>)
+                    </a>
+                    <a x-text="venues?.address"></a>
+                    <!-- <a x-text="venues?.type"></a> -->
+                </div>
+            </div>
+            <div class="right">
+                <a class="modal-trigger" data-modal="listing-wishlist-modal">
+                    <i data-feather="heart"></i>
+                    <span>Save</span>
+                </a>
+            </div>
+        </div>
+
+
+        <div id="lightgallery" class="listing-cover-wrapper" x-data="initCover()">
+            <a class="listing-cover has-background-image" :style="'background: url('+venues.gallery[0]+')';" x-bind:href="venues?.gallery[0]" data-fancybox="images" data-caption="All you need is a laptop to get started!"></a>
+
+            <a class="listing-cover has-background-image" :style="'background: url('+venues.gallery[1]+')';" x-bind:href="venues?.gallery[1]" data-demo-href="img/photo/content/flat/2.jpeg" data-fancybox="images" data-caption="You'll also need some sketching tools and some paper."></a>
+
+            <div class="listing-cover is-container">
+
+                <a class="listing-subcover has-background-image" :style="'background: url('+venues.gallery[2]+')';" x-bind:href="venues?.gallery[2]" data-demo-href="img/photo/content/flat/1.jpeg" data-fancybox="images" data-caption="We'll do some code review together..."></a>
+
+                <a class="listing-subcover has-background-image" :style="'background: url('+venues.gallery[3]+')';" x-bind:href="venues?.gallery[3]" data-demo-href="img/photo/content/flat/4.jpeg" data-fancybox="images" data-caption="And you'll get some homework to keep practicing at home."></a>
+
+            </div>
+
+            <a class="listing-cover has-background-image" :style="'background: url('+venues.gallery[4]+')';" x-bind:href="venues?.gallery[4]" data-demo-href="img/photo/content/flat/5.jpeg" data-fancybox="images" data-caption="At the end, you'll be a javascript master."></a>
+
+            <a class="button all-photos-button" x-bind:href="venues?.gallery[5]" data-demo-href="img/photo/content/flat/1.jpeg" data-fancybox="images" data-caption="After that, you'll be ready to build wonderful things!">View more photos</a>
+        </div>
+
+        <div class="listing-subtitle">
+            <div class="left" style="width: 100%;">
+                <div>
+                    <div class="upcoming-listings-wrapper" style="padding: 0 !important;">
+                        <h4 class="title is-5 is-narrow"> More venue by <span x-text="venues?.name"></span> </h4>
+                        <div class="upcoming-listings">
+                            <div class="upcoming-listings-inner">
+                                <template x-for="item in venuesFromVendor" :key="item.id">
+                            <div class="upcoming-listing">
+                              <div class="upcoming-listing-image" :style="'background: url('+item.gallery[0]+')';"></div>
+                              <div class="upcoming-listing-content">
+    
+                                  <p class="listing-name">
+                                      <a x-text="item.name" x-bind:href="'/details.html?venue=' + item.id"></a>
+                                  </p>
+                                  <div class="upcoming-listing-rating">
+                                      <i data-feather="star"></i>
+                                      <span  x-text="item.rating">4,94</span>
+                                      <span class="px-2">·</span>
+                                      <span x-text="item.city"></span>
+                                  </div>
+    
+                              </div>
+                          </div>
+                          </template>
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                        .upcoming-listings-wrapper .upcoming-listings .upcoming-listings-inner {
+                            width: 100%;
+                            display: flex;
+                            flex-wrap: wrap;
+                        }
+                        
+                        .upcoming-listings-wrapper .upcoming-listings .upcoming-listings-inner .upcoming-listing {
+                            width: 32%;
+                            padding: 0;
+                            border-radius: 20px;
+                            margin-right: 1.33%;
+                            margin-bottom: 1.33%;
+                        }
+                        
+                        .upcoming-listings-wrapper .upcoming-listings .upcoming-listings-inner .upcoming-listing .upcoming-listing-image {
+                            min-height: 80px;
+                            background-size: cover !important;
+                        }
+                        
+                        .upcoming-listings-wrapper .upcoming-listings .upcoming-listings-inner .upcoming-listing .upcoming-listing-content {
+                            margin-right: 1rem;
+                        }
+                    </style>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="listing-details">
+            <div class="columns">
+                <div class="column is-7">
+
+                    <div class="listing-content" x-data="initListingContent()">
+                        <h3 class="title is-5">About this venue</h3>
+                        </p>
+                        <div x-show="isDescriptionExpanded === false">
+                            <p x-text="venues?.description">
+                            </p>
+                        </div>
+                        <div x-show="isDescriptionExpanded === true">
+                            <p x-text="venues?.description">
+                            </p>
+                        </div>
+                        <!-- <a x-show="isDescriptionExpanded === false" x-on:click.prevent="toggleListingDescription()" class="underlink">Read more</a>
+                        <a x-show="isDescriptionExpanded === true" x-on:click.prevent="toggleListingDescription()" class="underlink">Read less</a> -->
+                    </div>
+
+                    <div class="listing-features capacity">
+                        <div class="listing-feature">
+                            <i class="las la-users"></i>
+                            <div class="meta">
+                                <span>Standing Capacity</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.standing" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-concierge-bell"></i>
+                            <div class="meta">
+                                <span> Dinning Capacity</span>
+                                <p style="font-size: 13px;">This hosts commits to our enhanced cleaning policy.
+                                </p>
+                                <span x-text="venues?.capacity?.dinning" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="la la-tv"></i>
+                            <div class="meta">
+                                <span>Theater Capacity</span>
+                                <p style="font-size: 13px;">This host has received a lot of positive reviews.
+                                </p>
+                                <span x-text="venues?.capacity?.theater" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="la la-music"></i>
+                            <div class="meta">
+                                <span>Cabaret Capacity</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-cubes"></i>
+                            <div class="meta">
+                                <span>Casual</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-utensils"></i>
+                            <div class="meta">
+                                <span>Catering</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-stroopwafel"></i>
+                            <div class="meta">
+                                <span>Cluster</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-calendar"></i>
+                            <div class="meta">
+                                <span>Conference</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-cocktail"></i>
+                            <div class="meta">
+                                <span>Dining</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="las la-child"></i>
+                            <div class="meta">
+                                <span>Schoolroom</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                        <div class="listing-feature">
+                            <i class="lab la-umbraco" style="font-size: 24px;"></i>
+                            <div class="meta">
+                                <span>U Shaped</span>
+                                <p style="font-size: 13px;">Entire residential home to yourself.
+                                </p>
+                                <span x-text="venues?.capacity?.cabaret" style="font-weight: 600;"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-participation listing-dates">
+                        <h3 class="title is-5 is-narrow">This Venues Provides Rooms</h3>
+                        <div class="participation-boxes" style="padding: 1.5rem 1rem;">
+                            <div class="columns is-flex-tablet-p available-dates" style="flex-wrap: wrap;">
+                                <template x-for="item in venues?.roomsDetails" :key="item.roomType">
+                                <div class="available-date">
+                                    <div class="top">
+                                        <i class="las la-bed" style="margin: 10px 0 0 0; font-size: 30px;"></i>
+                                      <h4  x-text="item.roomType"></h4><span>No of Rooms</span>
+                                      <span x-text="item.noOfRooms"  style="font-weight: bold;"></span>
+                                      
+                                    </div>
+                                    <div class="bottom cs">
+                                        <h6>
+                                            Price Range from  ₹<span x-text="item.priceFrom" style="margin-right: 5px;"></span> to ₹<span x-text="item.priceTo"></span>
+                                        </h6>
+                                    </div>
+                                  </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-participation">
+                        <h3 class="title is-5 is-narrow">House standards</h3>
+                        <div class="participation-boxes">
+                            <div class="columns is-flex-tablet-p" style="flex-wrap: wrap;">
+                                <template x-for="item in venues?.general_attributes?.house_standards" :key="item.id">
+                                <div class="column is-4">
+                                    <div class="participation-box">
+                                    <i :class="item.icon"></i>
+                                    <h4 x-text="item.name"></h4>
+                                    <p x-text="item.description"> </p>
+                                    </div>
+                                </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="listing-amenities">
+                        <h3 class="title is-5 is-narrow">House amenities</h3>
+                        <div class="amenities-list">
+                            <template x-for="item in venues?.general_attributes?.amenities" :key="item.id">
+                                <div class="amenities-item">
+                                <div class="icon-container">
+                                    <i :class="item.icon"></i>
+                                </div>
+                                <span x-text="item.name"></span>
+                                </div>
+                        </template>
+                        </div>
+                    </div>
+
+                    <div class="listing-guidelines">
+                        <!--Title-->
+                        <h4 class="title is-5">What you should know</h4>
+
+                        <div class="guidelines-content">
+                            <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+                                <!--Guideline column-->
+                                <div class="column is-6">
+                                    <div class="guidelines-item">
+                                        <h4 class="title is-6">House rules</h4>
+                                        <template x-for="item in venues?.general_attributes?.rules" :key="item.id">
+                                            <div class="guidelines-block">
+                                            <div class="icon-container">
+                                                <i :class="item.icon"></i>
+                                            </div>
+                                            <span x-text="item.name"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                                <!--Guideline column-->
+                                <div class="column is-6">
+                                    <div class="guidelines-item">
+                                        <h4 class="title is-6">Health & safety</h4>
+                                        <template x-for="item in venues?.general_attributes?.safety_rules" :key="item.id">
+                                            <div class="guidelines-block">
+                                            <div class="icon-container">
+                                                <i :class="item.icon"></i>
+                                            </div>
+                                            <span x-text="item.name"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <div class="column is-6" style="margin-top: 50px;">
+                                    <div class="guidelines-item">
+                                        <h4 class="title is-6">Attributes</h4>
+                                        <template x-for="item in venues?.general_attributes?.attributes" :key="item.id">
+                                            <div class="guidelines-block">
+                                            <div class="icon-container">
+                                                <i :class="item.icon"></i>
+                                            </div>
+                                            <span x-text="item.name"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <div class="column is-6" style="margin-top: 50px;">
+                                    <div class="guidelines-item">
+                                        <h4 class="title is-6">Additional Benefits</h4>
+                                        <template x-for="item in venues?.general_attributes?.additional_benefits" :key="item.id">
+                                            <div class="guidelines-block">
+                                            <div class="icon-container">
+                                                <i :class="item.icon"></i>
+                                            </div>
+                                            <span x-text="item.name"></span>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="listing-guidelines">
+                        <h4 class="title is-5">Additional information</h4>
+                        <div class="guidelines-content">
+                            <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+                                <template x-for="item in venues?.custom_blocks?.custom_blocks" :key="item.heading">
+                                    <div class="column is-6">
+                                        <div class="guidelines-item">
+                                        <h4 class="title is-6" x-text="item.heading"></h4>
+                                        <template x-for="innerItem in item.items" :key="innerItem.title">
+                                            <div class="guidelines-block cs">
+                                                <div class="head">
+                                                    <div class="icon-container">
+                                                        <i style="font-size: 16px;" class="las la-check"></i>
+                                                        </div>
+                                                        <span x-text="innerItem.title"></span>
+                                                </div>
+                                                <div>
+                                                    <p x-text="innerItem.desc"></p>
+                                                </div>
+                                            </div>
+                                            
+                                        </template>
+                            </div>
+                        </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="listing-guidelines">
+                <h4 class="title is-5">AddOn Services</h4>
+                <div class="guidelines-content">
+                    <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+                        <template x-for="item in venues?.add_on_services?.add_on_services" :key="item.heading">
+                            <div class="column is-6">
+                                <div class="guidelines-item">
+                                <h4 class="title is-6" x-text="item.heading"></h4>
+                                <template x-for="innerItem in item.items" :key="innerItem.title">
+                                    <div class="guidelines-block cs">
+                                        <div class="head">
+                                            <div class="icon-container">
+                                                <i style="font-size: 16px;" class="las la-check"></i>
+                                                </div>
+                                                <span x-text="innerItem.title"></span>
+                                        </div>
+                                        <div>
+                                            <p x-text="innerItem.desc"></p>
+                                        </div>
+                                    </div>
+                                    
+                                </template>
+                    </div>
+                </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div class="listing-guidelines">
+        <h4 class="title is-5">Chargeable Services</h4>
+        <div class="guidelines-content">
+            <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+                <template x-for="item in venues?.chargeable_services?.chargeable_services" :key="item.heading">
+                    <div class="column is-6">
+                        <div class="guidelines-item">
+                        <h4 class="title is-6" x-text="item.heading"></h4>
+                        <template x-for="innerItem in item.items" :key="innerItem.title">
+                            <div class="guidelines-block cs">
+                                <div class="head">
+                                    <div class="icon-container">
+                                        <i style="font-size: 16px;" class="las la-check"></i>
+                                        </div>
+                                        <span x-text="innerItem.title"></span>
+                                </div>
+                                <div>
+                                    <p x-text="innerItem.desc"></p>
+                                </div>
+                            </div>
+                            
+                        </template>
+            </div>
+        </div>
+        </template>
+    </div>
+</div>
+</div>
+
+<div class="listing-guidelines">
+    <h4 class="title is-5">Extra Details</h4>
+    <div class="guidelines-content">
+        <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+            <template x-for="item in venues?.chargeable_services?.chargeable_services" :key="item.heading">
+                <div class="column is-6">
+                    <div class="guidelines-item">
+                    <h4 class="title is-6" x-text="item.heading"></h4>
+                    <template x-for="innerItem in item.items" :key="innerItem.title">
+                        <div class="guidelines-block cs">
+                            <div class="head">
+                                <div class="icon-container">
+                                    <i style="font-size: 16px;" class="las la-check"></i>
+                                    </div>
+                                    <span x-text="innerItem.title"></span>
+                            </div>
+                            <div>
+                                <p x-text="innerItem.desc"></p>
+                            </div>
+                        </div>
+                        
+                    </template>
+        </div>
+    </div>
+    </template>
+</div>
+</div>
+</div>
+
+
+
+
+<div class="listing-guidelines" style="border: none;">
+    <!--Title-->
+    <h4 class="title is-5">Terms & Policies</h4>
+
+    <div class="guidelines-content">
+        <div class="columns b-columns-half-tablet-p" style="flex-wrap: wrap;">
+            <div class="column is-6">
+                <div class="guidelines-item">
+                    <div class="listing-feature">
+                        <div class="meta">
+                            <span> <i class="las la-clock" style="font-size: 20px;"></i></span>
+                            <span class="title is-6">Check-In:</span>
+                        </div>
+                        <div>
+                            <span x-text="venues?.terms_policies?.checkInTime" style="padding-left: 25px;"></span>
+                        </div>
+                    </div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="column is-6">
+                <div class="guidelines-item">
+                    <div class="meta">
+                        <span> <i class="las la-clock" style="font-size: 20px;"></i></span>
+                        <span class="title is-6">Check-Out:</span>
+                    </div>
+                    <div>
+                        <span x-text="venues?.terms_policies?.checkOutTime" style="padding-left: 25px;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-6 mt-3">
+                <div class="guidelines-item">
+                    <h4 class="title is-6">Cancellation terms</h4>
+                    <p x-text="venues?.terms_policies?.cancellationTerm" style="max-width: unset;">
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<!--Sticky form-->
+<div class="column is-4 is-offset-1">
+    <div class="sticky-outer">
+        <div class="sticky-wrapper">
+            <div class="sticky-wrapper-inner">
+                <!--Booking form-->
+                <div class="card booking-card" x-data="initBookingForm()" x-on:click.away="closeBookingPanel()" style="height: unset;">
+                    <div class="head is-flex">
+                        <span class="mr-1" style="font-size: 12px;"> Price Starting at  ₹
+                         </span>
+                        <span x-text="venues?.pricing?.perUnit"></span>
+                        <span> /per person</span>
+                        <div class="rating">
+                            <a>
+                                <i data-feather="star"></i>
+                                <span x-text="venues?.rating"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Dual picker wrapper-->
+                    <!-- <div class="dual-picker-wrapper">
+                                        <div x-show="bookingFormExpanded === true" class="dual-picker-panel" x-bind:class="{
+                                                'is-compressed': participantsFormActive,
+                                                '': !participantsFormActive
+                                            }">
+                                            <div x-show="dateFormActive === true" class="dual-picker-panel-inner">
+                                                <h4 class="dual-picker-panel-title">Select Date</h4>
+                                                <div class="booking-calendars">
+                                                    <input type="text" class="event-datepicker-start" x-on:click="getDateValue($event)" />
+                                                    <input type="text" class="event-datepicker-end" x-on:click="getDateValue($event)" />
+                                                    <div class="calendar-actions">
+                                                        <button class="button is-light">Clear Dates</button>
+                                                        <button class="button is-primary is-raised-hover">
+                                                            Save Dates
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div x-show="participantsFormActive === true" class="dual-picker-panel-inner">
+                                                <div class="participants-selector">
+                                                    <div class="type-block">
+                                                        <div class="meta">
+                                                            <span>Adults</span>
+                                                            <span>18 years +</span>
+                                                        </div>
+                                                        <div class="action">
+                                                            <div class="spinner">
+                                                                <button class="is-inactive">
+                                                                    <i data-feather="minus"></i>
+                                                                    </button>
+                                                                <input value="1" />
+                                                                <button><i data-feather="plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="type-block">
+                                                        <div class="meta">
+                                                            <span>Kids</span>
+                                                            <span>From 2 to 18 years</span>
+                                                        </div>
+                                                        <div class="action">
+                                                            <div class="spinner">
+                                                                <button class="is-inactive">
+                                                                            <i data-feather="minus"></i>
+                                                                            </button>
+                                                                <input value="0" />
+                                                                <button><i data-feather="plus"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="type-block">
+                                                        <div class="meta">
+                                                            <span>Babies</span>
+                                                            <span>less than 2 years</span>
+                                                        </div>
+                                                        <div class="action">
+                                                            <div class="spinner">
+                                                                <button class="is-inactive">
+                                                                        <i data-feather="minus"></i>
+                                                                        </button>
+                                                                <input value="0" />
+                                                                <button class="is-inactive">
+                                                                    <i data-feather="plus"></i>
+                                                                    </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="participants-actions">
+                                                        <button class="button is-primary is-raised-hover">
+                                                            Save Changes
+                                                            </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dual-picker">
+                                            <div class="field" x-on:click="openDatesPanel()" x-bind:class="{
+                                                    'is-active': dateFormActive,
+                                                    '': !dateFormActive
+                                                    }">
+                                                <i data-feather="chevron-down"></i>
+                                                <label>Dates</label>
+                                                <div class="control">
+                                                    <input type="text" class="input" placeholder="Pick a date" :value="dateValue" />
+                                                </div>
+                                            </div>
+                                            <div class="field" x-on:click="openParticipantsPanel()" x-bind:class="{
+                                                            'is-active': participantsFormActive,
+                                                            '': !participantsFormActive
+                                                            }">
+                                                <i data-feather="chevron-down"></i>
+                                                <label>People</label>
+                                                <div class="control">
+                                                    <input type="text" class="input" placeholder="Add people" :value="dateValue" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                    <form id="form-enquiry" class="enquiry-form mt-3">
+                        <div class="field">
+                            <div class="control">
+                                <label>Full Name</label>
+                                <input class="input" id="enquiry_name" placeholder="Eg. Jason Shahaji">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label>Mobile Number</label>
+                                <input class="input" id="enquiry_mobileNumber" placeholder="Eg. 8055844829">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <label>Email</label>
+                                <input class="input" id="enquiry_emailId" placeholder="Eg. jason@gmail.coom">
+                            </div>
+                        </div>
+                        <div class="row" style="display: flex; justify-content: space-between;">
+                            <div class="field" style="width: 48%;">
+                                <div class="control no-of-people">
+                                    <label>No of People</label>
+                                    <input type="number" id="enquiry_numberOfPeople" value="1" placeholder="Eg. 150">
+                                </div>
+                            </div>
+                            <div class="field" style="width: 48%;">
+                                <div class="control date">
+                                    <label>Date</label>
+                                    <input type="date" id="enquiry_bookingDate" placeholder="Eg. 05/06/2023">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-caret">
+                                <label>Message</label>
+                                <textarea class="textarea" id="enquiry_additionalMessage" placeholder="Your message..."></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                    <div class="group-toggle mt-3">
+                        <span>Send Quotations on Email</span>
+                        <div class="ninja-toggle">
+                            <input id="group-toggle" type="checkbox" />
+                            <label for="group-toggle" class="no-margin">
+                                            <span class="track">
+                                            <span class="track-inner"></span>
+                                            <span class="track-knob">
+                                                <i class="inactive" data-feather="circle"></i>
+                                                <i class="active" data-feather="check"></i>
+                                            </span>
+                                            </span>
+                                        </label>
+                        </div>
+                    </div>
+                    <div class="book-action mt-4 ml-0">
+                        <a href="#" x-on:click="postEnquiry()" class="button is-primary is-raised-hover is-fullwidth ml-0">Post Enquiry</a>
+                    </div>
+                    <a id="enq-success"></a>
+                </div>
+                <!-- <a class="report-link">
+                                    <i data-feather="flag"></i>
+                                    <span>Report this listing</span>
+                                </a> -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<div id="listing-map" class="host-map">
+    <h4 class="title is-5 is-narrow">Where you’ll be</h4>
+    <div class="listing-map-wrapper">
+        <div class="listing-map-inner">
+            <div id="main-map" class="listing-map" data-long="-4.884592" data-lat="36.511347"></div>
+            <span class="listing-map-badge">Exact location after booking</span>
+        </div>
+        <div class="listing-map-content">
+            <h4 class="title is-5 is-narrow" x-text="venues.address"></h4>
+            <p>
+                The house is located in the north end of the old town. It's a 5 minute walk away from one of our favourite restaurants, La Ferme that serves delicious food. It is only a short walk from Le Jardin , La Terr…
+            </p>
+            <div class="location-action">
+                <!-- <button class="button is-heavy modal-trigger" data-modal="listing-map-modal">
+                More on Location
+              </button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--More events section-->
+<div class="more-listings similar">
+    <!--Title-->
+    <h4 class="title is-5">Similar Venues</h4>
+
+    <!--Scheduled events carousel-->
+    <div class="scheduled-listings">
+        <div class="scheduled-listings-inner ">
+            <div>
+                <ul style="display: flex; flex-wrap: wrap;">
+                    <template x-for="item in venuesSameType" :key="item.id">
+                      <!-- <div class="upcoming-listing">
+                        <div class="upcoming-listing-image" :data-background="item.gallery[0]" data-demo-background="item.gallery[0]"></div>
+                        <div class="upcoming-listing-content">
+
+                            <p class="listing-name">
+                                <a x-text="item.name"></a>
+                            </p>
+                            <div class="upcoming-listing-rating">
+                                <i data-feather="star"></i>
+                                <span  x-text="item.rating">4,94</span>
+                                <span class="px-2">·</span>
+                                <span x-text="item.city"></span>
+                            </div>
+
+                        </div>
+                    </div> -->
+                    <li style="width: 23%; margin-right: 2%;">
+                      <div class="scheduled-listing">
+                          <div class="scheduled-listing-image" :style="'background: url('+item.gallery[0]+')';" >
+                              
+                          </div>
+                          <div class="scheduled-listing-content">
+                              <div class="scheduled-listing-rating">
+                                  <i data-feather="star"></i>
+                                  <span x-text="item.rating">3,72</span>
+                                  <span class="px-2">·</span>
+                                  <span x-text="item.city">Marbella, Spain</span>
+                              </div>
+                              <p class="listing-name">
+                                  <a x-text="item.name" x-bind:href="'/details.html?venue=' + item.id"></a>
+                              </p>
+                              <p class="listing-price">
+                                  Starting from <span x-text="item.price"></span> <small>/night</small>
+                              </p>
+                          </div>
+                      </div>
+                  </li>
+                    </template>
+
+                </ul>
+            </div>
+            <div class="glide__arrows" data-glide-el="controls">
+                <button class="glide__arrow glide__arrow--left" data-glide-dir="<">
+                  <i data-feather="arrow-left"></i>
+                </button>
+                <button class="glide__arrow glide__arrow--right" data-glide-dir=">">
+                  <i data-feather="arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+<script>
+    async function postEnquiry() {
+        let obj = {
+            name: document.getElementById('enquiry_name').value,
+            address: '',
+            enquiryDate: new Date(),
+            bookingDate: document.getElementById('enquiry_bookingDate').value,
+            emailId: document.getElementById('enquiry_emailId').value,
+            mobileNumber: document.getElementById('enquiry_mobileNumber').value,
+            additionalMessage: document.getElementById('enquiry_additionalMessage').value,
+            status: 1,
+            venueId: document.getElementById('venueId').value,
+            vendorId: document.getElementById('vendorId').value,
+            internalComment: '',
+            venuePrice: parseInt(document.getElementById('venuePrice').value),
+            numberOfPeople: parseInt(document.getElementById('enquiry_numberOfPeople').value),
+            emailQuotation: document.getElementById('group-toggle').checked
+        }
+
+        this.newpost = await (await fetch('http://localhost:3002/enquiry', {
+            method: 'POST',
+            body: JSON.stringify(obj),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })).json();
+
+        console.log('obj ', obj, this.newpost)
+        if (this.newpost.id) {
+            document.getElementById('form-enquiry').reset();
+            document.getElementById('enq-success').innerHTML = "Enquiry Added Successfully."
+        }
+    }
+</script>
+
+<!--Rules modal-->
+{{> rules-modal-flat}}
+
+<!--Health rules modal-->
+{{> health-rules-modal}}
+
+<!--Cancellation modal-->
+{{> cancellation-modal}}
+
+<!--Share modal-->
+{{> share-modal}}
+
+<!--Whishlist modal-->
+{{> wishlist-modal}}
+
+<!--Security modal-->
+{{> flat-security-modal}}
+
+<!--Cleaning modal-->
+{{> cleaning-modal}}
+
+<!--Concierge modal-->
+{{> concierge-modal}}
+
+<!--Amenities modal-->
+{{> amenities-modal}}
+
+<!--Comments modal-->
+{{> comments-modal}}
+
+<!--Map modal-->
+{{> map-modal}}

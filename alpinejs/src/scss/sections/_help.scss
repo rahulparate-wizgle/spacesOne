@@ -1,0 +1,207 @@
+/*! _help.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Help Center categories
+    2. Help center articles
+    3. Help center topics
+    4. Help center questions
+*/
+
+
+/* ==========================================================================
+1. Help Center categories
+========================================================================== */
+
+.help-center-categories {
+    max-width: 940px;
+    margin: 0 auto;
+    .help-center-category {
+        display: block;
+        background: $white;
+        border: 1px solid $border;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        text-align: center;
+        transition: background-color .3s, box-shadow .3s;
+        &:hover {
+            background: $widget-grey;
+            box-shadow: $light-box-shadow;
+            .svg-icon {
+                background: $white;
+                img {
+                    transform: scale(.6);
+                }
+            }
+        }
+        .svg-icon {
+            margin: 0 auto .75rem auto;
+            border-radius: 50%;
+            transition: background-color .3s;
+            img {
+                transition: transform .3s;
+            }
+        }
+        .title {
+            transition: color .3s;
+        }
+        p {
+            font-size: .9rem;
+            color: $medium-text;
+            transition: color .3s, opacity .3s;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .help-center-categories {
+        .help-center-category {
+            padding: 1.25rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Help center articles
+========================================================================== */
+
+.featured-articles {
+    max-width: 940px;
+    margin: 0 auto;
+    .featured-articles-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .featured-article {
+        display: block;
+        background: $white;
+        border: 1px solid $border;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        transition: border .3s;
+        &:hover {
+            border-color: $primary;
+            .tag {
+                background: $primary;
+                color: $white;
+                box-shadow: $primary-box-shadow;
+            }
+        }
+        .tags {
+            margin-bottom: .25rem;
+        }
+        .tag {
+            transition: background-color .3s, color .3s, box-shadow .3s;
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Help center topics
+========================================================================== */
+
+.help-center-topics {
+    max-width: 940px;
+    margin: 0 auto;
+    .help-center-topics-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .help-center-topic {
+        display: block;
+        background: $widget-grey;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        border: 1px solid transparent;
+        transition: border .3s, background-color .3s;
+        &:hover {
+            background: $white;
+            border-color: $border;
+        }
+        .topic-title {
+            position: relative;
+            padding-bottom: 1rem;
+            &::after {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                content: '';
+                height: 3px;
+                width: 60px;
+                background: $primary;
+            }
+        }
+        .topic-list {
+            padding: 1.5rem 0 .75rem 0;
+            .topic-item {
+                display: flex;
+                align-items: center;
+                &:not(:last-child) {
+                    margin-bottom: .75rem;
+                }
+                &:hover {
+                    .check-wrap {
+                        border-color: $primary;
+                        color: $primary;
+                    }
+                    .topic-name {
+                        color: $dark-text;
+                    }
+                }
+                .check-wrap {
+                    border-color: $light-text;
+                    color: $light-text;
+                    transition: color .3s, border .3s;
+                }
+                .topic-name {
+                    font-family: $font;
+                    color: $medium-text;
+                    margin-left: .55rem;
+                    transition: color .3s;
+                }
+            }
+        }
+    }
+}
+
+
+/* ==========================================================================
+4. Help center questions
+========================================================================== */
+
+.help-center-questions {
+    max-width: 940px;
+    margin: 0 auto;
+    .help-center-questions-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+    .help-center-question {
+        display: block;
+        background: $white;
+        border: 1px solid $border;
+        border-radius: 0.75rem;
+        padding: 1rem;
+        transition: border .3s, transform .3s, transform .3s;
+        &:hover {
+            border-color: $primary;
+            transform: translateY(-5px);
+            box-shadow: $light-box-shadow;
+        }
+        img {
+            display: block;
+            border-radius: .65rem;
+        }
+        .inner-content {
+            padding: 1.25rem 0 .75rem 0;
+        }
+    }
+}

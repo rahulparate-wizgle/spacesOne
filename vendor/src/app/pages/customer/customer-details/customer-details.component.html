@@ -1,0 +1,49 @@
+<div class="container-fluid">
+  <app-page-title
+    title="Profile"
+    [breadcrumbItems]="breadCrumbItems"
+  ></app-page-title>
+
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Personal Information</h4>
+
+          <p class="text-muted mb-4">
+            Hi I'm {{ customerData.name }},has been the industry's standard
+            dummy text To an English person, it will seem like simplified
+            English, as a skeptical Cambridge.
+          </p>
+          <div class="flex-shrink-0 me-3">
+            <img [src]="customerData?.image" alt="" class="avatar-sm rounded-circle img-thumbnail">
+        </div>
+          <div class="table-responsive">
+            <table class="table table-nowrap mb-0">
+              <tbody>
+                <tr>
+                  <th scope="row">Name :</th>
+                  <td>{{ customerData.name }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Address :</th>
+                  <td>{{ customerData.address }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Email :</th>
+                  <td>{{ customerData.email }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Contact No. :</th>
+                  <td>{{ customerData.mobileNumber }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+    </div>
+  </div>
+  <!-- end row -->
+</div>

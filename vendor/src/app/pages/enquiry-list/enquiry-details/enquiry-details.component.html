@@ -1,0 +1,101 @@
+<div class="container-fluid">
+
+
+    <div class="row align-items-end">
+        <div class="col-lg-6">
+            <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+                Enquiry Details
+            </h6>
+            <ol class="breadcrumb m-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Enquiry Details</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-4">
+            <div class="card" style="height: 500px;">
+                <div class="border-bottom p-4 d-flex justify-content-between align-items-end">
+                    <h6 class="fw-semibold text-uppercase mb-0">Overview</h6>
+                    <div class="d-flex flex-wrap gap-2">
+                        <div>
+                            <a class="btn btn-primary btn-label waves-light p-3" href="mailto:{{ enquiryData.emailId }}">
+                                <i class="bx bx-envelope label-icon"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a class="btn btn-success btn-label waves-light p-3" href="tel:{{ enquiryData.mobileNumber}}">
+                                <i class="bx bx-phone label-icon"></i>
+                            </a>
+                        </div>
+                        <div>
+                            <a href="javascript:void(0);" (click)="deleteEnquiryData()" class="btn btn-danger btn-label waves-light p-3">
+                                <i class="bx bx-trash label-icon"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="col" class="pl-0">Customer Name</th>
+                                    <!-- <td scope="col">{{ enquiryData.name | titlecase }}</td> -->
+                                    <td scope="col">{{ (enquiryData.customer?.name || enquiryData.name) | titlecase }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Enquiry Date</th>
+                                    <!-- <td>{{ enquiryData.enquiryDate }}</td> -->
+                                    <td>{{ enquiryData.enquiryDate ? (enquiryData.enquiryDate | date:'dd/MM/yyyy  : HH:mm') : "--" }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Booking Date</th>
+                                    <!-- <td>{{ enquiryData.bookingDate }}</td> -->
+                                    <td>{{ enquiryData.bookingDate ? (enquiryData.bookingDate | date:'dd/MM/yyyy') : "--" }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Message</th>
+                                    <td>{{ enquiryData.additionalMessage }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Status</th>
+                                    <td>
+                                      <ng-select [items]="selectValue" name="status"  [(ngModel)]="status" placeholder="Select Status" (change)="updateStatus($event.id)" bindLabel="status" bindValue="id">
+                                      </ng-select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div  class="col-8" class="img">
+          <div class="card p-3">
+            <div class="border-bottom p-4 d-flex justify-content-between align-items-end">
+                <h6 class="fw-semibold text-uppercase mb-0 head">Venue Details</h6>
+            </div>
+            <div class="card-body" class="text">
+                <div>
+                    <h5>
+                        {{ enquiryData.venue?.name }}
+                    </h5>
+                </div>
+                <div>
+                    <h6>
+                        {{ enquiryData?.address }}
+                    </h6>
+                </div>
+                <div class="list-inline-item">
+                    <p class="font-size-12 mb-0" style="font-weight: 600">
+                        <i class="uil uil-wallet"></i>Packages starting at
+                        <span class="text-primary font-size-15">₹ {{ enquiryData?.venue?.pricing?.perUnit }} / person</span>
+                    </p>
+                </div>
+            </div>
+                <div class="image" [ngStyle]="{'background-image': 'url('+ enquiryData?.venue?.gallery[0] + ')'}"></div>
+        </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div
+  class="listing-nav"
+  x-data="initListingNavbar()"
+  x-init="initScrollAnchors()"
+  x-on:scroll.window="scroll()"
+  x-bind:class="{
+    'is-active': scrolled,
+    '': !scrolled,
+  }"
+>
+  <div class="container">
+    <div class="listing-nav-inner">
+      <div class="left">
+        <a href="#presentation" class="nav-item scroll-link">
+          <span>Presentation</span>
+        </a>
+        <a href="#host" class="nav-item scroll-link">
+          <span>Host</span>
+        </a>
+        <a href="#comments" class="nav-item scroll-link">
+          <span>Comments</span>
+        </a>
+        <a href="#availability" class="nav-item scroll-link">
+          <span>Availability</span>
+        </a>
+      </div>
+      <div class="right">
+        <a class="modal-trigger" data-modal="listing-share-modal">
+          <i data-feather="share-2"></i>
+          <span>Share</span>
+        </a>
+        <a class="modal-trigger" data-modal="listing-wishlist-modal">
+          <i data-feather="heart"></i>
+          <span>Save</span>
+        </a>
+        <a
+          id="listing-navigation-action"
+          x-show="scrolledFull === true"
+          class="button is-primary is-raised-hover"
+        >
+          Book this flat
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

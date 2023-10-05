@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="row align-items-end">
+        <div class="col-lg-6">
+            <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+                Event Type List
+            </h6>
+            <ol class="breadcrumb m-0 p-0">
+                <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+                <li class="breadcrumb-item active">Event Type List</li>
+            </ol>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-12 d-flex justify-content-end">
+                    <div class="flex-shrink-0 d-flex gap-1 w-100 justify-content-end">
+                        <div class="col-xxl-3 col-lg-6">
+                            <input class="form-control" type="text" [(ngModel)]="filterBy" placeholder="Eg. Birthday Party" (keyup)="filter()" />
+                        </div>
+                        <div class="col-xxl-4 col-lg-6">
+                            <button type="button" class="btn btn-primary w-100" (click)="router.navigate(['event-type/form'])">
+                New Event Type
+              </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3" *ngIf="filteredEventType?.length > 0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Icon</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col" style="text-align: right">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of filteredEventType">
+                                    <td>
+                                        <i [class]="item.icon"></i>
+                                    </td>
+                                    <td scope="row">{{ item.title }}</td>
+                                    <td>{{ item.description }}</td>
+
+                                    <td>
+                                        <ul class="list-unstyled hstack gap-1 mb-0 d-flex justify-content-end">
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-soft-info" (click)="onEdit(item.id)"><i
+                            class="mdi mdi-pencil-outline"></i></a>
+                                            </li>
+                                            <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" (click)="deleteEventTypesData(item.id)">
+                                                <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"><i
+                            class="mdi mdi-delete-outline"></i></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" *ngIf="filteredEventType?.length == 0">
+        <div class="col-12 search-no-data">
+            <i class="bx bx-sleepy"></i>
+            <h6>No event type found matching your search</h6>
+        </div>
+    </div>
+</div>

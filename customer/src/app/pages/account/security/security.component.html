@@ -1,0 +1,98 @@
+<!-- Header-->
+<app-header id="top"></app-header>
+
+<!-- Page content-->
+<div class="container pt-5 pb-lg-4 mt-5 mb-sm-2">
+    <!-- Breadcrumb-->
+    <app-breadcrumbs [breadcrumbItems]="breadCrumbItems"></app-breadcrumbs>
+
+    <!-- Page content-->
+    <div class="row">
+        <aside class="col-lg-4 col-md-5 pe-xl-4 mb-5">
+            <!-- Account nav-->
+            <div class="card card-body border-0 pb-1 me-lg-1" style="background-color: #f5f5f5;">
+                <div class="d-flex d-md-block align-items-center pt-lg-2 mb-4 text-center ">
+                    <div class="img-thumb" [ngStyle]="{'background-image': 'url('+ loggedInUser?.image +')'}" style="margin: 0 auto;">
+                    </div>
+                    <div class="pt-md-2 pt-lg-0 ps-3 ps-md-0 ">
+                        <h2 class="fs-lg mb-0 mt-3">{{loggedInUser?.name}}</h2>
+                        <p class="fs-sm text-primary">
+                            {{loggedInUser?.email}}
+                        </p>
+                    </div>
+                </div>
+                <a class="btn btn-outline-secondary d-block d-md-none w-100 mb-3" href="javascript:void(0);" data-bs-toggle="collapse" (click)="SideBarMenu()"><i class="fi-align-justify me-2"></i>Menu</a>
+                <div class="collapse d-md-block mt-0" id="account-nav">
+                    <div class="card-nav">
+                        <a class="card-nav-link fs-sm " routerLink="/account/info"><i class="fi-user opacity-60 me-2"></i>Personal Info</a>
+                        <a class="card-nav-link fs-sm active" routerLink="/account/security"><i class="fi-lock opacity-60 me-2"></i>Change Password</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/properties"><i class="fi-home opacity-60 me-2 fs-sm"></i>My Properties</a> -->
+                        <a class="card-nav-link fs-sm" routerLink="/account/wishlist"><i class="fi-heart opacity-60 me-2"></i>Wishlist</a>
+                        <!-- <a class="card-nav-link" routerLink="/account/reviews"><i class="fi-star opacity-60 me-2 fs-sm"></i>Reviews</a> -->
+                        <!-- <a class="card-nav-link" routerLink="/account/notifications"><i class="fi-bell opacity-60 me-2 fs-sm"></i>Notifications</a> -->
+                        <a class="card-nav-link fs-sm" routerLink="/pages/help-center"><i class="fi-help opacity-60 me-2"></i>Help</a>
+                        <a class="card-nav-link fs-sm" href="javascript:void(0);" (click)="logout()"><i class="fi-logout opacity-60 me-2"></i>Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- Content-->
+        <div class="col-lg-8 col-md-7 mb-5">
+            <h1 class="h4 mb-0">Change Password</h1>
+            <p class="fs-sm mt-1">Manage your password settings and secure your account.</p>
+            <form class="needs-validation pb-4" novalidate (ngSubmit)="validSubmit()" [formGroup]="validationform">
+                <div class="row align-items-end mb-2">
+                    <div class="col-sm-4 mb-2">
+                        <label class="form-label" for="account-password">Current password</label>
+                        <div class="password-toggle">
+                            <input class="form-control" [type]="fieldTextType ? 'text' : 'password'" id="account-password" required formControlName="apassword" [ngClass]="{'is-invalid': submit && form['apassword'].errors}" (blur)="checkPassword($event)">
+                            <label class="password-toggle-btn" aria-label="Show/hide password">
+                              <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !fieldTextType, 'mdi-eye-outline': fieldTextType
+                            }" (click)="toggleFieldTextType()"></span>
+                            </label>
+                            <div *ngIf='passwordError'>
+                                <span class="text-dark fs-sm">{{passwordErrorMessage}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 mb-3">
+                        <label class="form-label" for="account-password-new">New password</label>
+                        <div class="password-toggle">
+                            <input class="form-control" [type]="fieldNewTextType ? 'text' : 'password'" id="account-password-new" required formControlName="npassword" [ngClass]="{'is-invalid': submit && form['npassword'].errors}">
+                            <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !fieldNewTextType, 'mdi-eye-outline': fieldNewTextType
+              }" (click)="toggleNewFieldTextType()"></span>
+              </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-4 mb-3">
+                        <label class="form-label" for="account-password-confirm">Confirm password</label>
+                        <div class="password-toggle">
+                            <input class="form-control" [type]="confirmfieldTextType ? 'text' : 'password'" id="account-password-confirm" required formControlName="cpassword" [ngClass]="{'is-invalid': submit && form['cpassword'].errors}" (keyup)="validateConfirmPwd()">
+                            <label class="password-toggle-btn" aria-label="Show/hide password">
+                <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator" [ngClass]="{'mdi-eye-off-outline': !confirmfieldTextType, 'mdi-eye-outline': confirmfieldTextType
+              }" (click)="toggleConfirmFieldTextType()"></span>
+              </label>
+                            <div *ngIf='pwdError'>
+                                <span class="text-dark fs-sm">{{passwordErrorMessage}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex ">
+                    <button class="btn btn-primary " type="submit" [disabled]="validationform.invalid || passwordError || pwdError ">Change Password</button>
+                </div>
+            </form>
+
+            <div class="col-6">
+                <p class="fs-xs text-danger"><b>Note:</b> Kindly be aware that upon changing your password, an automatic logout will occur, necessitating you to log in once more.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer-->
+<app-footer></app-footer>

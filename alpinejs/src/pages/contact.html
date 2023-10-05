@@ -1,0 +1,55 @@
+<!--Main Navbar-->
+{{> main-navigation-v2}}
+
+<div class="contact-nav">
+    <div class="container">
+        <a href="/" class="brand">
+            <img class="logo" src="img/logo/logo.svg" alt="" />
+        </a>
+    </div>
+</div>
+
+<div id="hero-map" class="hero is-fullheight contact-hero" x-data="initContactMap()" x-init="initHeroMap()" data-long="-118.44958367724455" data-lat="34.016818496913956">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="column is-6"></div>
+                <div class="column is-6">
+                    <div class="card card-form" x-data="initHeroCreateListingForm()" x-init="initSelects()">
+                        <div class="head">
+                            <h2 class="title is-5">
+                                Shoot us a little message and we'll get back to you.
+                            </h2>
+                            <form>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-bigger" placeholder="Full Name" />
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <input class="input is-bigger" placeholder="Email Address" />
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control has-caret">
+                                        <textarea class="textarea" placeholder="Your message..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="control">
+                                        <a class="button is-primary is-fullwidth mx-1">Send Message</a
+                    >
+                  </div>
+                </div>
+                <a class="bottom-link has-text-centered is-block"
+                  >We always reply!</a
+                >
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

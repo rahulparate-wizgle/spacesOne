@@ -1,0 +1,35 @@
+.no-icons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    i {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+}
+
+.tabs {
+    display: flex;
+}
+
+.tab-view {
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 20px;
+    opacity: 0.5;
+    p {
+        align-self: center;
+        margin-bottom: 0;
+    }
+}
+
+.active {
+    opacity: 1;
+    p {
+        font-size: 14px;
+        font-weight: bold;
+    }
+}

@@ -1,0 +1,77 @@
+/*! _contact.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Contact nav
+    2. Contact Hero
+    3. Terms layout
+*/
+
+
+/* ==========================================================================
+1. Contact nav
+========================================================================== */
+
+.contact-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 70px;
+    width: 100%;
+    padding: 0 1rem;
+    z-index: 3;
+    .brand {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        .logo {
+            display: block;
+            max-width: 40px;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Contact Hero
+========================================================================== */
+
+.contact-hero {
+    .hero-body {
+        position: relative;
+        z-index: 2;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .contact-hero {
+        .card-form {
+            padding: 2rem;
+        }
+    }
+}
+
+
+/* ==========================================================================
+3. Terms layout
+========================================================================== */
+
+.tos-container {
+    max-width: 740px;
+    margin: 0 auto;
+    .content {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: $font;
+        }
+        p,
+        ul li {
+            font-family: $font;
+            color: $medium-text !important;
+        }
+    }
+}

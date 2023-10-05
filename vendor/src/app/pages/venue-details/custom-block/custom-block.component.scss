@@ -1,0 +1,35 @@
+.attributes {
+    margin-left: 5px;
+    font-weight: 400;
+}
+
+.houseInput {
+    height: 38px;
+    width: 350px;
+}
+
+.rules {
+    // margin-right: 90px;
+    // margin-left: 10px;
+    display: flex;
+    justify-content: left;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+.rules1 {
+    display: flex;
+    justify-content: left;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+.error-message {
+    color: red;
+}
+
+.table-responsive {
+    background: #eff2f7;
+    padding: 15px;
+    border-radius: 20px;
+}

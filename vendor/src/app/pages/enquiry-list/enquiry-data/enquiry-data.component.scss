@@ -1,0 +1,72 @@
+.task-list {
+    min-height: 100px !important;
+}
+
+.btn-group-example {
+    height: 40px;
+    .btn:before {
+        background-color: #f8f8fb;
+        color: #09142d;
+    }
+}
+
+.kanbanNew
+.task-box::before {
+  content: "";
+  width: 3px; /* Adjust the width as needed */
+  background: #17a2b8;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.kanbanNew .task-box {
+  position: relative;
+}
+
+.kanbanInProgress
+.task-box::before {
+  content: "";
+  width: 3px; /* Adjust the width as needed */
+  background: #f1b44c;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.kanbanInProgress .task-box {
+  position: relative;
+}
+
+.kanbanSuccess
+.task-box::before {
+  content: "";
+  width: 3px; /* Adjust the width as needed */
+  background: #34c38f;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.kanbanSuccess .task-box {
+  position: relative;
+}
+
+.kanbanDanger
+.task-box::before {
+  content: "";
+  width: 3px; /* Adjust the width as needed */
+  background: #f46a6a;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 5px;
+}
+.kanbanDanger .task-box {
+  position: relative;
+}
+

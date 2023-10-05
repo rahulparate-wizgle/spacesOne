@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="row align-items-end">
+    <div class="col-lg-6">
+      <h6 class="text-uppercase" style="font-weight: bold; font-size: 16px">
+        Customer List
+      </h6>
+      <ol class="breadcrumb m-0 p-0">
+        <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
+        <li class="breadcrumb-item active">Customer List</li>
+      </ol>
+    </div>
+    <div class="col-lg-6 d-flex align-items-center justify-content-end">
+      <input class="form-control" type="text" [(ngModel)]="filterBy" placeholder="Eg. Sumit Raghav" (keyup)="filter()"
+        style="width: unset">
+      <div class="position-relative h-100 hstack" style="margin-left: 10px;">
+        <button type="button" class="btn btn-primary waves-effect waves-light"
+        (click)="router.navigate(['customer/customer-form'])"  style="margin-left: 10px;">New Customer</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px;">
+    <div class="col-12">
+      <div class="card">
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle nowrap">
+              <thead>
+                <tr>
+
+                  <th scope="col">Name</th>
+                  <th scope="col">Contact No</th>
+                  <th scope="col">Email</th>
+                  <th scope="col" style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of filteredUsers | paginate: {itemsPerPage:10, currentPage:p}">
+                  <td>{{data.name}}</td>
+                  <td>{{data.mobileNumber}}</td>
+                  <td>{{data.email}}</td>
+                  <td>
+                    <ul class="list-unstyled hstack gap-1 mb-0 d-flex justify-content-end">
+                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                        <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger"
+                          (click)="deleteCustomerData(data.id,$event)"><i class="mdi mdi-delete-outline"></i></a>
+                      </li>
+                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" (click)="goToEdit(data.id)">
+                        <a href="javascript:void(0);" class="btn btn-sm btn-soft-info"><i
+                            class="mdi mdi-pencil-outline"></i></a>
+                      </li>
+                      <li class="flex-fill" (click)="goToDetails(data.id)">
+                        <a href="javascript: void(0);" ngbTooltip="Profile"><i class="bx bx-user-circle"></i></a>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row pagination">
+            <div class="col-auto d-flex justify-content-end">
+              <div class="card d-inline-block ms-auto mb-0">
+                <div class="card-body p-2">
+                  <nav aria-label="Page navigation example" class="mb-0">
+                    <ul class="pagination mb-0">
+                      <pagination-controls
+                        (pageChange)="p = $event"
+                      ></pagination-controls>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+            <!--end col-->
+          </div>
+        </div>
+        <div class="card-body" *ngIf="filteredUsers?.length == 0">
+          <div class="col-12 search-no-data">
+            <i class="bx bx-sleepy"></i>
+            <h6> No enquires found matching your search</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+

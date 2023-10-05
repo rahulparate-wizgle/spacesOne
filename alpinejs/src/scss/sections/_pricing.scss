@@ -1,0 +1,99 @@
+/*! _pricing.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    1. Comparison table
+*/
+
+
+/* ==========================================================================
+1. Comparison table
+========================================================================== */
+
+.comparison-table-wrapper {
+    overflow-x: auto;
+    table {
+        width: 100%;
+        border-color: $border;
+        font-family: $font;
+        border-collapse: collapse;
+    }
+    thead tr th:first-child {
+        background: none;
+        border-color: transparent;
+        border-bottom: 1px solid $border;
+        border-right: 1px solid $border;
+    }
+    tbody tr {
+        td {
+            border-color: $border;
+            border-left-color: transparent;
+            &:first-child {
+                width: 40%;
+                border-top-color: transparent;
+            }
+        }
+    }
+    td,
+    th {
+        text-align: center;
+        border: solid 1px $border;
+        font-size: 1rem;
+        padding: 26px;
+        word-wrap: break-word;
+        color: #666;
+        vertical-align: middle;
+    }
+    td {
+        color: #ccc;
+        font-weight: bold;
+    }
+    .price {
+        font-size: 30px;
+        color: #000;
+    }
+    .check {
+        color: #e20074;
+        font-size: 30px;
+    }
+    th:first-child,
+    td:first-child {
+        font-weight: 100;
+        color: black;
+    }
+    @media only screen and (max-width: 767px) {
+        .comparison-table-wrapper {
+            .check {
+                color: #e20074;
+                font-size: 20px;
+            }
+            tr {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-around;
+            }
+            td,
+            th {
+                display: block;
+                width: 33.333333333333%;
+                font-size: 20px;
+            }
+            #test {
+                width: 100%;
+            }
+            th:first-child,
+            td:first-child {
+                background: #efefef;
+                width: 100%;
+            }
+            th:first-child {
+                display: none;
+            }
+        }
+        .p {
+            text-align: center;
+            font-size: 13px;
+            padding-top: 130px;
+        }
+    }
+}

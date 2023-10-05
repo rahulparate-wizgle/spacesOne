@@ -1,0 +1,77 @@
+<app-venue-details [venue]="venue" [currentTab]="7" ></app-venue-details>
+<div class="container-fluid card" style="border-radius: 10px;">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-6" style="height: 500px">
+        <form [formGroup]="houseStandardForm">
+          <div class="mb-3">
+            <label for="projectname" class="col-form-label col-lg-2"
+              >Icon</label
+            >
+            <input
+              name="icon"
+              formControlName="icon"
+              type="text"
+              class="form-control"
+              placeholder="Eg. icon"
+            />
+            <span class="error-message">{{ validationError.icon }}</span>
+          </div>
+
+          <div class="mb-3 col-12">
+            <label for="projectname" class="col-form-label col-lg-2"
+              >House Title</label
+            >
+            <input
+            name="title"
+            formControlName="title"
+            type="text"
+            class="form-control"
+            placeholder="Eg. title"
+          />
+            <span class="error-message">{{ validationError.title }}</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="projectname" class="col-form-label col-lg-2"
+              > Description</label
+            >
+            <textarea
+            name="description"
+            formControlName="description"
+            type="text"
+            class="form-control"
+            placeholder="Eg. description"
+          ></textarea>
+            <span class="error-message">{{ validationError.description }}</span>
+          </div>
+
+        </form>
+        <div class="row">
+          <div class="col-12 d-flex justify-content-end flex-wrap gap-2">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="postHouseStandardData($event)"
+            >
+              <i
+                class="bx bx-send font-size-16 align-middle me-2"
+                style="transform: rotate(-45deg); margin-top: -5px"
+              ></i>
+              Save & Publish
+            </button>
+
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-6">
+        <div class="preview mt-4" style="height: 350px">
+          <i class="bx bx-image font-16"></i>
+          <h6 class="mt-4 text-uppercase">Preview</h6>
+          <p>Get a look of how the customer will get to see these details</p>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
+

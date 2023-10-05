@@ -1,0 +1,18 @@
+.btnNext{
+  display: flex;
+  justify-content: end;
+
+}
+.btnBlock{
+height: 33px;
+width: 100px;
+}
+.active{
+  border: 2px solid rgb(118, 242, 118);
+  cursor: pointer;
+}
+
+.not-active{
+  padding : 1rem;
+  cursor: pointer;
+}

@@ -1,0 +1,348 @@
+<div
+  class="mobile-main-navigation"
+  x-data="initNavbarMobile()"
+  x-on:scroll.window="scroll()"
+  x-bind:class="{
+        'is-active is-scrolled': mobileSearchOpened,
+        '': !mobileSearchOpened,
+        'is-scrolled': scrolled,
+        '': !scrolled,
+    }"
+>
+  <div class="mobile-main-navigation--inner">
+    <div class="field">
+      <div class="control has-icon">
+        <input
+          x-on:focus="toggleMobileSearch()"
+          type="text"
+          class="input is-rounded"
+          placeholder="Where are you?"
+        />
+        <div class="form-icon">
+          <i data-feather="search"></i>
+        </div>
+      </div>
+    </div>
+    <a
+      x-show="mobileSearchOpened"
+      x-on:click="toggleMobileSearch()"
+      class="cancel-link"
+      >Cancel</a
+    >
+  </div>
+
+  <div class="mobile-main-navigation--location">
+    <a class="near-link" x-on:click="toggleMobileSearchPanel()">
+      <div class="near-icon">
+        <i data-feather="map-pin"></i>
+      </div>
+      <span>Explore events near you</span>
+    </a>
+    <div class="near-tags">
+      <h4>Places near you</h4>
+      <div class="tags">
+        <span class="tag">Los Angeles</span>
+        <span class="tag">San Francisco</span>
+        <span class="tag">San Diego</span>
+        <span class="tag">Orange County</span>
+        <span class="tag">San Juan</span>
+      </div>
+    </div>
+    <div class="other-locations">
+      <h4>Other places</h4>
+      <div class="locations-group">
+        <!--Item-->
+        <div class="location-item">
+          <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/events/carousel/19.jpg" alt="" />
+          <div class="meta">
+            <span>Marbella, Spain</span>
+            <span>A great city with authenticity</span>
+          </div>
+        </div>
+        <!--Item-->
+        <div class="location-item">
+          <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/events/carousel/20.jpg" alt="" />
+          <div class="meta">
+            <span>Fuengirola, Spain</span>
+            <span>The best place for your holidays</span>
+          </div>
+        </div>
+        <!--Item-->
+        <div class="location-item">
+          <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/events/carousel/21.jpg" alt="" />
+          <div class="meta">
+            <span>Torremolinos</span>
+            <span>Ideal for families and children</span>
+          </div>
+        </div>
+        <!--Item-->
+        <div class="location-item">
+          <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/events/carousel/22.jpg" alt="" />
+          <div class="meta">
+            <span>Malaga, Spain</span>
+            <span>A big and living city</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="mobile-search-panel"
+    x-bind:class="{
+            'is-active': mobileSearchPanelOpened,
+            '': !mobileSearchPanelOpened
+        }"
+  >
+    <div class="mobile-search-panel--inner">
+      <div class="panel-header">
+        <button class="close-button" x-on:click="toggleMobileSearchPanel()">
+          <i data-feather="chevron-left"></i>
+        </button>
+      </div>
+      <div class="panel-body">
+        <div x-show.transition="activeWizardStep === 0" class="panel-step">
+          <h3>What are you looking for?</h3>
+          <div class="radio-cards-group">
+            <!--Card-->
+            <div class="radio-card">
+              <input type="radio" name="topic_selection" checked />
+              <div class="radio-card-inner">
+                <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/thumbs/square/15.jpg" alt="" />
+                <div class="meta">
+                  <span>Everything</span>
+                  <span>Everything that you can book on Venues.One.</span>
+                </div>
+              </div>
+            </div>
+            <!--Card-->
+            <div class="radio-card">
+              <input type="radio" name="topic_selection" />
+              <div class="radio-card-inner">
+                <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/thumbs/square/7.jpg" alt="" />
+                <div class="meta">
+                  <span>Events</span>
+                  <span>Events that you can search and book on Venues.One.</span>
+                </div>
+              </div>
+            </div>
+            <!--Card-->
+            <div class="radio-card">
+              <input type="radio" name="topic_selection" />
+              <div class="radio-card-inner">
+                <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/thumbs/square/18.jpg" alt="" />
+                <div class="meta">
+                  <span>Trips</span>
+                  <span>Trips and travel formulas available on Venues.One.</span>
+                </div>
+              </div>
+            </div>
+            <!--Card-->
+            <div class="radio-card">
+              <input type="radio" name="topic_selection" />
+              <div class="radio-card-inner">
+                <img src="https://dummyimage.com/150x150" data-demo-src="img/photo/content/thumbs/square/13.jpg" alt="" />
+                <div class="meta">
+                  <span>Flats</span>
+                  <span>Flats and houses that you can rent on Venues.One.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div x-show.transition="activeWizardStep === 1" class="panel-step">
+          <h3>When should that start?</h3>
+
+          <div class="mobile-dates is-relative">
+            <div class="month-selector">
+              <div class="months">
+                <a class="month active">Oct</a>
+                <a class="month">Nov</a>
+                <a class="month">Dec</a>
+                <a class="month">Jan</a>
+              </div>
+            </div>
+
+            <div class="date-selector">
+              <div class="date-box">
+                <input type="radio" name="date_selection" checked />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>15</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>16</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>17</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>18</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>19</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>20</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>21</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>22</span>
+                </div>
+              </div>
+              <div class="date-box">
+                <input type="radio" name="date_selection" />
+                <div class="date-box-inner">
+                  <div class="indicator">
+                    <i class="fas fa-check"></i>
+                  </div>
+                  <span>Mon</span>
+                  <span>23</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-4 has-text-centered">
+              <a class="underlink">Load more dates</a>
+            </div>
+          </div>
+        </div>
+
+        <div x-show.transition="activeWizardStep === 2" class="panel-step">
+          <h3>What type of audience?</h3>
+
+          <div class="type-blocks">
+            <div class="type-block">
+              <div class="meta">
+                <span>General audience</span>
+                <span>Suitable for everyone</span>
+              </div>
+              <div class="action">
+                <label class="form-switch is-primary">
+                  <input
+                    type="radio"
+                    name="search_type_radio_mobile"
+                    class="is-switch"
+                    checked
+                  />
+                  <i></i>
+                </label>
+              </div>
+            </div>
+            <div class="type-block">
+              <div class="meta">
+                <span>Family</span>
+                <span>Suitable for kids and families</span>
+              </div>
+              <div class="action">
+                <label class="form-switch is-primary">
+                  <input
+                    type="radio"
+                    name="search_type_radio_mobile"
+                    class="is-switch"
+                  />
+                  <i></i>
+                </label>
+              </div>
+            </div>
+            <div class="type-block">
+              <div class="meta">
+                <span>Adults only</span>
+                <span>Only for adults and grown ups</span>
+              </div>
+              <div class="action">
+                <label class="form-switch is-primary">
+                  <input
+                    type="radio"
+                    name="search_type_radio_mobile"
+                    class="is-switch"
+                  />
+                  <i></i>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Wizard Navigation Buttons-->
+  <div
+    class="search-panel-buttons"
+    x-bind:class="{
+            'is-active': mobileSearchPanelOpened,
+            '': !mobileSearchPanelOpened
+        }"
+  >
+    <div class="search-panel-buttons-inner">
+      <button
+        class="button h-button is-light is-bold"
+        x-on:click="wizardBack($event)"
+      >
+        Previous
+      </button>
+      <button
+        class="button h-button is-primary is-bold"
+        x-on:click="wizardForward($event)"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,307 @@
+/*! _typography.scss | Venues.One | Wizgle 2021-2022 */
+
+
+/*
+    0. Resets
+    1. Titles
+    2. Links
+    3. Typography Helpers
+    4. Media Queries
+*/
+
+
+/* ==========================================================================
+0. Variables and Resets
+========================================================================== */
+
+$font: "Karla",
+sans-serif;
+$font-main: "Montserrat",
+sans-serif;
+html {
+    overflow: unset !important;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+var {
+    font-style: normal;
+}
+
+div {
+    color: $dark-text;
+}
+
+p {
+    font-family: $font;
+    font-weight: 300;
+    color: $light-text;
+    &.is-sm {
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+    &.is-md {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+    &.text-inverted {
+        color: $white;
+    }
+    &.stressed-1 {
+        color: $medium-text;
+    }
+    &.stressed-2 {
+        color: $dark-text;
+    }
+}
+
+
+/* ==========================================================================
+1. Titles
+========================================================================== */
+
+.title {
+    font-family: $font-main;
+    color: $dark-text;
+    &.is-narrow {
+        margin-bottom: 0 !important;
+    }
+    &.has-space {
+        margin-bottom: 0.75rem !important;
+    }
+    &.is-thin {
+        font-weight: 300;
+    }
+    &.is-heavy {
+        font-weight: 600;
+    }
+    &.is-bold {
+        font-weight: 700;
+    }
+    &.is-bolder {
+        font-weight: 800;
+    }
+    &.is-inverted {
+        color: $white;
+    }
+    &.stressed {
+        color: $light-text;
+    }
+    &.stressed-1 {
+        color: $medium-text;
+    }
+    &.stressed-2 {
+        color: $dark-text;
+    }
+}
+
+.subtitle {
+    font-family: $font;
+    color: $dark-text;
+    &.is-narrow {
+        margin-bottom: 0;
+    }
+    &.has-space {
+        margin-bottom: 0.75rem !important;
+    }
+    &.is-thin {
+        font-weight: 300;
+    }
+    &.is-heavy {
+        font-weight: 600;
+    }
+    &.is-bold {
+        font-weight: 700;
+    }
+    &.is-bolder {
+        font-weight: 800;
+    }
+    &.is-inverted {
+        color: $white !important;
+    }
+    &.stressed {
+        color: $light-text;
+    }
+    &.stressed-1 {
+        color: $medium-text;
+    }
+    &.stressed-2 {
+        color: $dark-text;
+    }
+}
+
+.title-divider {
+    height: 1px;
+    width: 80px;
+    border-top: 2px solid $medium-text;
+    margin: 0 auto 2.5rem auto;
+}
+
+.centered-subheading {
+    max-width: 640px;
+    margin: 0 auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .title {
+        &.is-2.is-thin-mobile {
+            font-size: 2rem !important;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    .title {
+        &.is-2.is-thin-mobile {
+            font-size: 2rem !important;
+        }
+    }
+}
+
+
+/* ==========================================================================
+2. Links
+========================================================================== */
+
+.underlink {
+    position: relative;
+    display: inline-block;
+    font-weight: 500;
+    font-family: $font;
+    color: $primary;
+    &.is-inverted {
+        color: $white;
+        &::after {
+            border-color: $white !important;
+        }
+    }
+    &:after {
+        content: "" !important;
+        border-bottom: 1px solid $primary !important;
+        bottom: 1px !important;
+        left: 0px !important;
+        position: absolute !important;
+        width: 100% !important;
+    }
+    &:hover {
+        color: lighten($primary, 10%);
+    }
+}
+
+.colorlink {
+    font-weight: 500;
+    font-family: $font;
+    color: $primary;
+}
+
+.arrow-link {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-family: $font;
+    color: $primary;
+    transition: opacity 0.3s;
+    &:hover {
+        color: $primary;
+        opacity: 0.8;
+        svg {
+            transform: translateX(0.25rem);
+        }
+    }
+    svg {
+        margin-left: 0.25rem;
+        height: 18px;
+        width: 18px;
+        transition: transform 0.3s;
+    }
+}
+
+
+/* ==========================================================================
+3. Typography Helpers
+========================================================================== */
+
+.is-font {
+    font-family: $font;
+}
+
+.is-font-main {
+    font-family: $font-main !important;
+}
+
+.is-weight-300 {
+    font-weight: 300 !important;
+}
+
+.is-weight-400 {
+    font-weight: 400 !important;
+}
+
+.is-weight-500 {
+    font-weight: 500 !important;
+}
+
+.is-weight-600 {
+    font-weight: 600 !important;
+}
+
+.is-weight-700 {
+    font-weight: 700 !important;
+}
+
+.is-weight-500 {
+    font-weight: 500 !important;
+}
+
+.is-weight-900 {
+    font-weight: 900 !important;
+}
+
+.rem-70 {
+    font-size: 0.7rem;
+}
+
+.rem-75 {
+    font-size: 0.75rem;
+}
+
+.rem-80 {
+    font-size: 0.8rem;
+}
+
+.rem-85 {
+    font-size: 0.85rem;
+}
+
+.rem-90 {
+    font-size: 0.9rem;
+}
+
+.rem-95 {
+    font-size: 0.95rem;
+}
+
+.rem-100 {
+    font-size: 1rem;
+}
+
+.rem-125 {
+    font-size: 1.25rem;
+}
+
+
+/* ==========================================================================
+4. Media Queries
+========================================================================== */
+
+@media only screen and (max-width: 767px) {
+    .section-title {
+        .title {
+            &.is-2 {
+                font-size: 2.25rem;
+            }
+        }
+    }
+}

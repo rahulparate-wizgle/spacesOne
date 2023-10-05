@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="card" style="border-radius: 0 0 10px 10px">
+    <div class="card-body">
+      <div class="row d-flex justify-content-end">
+        <div class="col-12">
+          <form [formGroup]="blogForm">
+            <div class="row">
+              <div class="mb-3 col-6" style="max-width: 60%">
+                <label for="projectname" class="col-form-label col-lg-2">Title</label>
+                <input name="name" formControlName="name" type="text" class="form-control"
+                  placeholder="Eg. Enter Name" />
+                <span class="error-message">{{ validationError.name }}</span>
+              </div>
+              <div class="mb-3 col-6" style="max-width: 60%">
+                <label for="projectname" class="col-form-label col-lg-2">Mobile Number</label>
+                <input name="mobileNumber" formControlName="mobileNumber" type="text" class="form-control"
+                  placeholder="Eg. Enter Mobile Number" />
+                <span class="error-message">{{ validationError.mobileNumber }}</span>
+              </div>
+              <div class="mb-3 col-6" style="max-width: 60%">
+                <label for="projectname" class="col-form-label col-lg-2">Image</label>
+                <input name="image" formControlName="image" type="text" class="form-control" placeholder="Eg.URL" />
+                <span class="error-message">{{ validationError.image }}</span>
+              </div>
+              <div class="mb-3 col-6" style="max-width: 60%">
+                <label for="projectname" class="col-form-label col-lg-2">Publish Date</label>
+                <input name="publishDate" type="date" class="form-control" formControlName="publishDate" />
+                <span class="error-message">{{validationError.publishDate}}</span>
+              </div>
+              
+
+            </div>
+            <div class="mb-3">
+              <label for="projectname" class="col-form-label col-lg-2">Address</label>
+              <div class="row">
+                <div class="mb-3 col-4" style="max-width: 60%">
+                  <label for="projectname" class="col-form-label col-lg-2">Country</label>
+                  <ng-select [items]="countries" bindLabel="name" bindValue="countries  | json" [multiple]="false"
+                    placeholder="Select your country" formControlName="country" ngModel="country"
+                    (change)="onCountryChange($event)">
+                  </ng-select>
+
+                  <span class="error-message">{{validationError.country}}</span>
+                </div>
+                <div *ngIf="states" class="mb-3 col-4" style="max-width: 60%">
+                  <label for="projectname" class="col-form-label col-lg-2">State</label>
+                  <ng-select [items]="states" bindLabel="name" bindValue="states" [multiple]="false"
+                    placeholder="Select your states" formControlName="state" ngModel="state"
+                    (change)="onStateChange($event)">
+                  </ng-select>
+                </div>
+                <div *ngIf="cities" class="mb-3 col-4" style="max-width: 60%">
+                  <label for="projectname" class="col-form-label col-lg-2">City</label>
+                  <ng-select [items]="cities" bindLabel="name" bindValue="cities" [multiple]="false"
+                    placeholder="Select your city" formControlName="city" ngModel="city"
+                    (change)="onCityChange($event)">
+                  </ng-select>
+                </div>
+                <span class="error-message">{{ validationError.address }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="projectname" class="col-form-label col-lg-2">Summary</label>
+                <textarea style="height: 80px;" type="text" class="form-control" formControlName="summary" name="summary"
+                  placeholder="Eg.summary"></textarea>
+                <span class="error-message">{{ validationError.summary }}</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-12">
+                <label for="projectname" class="col-form-label col-lg-2">Description</label>
+                <textarea style="height: 150px;" type="text" class="form-control" formControlName="description" name="description"
+                  placeholder="Eg. Blog description"></textarea>
+                <span class="error-message">{{ validationError.description }}</span>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="mb-3 col-6">
+                <label for="projectname" class="col-form-label col-lg-2">Post By</label>
+                <input type="text" class="form-control" value="Rahul Parate" disabled />
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row mt-3">
+                <div class="col-12 flex-wrap">
+                  <button type="button" class="btn btn-success">
+                    <i class="bx bx-check-double font-size-16 align-middle me-2"></i>
+                    Save Draft
+                  </button>
+                  <button type="button" class="btn btn-primary" style="margin-left: 10px"
+                    (click)="postBlogData($event)">
+                    <i class="bx bx-send font-size-16 align-middle me-2"
+                      style="transform: rotate(-45deg); margin-top: -5px"></i>
+                    Save & Publish
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
